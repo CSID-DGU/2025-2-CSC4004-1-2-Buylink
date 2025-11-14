@@ -1,0 +1,44 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:proxyshopping;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    generate-unique-name: false
+
+  h2:
+    console:
+      enabled: true
+      path: /my-h2-console
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    defer-datasource-initialization: true
+    properties:
+      hibernate.format_sql: true
+
+  sql:
+    init:
+      mode: always
+
+app:
+  cart:
+    default-sid: sid-demo-1
+
+python:
+  crawler:
+    base-url: http://localhost:5001
+
+juso:
+  api-key: "devU01TX0FVVEgyMDI1MTExNDA1MDE1MzExNjQ0OTI="
+
+toss:
+  secret-key: test_sk_Z61JOxRQVEm6YlzZJzn2VW0X9bAq
+  base-url: https://api.tosspayments.com
+
+
+# ai:
+#   base-url:
+#     # (AI 준비되면 예: http://localhost:7001 로 채우세요)
