@@ -1,19 +1,5 @@
 import { motion, AnimatePresence } from "motion/react";
-import {
-  ShoppingCart,
-  Package,
-  ChevronLeft,
-  CheckCircle,
-  TrendingUp,
-  Shield,
-  Zap,
-  Globe,
-  Camera,
-  DollarSign,
-  Users,
-  ArrowRight,
-  AlertCircle,
-} from "lucide-react";
+import { Package, CheckCircle, Shield, Zap, Globe, Camera, DollarSign, ArrowRight, AlertCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import sampleimg from "../assets/cuteeeee.png";
 

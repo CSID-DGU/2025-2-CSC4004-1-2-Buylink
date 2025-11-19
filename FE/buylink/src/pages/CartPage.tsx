@@ -1,5 +1,5 @@
 // src/pages/CartPage.tsx
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "motion/react";
 import { Plus, X } from "lucide-react";
@@ -15,6 +15,24 @@ type CartItem = {
   selected: boolean;
 };
 
+// /api/cart GET 응답 스펙
+type CartApiItem = {
+  id: number;
+  productName: string;
+  priceKRW: number;
+  imageUrl: string;
+};
+
+type CartApiGetResponse = {
+  success: boolean;
+  data: {
+    items: CartApiItem[];
+    totalKRW: number;
+  } | null;
+  error: string | null;
+};
+
+// 🔥 UI 확인용 목업 데이터 (localStorage 없을 때 사용)
 const MOCK_CART_ITEMS: CartItem[] = [
   {
     id: 1,
@@ -37,11 +55,93 @@ const MOCK_CART_ITEMS: CartItem[] = [
 export default function CartPage() {
   const navigate = useNavigate();
 
-  const [items, setItems] = useState<CartItem[]>(MOCK_CART_ITEMS);
+  const [items, setItems] = useState<CartItem[]>([]);
   const [extraPackaging, setExtraPackaging] = useState(true);
   const [insurance, setInsurance] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const selectedItems = items.filter((i) => i.selected);
+
+  // --------------------------------------------------------
+  // 🟡 현재 버전: RequestPage에서 localStorage.cartProducts 사용
+  //    - 없으면 MOCK_CART_ITEMS로 채움
+  // --------------------------------------------------------
+  useEffect(() => {
+    const loadCartFromLocal = () => {
+      setIsLoading(true);
+      try {
+        const raw = localStorage.getItem("cartProducts");
+        if (raw) {
+          const products: any[] = JSON.parse(raw);
+          const mapped: CartItem[] = products.map((p, index) => ({
+            id: index + 1,
+            productName: p.productName,
+            priceKRW: p.priceKRW,
+            quantity: p.quantity ?? 1,
+            imageUrl: p.imageUrls?.[0] ?? sampleimg,
+            selected: true,
+          }));
+          setItems(mapped);
+        } else {
+          setItems(MOCK_CART_ITEMS);
+        }
+      } catch (e) {
+        console.error(e);
+        setItems(MOCK_CART_ITEMS);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadCartFromLocal();
+  }, []);
+
+  // --------------------------------------------------------
+  // 🔁 나중에 실제 장바구니 조회: GET /api/cart
+  //    resp:
+  //    {
+  //      "success": true,
+  //      "data": { "items": [...], "totalKRW": 19990 },
+  //      "error": null
+  //    }
+  //    👉 localStorage 버전 지우고 아래 useEffect 주석 풀면 됨
+  // --------------------------------------------------------
+  /*
+  useEffect(() => {
+    const fetchCartFromServer = async () => {
+      setIsLoading(true);
+      try {
+        const res = await fetch("/api/cart");
+        if (!res.ok) {
+          throw new Error("장바구니 조회 실패");
+        }
+
+        const json = (await res.json()) as CartApiGetResponse;
+
+        if (!json.success || !json.data) {
+          throw new Error(json.error ?? "장바구니 데이터가 없습니다.");
+        }
+
+        setItems(
+          json.data.items.map((item) => ({
+            id: item.id,
+            productName: item.productName,
+            priceKRW: item.priceKRW,
+            quantity: 1,
+            imageUrl: item.imageUrl,
+            selected: true,
+          }))
+        );
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCartFromServer();
+  }, []);
+  */
 
   const handleToggleAll = () => {
     const allSelected = items.every((i) => i.selected);
@@ -58,31 +158,109 @@ export default function CartPage() {
     );
   };
 
-  const handleDeleteSelected = () => {
+  const handleDeleteSelected = async () => {
     const ids = selectedItems.map((i) => i.id);
     if (ids.length === 0) {
       alert("삭제할 상품을 선택해주세요.");
       return;
     }
-    // fetch(`/api/cart?ids=${ids.join(',')}`, { method: 'DELETE' })
+
+    // ✅ 현재 버전: 프론트 상태에서만 삭제
     setItems((prev) => prev.filter((i) => !i.selected));
+
+    // 🔁 나중에 실제 선택 삭제: DELETE /api/cart?ids=1,3,7
+    //     resp: { "success": true, "data": { message, deletedIds, deletedCount }, "error": null }
+    /*
+    try {
+      const query = ids.join(",");
+      const res = await fetch(`/api/cart?ids=${query}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        throw new Error("선택 상품 삭제 실패");
+      }
+
+      const json = await res.json();
+      console.log("삭제 결과:", json);
+
+      // Delete 이후에는 GET /api/cart 다시 호출하는 패턴도 가능
+      setItems((prev) => prev.filter((i) => !ids.includes(i.id)));
+    } catch (e) {
+      console.error(e);
+      alert("선택 상품 삭제 중 문제가 발생했습니다.");
+    }
+    */
   };
 
-  const handleDeleteOne = (id: number) => {
-    // fetch(`/api/cart?ids=${id}`, { method: 'DELETE' })
+  const handleDeleteOne = async (id: number) => {
+    // ✅ 현재 버전: 프론트 상태에서만 삭제
     setItems((prev) => prev.filter((i) => i.id !== id));
+
+    // 🔁 나중에 실제 단일 삭제: DELETE /api/cart?ids=1
+    /*
+    try {
+      const res = await fetch(`/api/cart?ids=${id}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        throw new Error("상품 삭제 실패");
+      }
+
+      const json = await res.json();
+      console.log("삭제 결과:", json);
+
+      setItems((prev) => prev.filter((i) => i.id !== id));
+    } catch (e) {
+      console.error(e);
+      alert("상품 삭제 중 문제가 발생했습니다.");
+    }
+    */
   };
 
   const handleGoRequestPage = () => navigate("/request");
 
-  const handleGoCheckoutPage = () => {
+  const handleGoCheckoutPage = async () => {
     if (selectedItems.length === 0) {
       alert("결제할 상품을 선택해주세요.");
       return;
     }
-    // const payload = { extraPackaging, insurance, itemIds: selectedItems.map(i => i.id) }
-    // await fetch('/api/cart/estimate', ...)
+
+    // ✅ 현재 버전: 견적은 CartQuotation에서 목업으로 계산
+    //    여기서는 그냥 /checkout으로만 이동
     navigate("/checkout");
+
+    // 🔁 나중에 /api/cart/estimate 연동:
+    //    POST /api/cart/estimate
+    //    body: { "extraPackaging": true, "insurance": false }
+    //    resp: { success, data: CartEstimate, error }
+    /*
+    try {
+      const payload = {
+        extraPackaging,
+        insurance,
+      };
+
+      const res = await fetch("/api/cart/estimate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        throw new Error("견적 요청 실패");
+      }
+
+      const json = await res.json();
+      console.log("견적 결과:", json);
+
+      // navigate("/checkout", { state: json.data });
+    } catch (e) {
+      console.error(e);
+      alert("견적 요청 중 문제가 발생했습니다.");
+    }
+    */
   };
 
   return (
@@ -129,50 +307,59 @@ export default function CartPage() {
 
           {/* 상품 카드 리스트 (여기만 스크롤) */}
           <div className="space-y-6 lg:overflow-y-auto lg:max-h-[60vh] lg:pr-1">
-            {items.map((item) => (
-              <div
-                key={item.id}
-                className="bg-white rounded-2xl shadow p-6 border border-gray-200"
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <button
-                    onClick={() => handleToggleOne(item.id)}
-                    className="w-5 h-5 bg-[#ffe788] border border-gray-300 rounded flex items-center justify-center"
-                  >
-                    {item.selected && (
-                      <span className="text-xs font-bold">✓</span>
-                    )}
-                  </button>
+            {isLoading && (
+              <p className="text-sm text-[#767676] px-2 py-4">
+                장바구니를 불러오는 중입니다...
+              </p>
+            )}
 
-                  <button onClick={() => handleDeleteOne(item.id)}>
-                    <X className="w-5 h-5 text-gray-500" />
-                  </button>
-                </div>
+            {!isLoading &&
+              items.map((item) => (
+                <div
+                  key={item.id}
+                  className="bg-white rounded-2xl shadow p-6 border border-gray-200"
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <button
+                      onClick={() => handleToggleOne(item.id)}
+                      className="w-5 h-5 bg-[#ffe788] border border-gray-300 rounded flex items-center justify-center"
+                    >
+                      {item.selected && (
+                        <span className="text-xs font-bold">✓</span>
+                      )}
+                    </button>
 
-                <div className="flex gap-4 mb-3">
-                  <img
-                    src={item.imageUrl}
-                    alt={item.productName}
-                    className="w-20 h-20 rounded-lg object-cover"
-                  />
-                  <div className="flex-1">
-                    <p className="font-medium text-[#111111]">
-                      {item.productName}
-                    </p>
-                    <p className="mt-1 font-semibold text-[#111111]">
-                      {item.priceKRW.toLocaleString()}원
+                    <button onClick={() => handleDeleteOne(item.id)}>
+                      <X className="w-5 h-5 text-gray-500" />
+                    </button>
+                  </div>
+
+                  <div className="flex gap-4 mb-3">
+                    <img
+                      src={item.imageUrl}
+                      alt={item.productName}
+                      className="w-20 h-20 rounded-lg object-cover"
+                    />
+                    <div className="flex-1">
+                      <p className="font-medium text-[#111111]">
+                        {item.productName}
+                      </p>
+                      <p className="mt-1 font-semibold text-[#111111]">
+                        {item.priceKRW.toLocaleString()}원
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="bg-[#f7f7fb] rounded-lg p-3">
+                    <p className="text-sm text-[#505050]">
+                      <span className="font-semibold text-[#111111]">
+                        수량:{" "}
+                      </span>
+                      {item.quantity}개
                     </p>
                   </div>
                 </div>
-
-                <div className="bg-[#f7f7fb] rounded-lg p-3">
-                  <p className="text-sm text-[#505050]">
-                    <span className="font-semibold text-[#111111]">수량: </span>
-                    {item.quantity}개
-                  </p>
-                </div>
-              </div>
-            ))}
+              ))}
           </div>
 
           {/* 스크롤 아래 고정 버튼 */}
@@ -189,9 +376,8 @@ export default function CartPage() {
           </div>
         </div>
 
-        {/* 오른쪽: 옵션 + 견적서 (크기 줄인 버전) */}
+        {/* 오른쪽: 옵션 + 견적서 */}
         <div className="space-y-4 lg:self-start text-sm">
-          {/* 옵션 카드: 패딩/폰트/간격만 살짝 축소 */}
           <div className="bg-white rounded-2xl shadow p-4 border border-gray-200 space-y-4">
             {/* 포장 옵션 */}
             <div>
@@ -297,7 +483,7 @@ export default function CartPage() {
             </div>
           </div>
 
-          {/* 견적서 컴포넌트 (안쪽에서 패딩/폰트도 살짝 줄여 둔 상태) */}
+          {/* 견적서 컴포넌트 */}
           <CartQuotation
             extraPackaging={extraPackaging}
             insurance={insurance}
