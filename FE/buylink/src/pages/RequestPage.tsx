@@ -5,6 +5,7 @@ import { useSetRecoilState } from "recoil";
 import { productState, type Product } from "../recoil/productState.ts";
 import { LinkIcon, X } from "lucide-react";
 import imgSpinner from "../assets/spinner.gif";
+import sampleimg from "../assets/cuteeeee.png";
 
 export default function RequestPage() {
   const navigate = useNavigate();
@@ -102,7 +103,7 @@ const handleLoadProduct = async () => {
 
     // 🔥 Recoil에 최종 선택된 상품만 저장
     setProductData(selectedProducts);
-    navigate("../cart");
+    navigate("/cart");
   };
 
   // --------------------------------------------------------
@@ -124,7 +125,7 @@ const handleLoadProduct = async () => {
         </h1>
 
         {/* URL 입력 박스 */}
-        <div className="bg-white rounded-2xl shadow-lg border p-6 mb-8 text-left">
+        <div className="bg-white rounded-2xl shadow-lg border border-gray-300 p-6 mb-8 text-left">
           <h2 className="text-lg font-semibold mb-4">상품 추가</h2>
           <div className="flex gap-3">
             <div className="relative flex-1">
