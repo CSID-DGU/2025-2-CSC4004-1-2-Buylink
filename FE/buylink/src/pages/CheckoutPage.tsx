@@ -3,6 +3,20 @@ import { motion } from "motion/react";
 import sampleimg from "../assets/cuteeeee.png";
 
 // =============================
+// TossPayments 전역 타입 선언
+// =============================
+declare global {
+  interface Window {
+    TossPayments?: (clientKey: string) => {
+      requestPayment: (method: string, options: any) => Promise<void>;
+    };
+  }
+}
+
+// 🔹 토스페이먼츠 테스트 클라이언트 키 (프론트에서 써도 되는 키)
+const TOSS_CLIENT_KEY = "test_ck_kYG57Eba3GmNoeeGjpWErpWDOxmA";
+
+// =============================
 // 타입
 // =============================
 type OrderItem = {
@@ -41,19 +55,53 @@ type CustomsInfo = {
   name: string;
 };
 
+// 🔹 /api/address/search 응답 타입
+type AddressSearchApiResponse = {
+  success: boolean;
+  data: {
+    currentPage: number;
+    countPerPage: number;
+    totalCount: number;
+    addresses: AddressResult[];
+  } | null;
+  error: string | null;
+};
+
+// 🔹 /api/orders/address 응답 타입
+type OrdersAddressApiResponse = {
+  success: boolean;
+  data: SavedAddress | null;
+  error: string | null;
+};
+
+// 🔹 /api/orders/customs-code/verify 응답 타입
+type CustomsVerifyResponse = {
+  isValid: boolean;
+  name: string;
+};
+
+// 🔹 /api/orders/pay 응답 타입
+type OrdersPayResponse = {
+  paymentId: string;
+  status: "SUCCESS" | "FAIL";
+  paidAt?: string;
+};
+
+// =============================
+// 목업 주문 상품
 // =============================
 const MOCK_ORDER_ITEMS: OrderItem[] = [
   {
     id: 1,
     productName: "몬치치 마스코트 키체인 3",
-    priceKRW: 11990,
+    priceKRW: 50,
     quantity: 1,
     imageUrl: sampleimg,
   },
   {
     id: 2,
     productName: "상품명은 최대 1줄 노출 길어지면 말줄임",
-    priceKRW: 8000,
+    priceKRW: 50,
     quantity: 1,
     imageUrl: sampleimg,
   },
@@ -80,12 +128,13 @@ export default function CheckoutPage() {
   const [addressModalOpen, setAddressModalOpen] = useState(false);
   const [savedAddress, setSavedAddress] = useState<SavedAddress | null>(null);
 
-  // 개인통관고유번호 모달 + 정보
   const [customsModalOpen, setCustomsModalOpen] = useState(false);
   const [customsInfo, setCustomsInfo] = useState<CustomsInfo | null>(null);
 
+  const [isPaying, setIsPaying] = useState(false);
+
   // ==============================
-  // 결제 금액
+  // 결제 금액 (지금은 목업 기준)
   // ==============================
   const productTotal = MOCK_ORDER_ITEMS.reduce(
     (sum, item) => sum + item.priceKRW * item.quantity,
@@ -98,7 +147,124 @@ export default function CheckoutPage() {
   // 코드 일부 마스킹용 (P1234*****890 이런 느낌)
   const maskCustomsCode = (code: string) => {
     if (code.length <= 5) return code;
-    return code.slice(0, 5) + "*".repeat(Math.max(0, code.length - 7)) + code.slice(-2);
+    return (
+      code.slice(0, 5) + "*".repeat(Math.max(0, code.length - 7)) + code.slice(-2)
+    );
+  };
+
+  // ==============================
+  // 결제 버튼 클릭
+  //  - TOSS_PAY → 토스 결제창 호출
+  //  - 그 외 → 현재는 목업 결제
+  // ==============================
+  const handlePay = async () => {
+    if (!savedAddress) {
+      alert("배송지를 등록해 주세요.");
+      return;
+    }
+    if (!customsInfo) {
+      alert("개인통관고유번호를 등록해 주세요.");
+      return;
+    }
+    if (!agree) {
+      alert("주문정보 확인 및 약관에 동의해 주세요.");
+      return;
+    }
+
+    setIsPaying(true);
+
+    // ─────────────────────────────
+    // 1) 토스페이 결제창 호출 분기
+    // ─────────────────────────────
+    if (paymentMethod === "TOSS_PAY") {
+      try {
+        if (!window.TossPayments) {
+          alert(
+            "결제 모듈이 로드되지 않았습니다. index.html에 TossPayments 스크립트가 추가되어 있는지 확인해 주세요."
+          );
+          return;
+        }
+
+        const tossPayments = window.TossPayments(TOSS_CLIENT_KEY);
+
+        // 실제 서비스에서 orderId는 백엔드에서 관리하는 유니크 값으로 맞추면 된다.
+        const orderId = `ORDER-${Date.now()}`;
+
+        await tossPayments.requestPayment("CARD", {
+          // 간편결제(토스페이)도 결제수단은 보통 "CARD" 타입으로 호출
+          amount: totalAmount,
+          orderId,
+          orderName: "BuyLink 구매대행 결제",
+          customerName: savedAddress.receiverName,
+          successUrl: `${window.location.origin}/payments/success`,
+          failUrl: `${window.location.origin}/payments/fail`,
+          // easyPay: "TOSSPAY", // 나중에 간편결제 종류까지 지정하고 싶으면 사용
+        });
+
+        // requestPayment 이후에는 success/fail URL로 리다이렉트된다.
+        // 여기 아래 코드는 보통 실행되지 않는다.
+      } catch (error: any) {
+        console.error(error);
+        alert(
+          `결제창을 닫았거나 오류가 발생했습니다.\n${error?.message ?? ""}`
+        );
+      } finally {
+        setIsPaying(false);
+      }
+
+      return; // 토스페이 분기는 여기서 끝
+    }
+
+    // ─────────────────────────────
+    // 2) 그 외 결제수단: 현재는 목업 결제
+    //    나중에 /api/orders/pay 연결하면 여기 분기에서 처리
+    // ─────────────────────────────
+    try {
+      // ============================
+      // 🔥 현재: 목업 결제 처리
+      // ============================
+      const mockPayment: OrdersPayResponse = {
+        paymentId: "tspay_20251024_0001",
+        status: "SUCCESS",
+        paidAt: "2025-10-24T15:21:00",
+      };
+
+      console.log("결제 목업 응답:", mockPayment);
+      alert("결제가 완료되었습니다! (목업)");
+
+      // ============================
+      // 🔁 나중에 실제 결제 API 연결 시
+      // ============================
+      /*
+      const res = await fetch("/api/orders/pay", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          orderId: 101,             // 실제 주문 ID로 교체
+          method: paymentMethod,    // "TOSS_PAY" | "CARD" | ...
+          amount: totalAmount,
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error("결제 요청 실패");
+      }
+
+      const json: OrdersPayResponse = await res.json();
+
+      if (json.status !== "SUCCESS") {
+        throw new Error("결제에 실패했습니다.");
+      }
+
+      console.log("실제 결제 응답:", json);
+      alert("결제가 완료되었습니다!");
+      */
+    } catch (e) {
+      console.error(e);
+      alert("결제 처리 중 문제가 발생했습니다.");
+    } finally {
+      setIsPaying(false);
+    }
   };
 
   return (
@@ -169,7 +335,6 @@ export default function CheckoutPage() {
                 <p className="text-[#505050]">
                   개인통관고유번호: {maskCustomsCode(customsInfo.code)}
                 </p>
-
               </div>
             ) : (
               <div className="border border-dashed border-[#e5e5ec] rounded-xl py-5 px-4 text-sm text-[#767676]">
@@ -300,8 +465,14 @@ export default function CheckoutPage() {
             </div>
           </div>
 
-          <button className="w-full py-4 rounded-xl bg-gradient-to-r from-[#ffe788] to-[#ffcc4c] text-[#111111] font-semibold shadow-lg hover:shadow-xl transition-all">
-            {`${formatKRW(totalAmount)} 결제하기`}
+          <button
+            onClick={handlePay}
+            disabled={isPaying}
+            className="w-full py-4 rounded-xl bg-gradient-to-r from-[#ffe788] to-[#ffcc4c] text-[#111111] font-semibold shadow-lg hover:shadow-xl transition-all disabled:opacity-60"
+          >
+            {isPaying
+              ? "결제 처리 중..."
+              : `${formatKRW(totalAmount)} 결제하기`}
           </button>
         </aside>
       </div>
@@ -343,7 +514,7 @@ function AddressModal({
   onSaved,
 }: {
   onClose: () => void;
-  onSaved: (addr: any) => void;
+  onSaved: (addr: SavedAddress) => void;
 }) {
   const [receiverName, setReceiverName] = useState("");
   const [phone, setPhone] = useState("");
@@ -355,28 +526,99 @@ function AddressModal({
   const [deliveryRequest, setDeliveryRequest] = useState("");
 
   // =============================
+  // 목업: /api/address/search
+  // =============================
+  const mockAddressSearch = async (
+    keyword: string
+  ): Promise<AddressSearchApiResponse> => {
+    console.log("주소 검색 키워드(목업):", keyword);
+
+    return {
+      success: true,
+      data: {
+        currentPage: 1,
+        countPerPage: 10,
+        totalCount: 1,
+        addresses: [
+          {
+            roadAddress:
+              "서울특별시 광진구 아차산로 549 (광장동, 광장현대파크빌)",
+            jibunAddress: "서울특별시 광진구 광장동 577 광장현대파크빌",
+            zipCode: "04983",
+          },
+        ],
+      },
+      error: null,
+    };
+  };
+
+  // =============================
   // 주소 검색
   // =============================
   const handleSearch = async () => {
     if (!query.trim()) return;
 
-    const res = await fetch("/api/address/search", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ query }),
-    });
+    try {
+      // 🔥 현재: 목업 사용
+      const json = await mockAddressSearch(query);
 
-    const json = await res.json();
-    if (json.success) {
-      setSearchResults(json.data.addresses);
+      // 🔁 나중에 실제 API 연결 시 (GET /api/address/search)
+      /*
+      const res = await fetch(`/api/address/search?query=${encodeURIComponent(query)}`, {
+        method: "GET",
+      });
+
+      if (!res.ok) {
+        throw new Error("주소 검색 실패");
+      }
+
+      const json = (await res.json()) as AddressSearchApiResponse;
+      */
+
+      if (json.success && json.data) {
+        setSearchResults(json.data.addresses);
+      } else {
+        alert(json.error ?? "주소 검색에 실패했습니다.");
+      }
+    } catch (e) {
+      console.error(e);
+      alert("주소 검색 중 문제가 발생했습니다.");
     }
+  };
+
+  // =============================
+  // 목업: /api/orders/address
+  // =============================
+  const mockSaveAddress = async (
+    payload: Omit<SavedAddress, "id">
+  ): Promise<OrdersAddressApiResponse> => {
+    console.log("배송지 등록 payload(목업):", payload);
+
+    return {
+      success: true,
+      data: {
+        id: 5,
+        receiverName: payload.receiverName,
+        phone: payload.phone,
+        postalCode: payload.postalCode,
+        roadAddress: payload.roadAddress,
+        detailAddress: payload.detailAddress,
+        deliveryRequest: payload.deliveryRequest,
+      },
+      error: null,
+    };
   };
 
   // =============================
   // 배송지 등록
   // =============================
   const handleSubmit = async () => {
-    const payload = {
+    if (!receiverName || !phone || !roadAddress || !postalCode) {
+      alert("이름, 전화번호, 주소, 우편번호를 입력해 주세요.");
+      return;
+    }
+
+    const payload: Omit<SavedAddress, "id"> = {
       receiverName,
       phone,
       postalCode,
@@ -385,15 +627,33 @@ function AddressModal({
       deliveryRequest,
     };
 
-    const res = await fetch("/api/orders/address", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+    try {
+      // 🔥 현재: 목업 사용
+      const json = await mockSaveAddress(payload);
 
-    const json = await res.json();
-    if (json.success) {
-      onSaved(json.data);
+      // 🔁 나중에 실제 API 연결 시 (POST /api/orders/address)
+      /*
+      const res = await fetch("/api/orders/address", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        throw new Error("배송지 등록 요청 실패");
+      }
+
+      const json = (await res.json()) as OrdersAddressApiResponse;
+      */
+
+      if (json.success && json.data) {
+        onSaved(json.data);
+      } else {
+        alert(json.error ?? "배송지 등록에 실패했습니다.");
+      }
+    } catch (e) {
+      console.error(e);
+      alert("배송지 등록 중 문제가 발생했습니다.");
     }
   };
 
@@ -513,6 +773,19 @@ function CustomsCodeModal({
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // 목업: /api/orders/customs-code/verify
+  const mockVerifyCustomsCode = async (
+    c: string
+  ): Promise<CustomsVerifyResponse> => {
+    console.log("개인통관고유번호 검증(목업):", c);
+
+    // 간단하게 "P"로 시작하고 길이 13이면 유효하다고 가정
+    if (c.startsWith("P") && c.length === 13) {
+      return { isValid: true, name: "홍길동" };
+    }
+    return { isValid: false, name: "" };
+  };
+
   const handleVerify = async () => {
     if (!code.trim()) {
       alert("개인통관고유번호를 입력해 주세요.");
@@ -521,16 +794,26 @@ function CustomsCodeModal({
 
     setLoading(true);
     try {
+      // 🔥 현재: 목업 사용
+      const json = await mockVerifyCustomsCode(code.trim());
+
+      // 🔁 나중에 실제 API 연결 시 (POST /api/orders/customs-code/verify)
+      /*
       const res = await fetch("/api/orders/customs-code/verify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ code }),
       });
 
-      const json: { isValid: boolean; name: string } = await res.json();
+      if (!res.ok) {
+        throw new Error("개인통관고유번호 검증 요청 실패");
+      }
+
+      const json: CustomsVerifyResponse = await res.json();
+      */
 
       if (json.isValid) {
-        onVerified({ code, name: json.name });
+        onVerified({ code: code.trim(), name: json.name });
       } else {
         alert("올바르지 않은 번호입니다. 다시 확인해주세요.");
       }

@@ -62,8 +62,7 @@ export default function RequestPage() {
         hasShippingFee: true,
         category: "홈 > 장난감 > 피규어",
         imageUrls: [
-          "https://static.mercdn.net/item/detail/orig/photos/m12345678901_1.jpg",
-          "https://static.mercdn.net/item/detail/orig/photos/m12345678901_2.jpg",
+          "https://static.mercdn.net/thumb/item/webp/m96134042874_1.jpg?1763528173",
         ],
         isSoldOut: soldout,
         quantity: 1,

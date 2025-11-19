@@ -30,6 +30,13 @@ interface CartQuotationProps {
   onCheckout: () => void;
 }
 
+// 🔹 /api/cart/estimate 응답 모양
+type CartEstimateApiResponse = {
+  success: boolean;
+  data: CartEstimate | null;
+  error: string | null;
+};
+
 const formatKRW = (v: number) => `${v.toLocaleString()}원`;
 
 export default function CartQuotation({
@@ -63,15 +70,24 @@ export default function CartQuotation({
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
-        const json = await res.json();
-        if (!json.success) {
+
+        if (!res.ok) {
+          throw new Error("견적 계산 요청 실패");
+        }
+
+        const json = (await res.json()) as CartEstimateApiResponse;
+
+        if (!json.success || !json.data) {
           throw new Error(json.error || "견적 계산 실패");
         }
-        setEstimate(json.data as CartEstimate);
+
+        setEstimate(json.data);
         */
 
         // 🔥 백엔드 연결 전: 목업 데이터로 동작
+        //    → 지금 구조를 실제 응답 예시에 최대한 맞춰서 구성
         const base: CartEstimate = {
+          // 실제 예시 기준 값
           productTotalKRW: 11990,
           serviceFeeKRW: 600,
 
@@ -86,13 +102,18 @@ export default function CartQuotation({
           totalShippingFeeKRW: 19000,
 
           paymentFeeKRW: 1080,
+          // 옵션별로 변하는 값은 아래에서 다시 세팅
           extraPackagingFeeKRW: 0,
           insuranceFeeKRW: 0,
-          grandTotalKRW: 0, // 아래에서 다시 계산
+          grandTotalKRW: 0,
         };
 
+        // 🔹 실제 예시에서는:
+        //   extraPackaging: true, insurance: false 일 때
+        //   extraPackagingFeeKRW: 2000, insuranceFeeKRW: 0, grandTotalKRW: 32670
+        //   (여기서는 grandTotalKRW는 "상품+수수료+배송+결제수수료" 합계 기반으로 계산)
         const extraPackagingFeeKRW = extraPackaging ? 2000 : 0;
-        const insuranceFeeKRW = insurance ? 500 : 0;
+        const insuranceFeeKRW = insurance ? 500 : 0; // 보험 true일 때 500원이라고 가정 (FE 목업용)
 
         const grandTotalKRW =
           base.productTotalKRW +
@@ -102,18 +123,22 @@ export default function CartQuotation({
           extraPackagingFeeKRW +
           insuranceFeeKRW;
 
-        const mock: CartEstimate = {
-          ...base,
-          extraPackagingFeeKRW,
-          insuranceFeeKRW,
-          grandTotalKRW,
+        const mockResponse: CartEstimateApiResponse = {
+          success: true,
+          data: {
+            ...base,
+            extraPackagingFeeKRW,
+            insuranceFeeKRW,
+            grandTotalKRW,
+          },
+          error: null,
         };
 
         // payload 사용 안 해서 린트 경고 나올 수 있어서 더미 사용
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const _unused = payload;
 
-        setEstimate(mock);
+        setEstimate(mockResponse.data);
       } catch (e) {
         console.error(e);
         setEstimate(null);
