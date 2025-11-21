@@ -26,12 +26,6 @@ type ApiResponse<T> = {
   error: string | null;
 };
 
-// // /api/products/predict 응답 타입
-// type PredictResponse = {
-//   weight: number; // kg
-//   volume: number; // m3
-// };
-
 export default function RequestPage() {
   const navigate = useNavigate();
 
@@ -40,34 +34,6 @@ export default function RequestPage() {
 
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
-
-  // --------------------------------------------------------
-  // ❌ 목업 함수 — 전체 주석 처리
-  // --------------------------------------------------------
-  /*
-  const mockFetchProduct = (
-    url: string,
-    soldout: boolean
-  ): ApiResponse<Product> => {
-    return {
-      success: true,
-      data: {
-        productURL: url || "https://jp.mercari.com/item/m41121124914",
-        productName: "예시 상품 이름",
-        productDescription: "예시 상품 설명입니다. 상태 양호, 박스 포함.",
-        priceKRW: 19900,
-        hasShippingFee: true,
-        category: "홈 > 장난감 > 피규어",
-        imageUrls: [
-          "https://static.mercdn.net/thumb/item/webp/m96134042874_1.jpg?1763528173",
-        ],
-        isSoldOut: soldout,
-        quantity: 1,
-      },
-      error: null,
-    };
-  };
-  */
 
   // --------------------------------------------------------
   // 🔗 실제 백엔드 /api/products/fetch, /api/products/predict
@@ -100,24 +66,6 @@ const fetchProductFromServer = async (
   return (await res.json()) as ApiResponse<ServerProduct>;
 };
 
-  // // 2) AI 예측 호출 (선택)
-  // const predictProductFromServer = async (
-  //   fetchResult: ApiResponse<ServerProduct>
-  // ): Promise<PredictResponse> => {
-  //   const res = await fetch("/api/products/predict", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify(fetchResult),
-  //     credentials: "include",
-  //   });
-
-  //   if (!res.ok) {
-  //     throw new Error("AI 예측 요청에 실패했습니다.");
-  //   }
-
-  //   return (await res.json()) as PredictResponse;
-  // };
-
   // --------------------------------------------------------
   // URL 입력 후 “불러오기”
   // --------------------------------------------------------
@@ -140,10 +88,6 @@ const fetchProductFromServer = async (
         setIsLoading(false);
         return;
       }
-
-      // (선택) 2) AI 예측
-      // const predict = await predictProductFromServer(fetchResult);
-      // console.log("AI 예측:", predict.weight, predict.volume);
 
       // 🔄 백엔드 product + 프론트 전용 quantity 추가
       const apiData: ApiResponse<Product> = {

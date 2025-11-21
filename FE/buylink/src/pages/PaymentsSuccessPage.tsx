@@ -17,21 +17,11 @@ type CreateOrderResponse = {
   status: "PAID" | "PENDING" | "CANCELLED";
 };
 
-// 🔥 예전 목업 데이터 (지금은 사용 X, 참고용으로만 남겨둠)
-/*
-const MOCK_CART_ITEMS = [
-  {
-    id: 1,
-    productName: "몬치치 키체인",
-    priceKRW: 11990,
-    quantity: 1,
-    imageUrl: "https://.../photos/1.jpg",
-  },
-];
+// 🔹 DEV/PROD 공통 API base URL
+const API_BASE_URL =
+  import.meta.env.DEV ? import.meta.env.VITE_API_BASE_URL ?? "" : "";
 
-const MOCK_ADDRESS_ID = 10;
-const MOCK_CUSTOMS_CODE = "P123456789012";
-*/
+const buildApiUrl = (path: string) => `${API_BASE_URL}${path}`;
 
 export default function PaymentsSuccessPage() {
   const location = useLocation();
@@ -59,19 +49,22 @@ export default function PaymentsSuccessPage() {
       try {
         // ─────────────────────────────
         // 1) 결제 검증 단계 (/api/orders/pay)
+        //    - Toss에서 넘겨준 orderId 그대로 string으로 전달
+        //    - paymentKey도 함께 보내서 백엔드에서 Toss confirm 호출할 수 있게
         // ─────────────────────────────
 
-        const payRes = await fetch("/api/orders/pay", {
+        const payUrl = buildApiUrl("/api/orders/pay");
+        console.log("[PaymentsSuccessPage] POST /api/orders/pay:", payUrl);
+
+        const payRes = await fetch(payUrl, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          credentials: "include",
           body: JSON.stringify({
-            // ⚠️ 백엔드에서 기대하는 주문번호 규칙에 맞게 조정 필요
-            orderId: Number(orderIdFromToss),
+            orderId: orderIdFromToss, // ↔ Checkout에서 넘긴 ORDER-xxxx 그대로
             method: "TOSS_PAY",
             amount,
-            // 필요하다면 paymentKey도 같이 보내서
-            // 백엔드에서 Toss 서버에 /v1/payments/confirm 호출하게 하면 됨
-            // paymentKey,
+            paymentKey,
           }),
         });
 
@@ -89,16 +82,20 @@ export default function PaymentsSuccessPage() {
         // 2) 주문 생성 단계 (/api/orders)
         //    cartItems / addressId / customsCode 는
         //    실제론 장바구니·체크아웃 상태에서 가져와야 함.
-        //    여기서는 빈 값으로만 보내고, 주석으로 TODO 남김.
+        //    지금은 TODO 그대로 두고, 백엔드 스펙에 맞춰 채워넣으면 됨.
         // ─────────────────────────────
 
         const cartItems: any[] = []; // TODO: 전역 상태(장바구니)에서 실제 아이템 목록 가져오기
         const addressId = 0; // TODO: CheckoutPage에서 선택한 주소 id
-        const customsCode = ""; // TODO: CheckoutPage에서 입력한 개인통관고유부호
+        const customsCode = ""; // TODO: CheckoutPage에서 입력한 개인통관고유번호
 
-        const orderRes = await fetch("/api/orders", {
+        const orderUrl = buildApiUrl("/api/orders");
+        console.log("[PaymentsSuccessPage] POST /api/orders:", orderUrl);
+
+        const orderRes = await fetch(orderUrl, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          credentials: "include",
           body: JSON.stringify({
             cartItems,
             addressId,

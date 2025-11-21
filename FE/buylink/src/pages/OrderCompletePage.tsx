@@ -188,7 +188,7 @@ export default function OrderCompletePage() {
   const handleGoHome = () => navigate("/");
 
   const handleRequestMore = () => {
-    window.location.href = "/redirect/products/fetch";
+    navigate("/request");
   };
 
   if (loading) {
