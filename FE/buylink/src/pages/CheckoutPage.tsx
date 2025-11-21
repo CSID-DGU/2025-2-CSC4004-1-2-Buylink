@@ -1,3 +1,4 @@
+// src/pages/CheckoutPage.tsx
 import { useState } from "react";
 import { motion } from "motion/react";
 import sampleimg from "../assets/cuteeeee.png";
@@ -26,13 +27,6 @@ type OrderItem = {
   quantity: number;
   imageUrl: string;
 };
-
-type PaymentMethodId =
-  | "CARD"
-  | "CHECK_CARD"
-  | "BANK_TRANSFER"
-  | "NAVER_PAY"
-  | "TOSS_PAY";
 
 type AddressResult = {
   roadAddress: string;
@@ -80,16 +74,19 @@ type CustomsVerifyResponse = {
   name: string;
 };
 
-// 🔹 /api/orders/pay 응답 타입
+// 🔹 /api/orders/pay 응답 타입 (지금은 사용 X, 나중용)
+/*
 type OrdersPayResponse = {
   paymentId: string;
   status: "SUCCESS" | "FAIL";
   paidAt?: string;
 };
+*/
 
 // =============================
-// 목업 주문 상품
+// 🔥 목업 주문 상품 → 전부 주석 처리
 // =============================
+/*
 const MOCK_ORDER_ITEMS: OrderItem[] = [
   {
     id: 1,
@@ -106,14 +103,10 @@ const MOCK_ORDER_ITEMS: OrderItem[] = [
     imageUrl: sampleimg,
   },
 ];
+*/
 
-const PAYMENT_METHODS: { id: PaymentMethodId; label: string }[] = [
-  { id: "CARD", label: "신용카드" },
-  { id: "CHECK_CARD", label: "체크카드" },
-  { id: "BANK_TRANSFER", label: "무통장 입금" },
-  { id: "NAVER_PAY", label: "네이버페이" },
-  { id: "TOSS_PAY", label: "토스페이" },
-];
+// 👉 실제에선 백엔드에서 주문/장바구니 데이터를 받아와 채울 예정
+const ORDER_ITEMS: OrderItem[] = [];
 
 const formatKRW = (v: number) => `${v.toLocaleString()}원`;
 
@@ -121,8 +114,6 @@ const formatKRW = (v: number) => `${v.toLocaleString()}원`;
 // 메인 컴포넌트
 // ========================================
 export default function CheckoutPage() {
-  const [paymentMethod, setPaymentMethod] =
-    useState<PaymentMethodId>("TOSS_PAY");
   const [agree, setAgree] = useState(false);
 
   const [addressModalOpen, setAddressModalOpen] = useState(false);
@@ -134,9 +125,9 @@ export default function CheckoutPage() {
   const [isPaying, setIsPaying] = useState(false);
 
   // ==============================
-  // 결제 금액 (지금은 목업 기준)
+  // 결제 금액 (지금은 ORDER_ITEMS 기준, 비어있으면 0원)
   // ==============================
-  const productTotal = MOCK_ORDER_ITEMS.reduce(
+  const productTotal = ORDER_ITEMS.reduce(
     (sum, item) => sum + item.priceKRW * item.quantity,
     0
   );
@@ -154,8 +145,7 @@ export default function CheckoutPage() {
 
   // ==============================
   // 결제 버튼 클릭
-  //  - TOSS_PAY → 토스 결제창 호출
-  //  - 그 외 → 현재는 목업 결제
+  //  - 결제수단 선택 없이 바로 TossPayments 테스트 결제
   // ==============================
   const handlePay = async () => {
     if (!savedAddress) {
@@ -173,95 +163,36 @@ export default function CheckoutPage() {
 
     setIsPaying(true);
 
-    // ─────────────────────────────
-    // 1) 토스페이 결제창 호출 분기
-    // ─────────────────────────────
-    if (paymentMethod === "TOSS_PAY") {
-      try {
-        if (!window.TossPayments) {
-          alert(
-            "결제 모듈이 로드되지 않았습니다. index.html에 TossPayments 스크립트가 추가되어 있는지 확인해 주세요."
-          );
-          return;
-        }
-
-        const tossPayments = window.TossPayments(TOSS_CLIENT_KEY);
-
-        // 실제 서비스에서 orderId는 백엔드에서 관리하는 유니크 값으로 맞추면 된다.
-        const orderId = `ORDER-${Date.now()}`;
-
-        await tossPayments.requestPayment("CARD", {
-          // 간편결제(토스페이)도 결제수단은 보통 "CARD" 타입으로 호출
-          amount: totalAmount,
-          orderId,
-          orderName: "BuyLink 구매대행 결제",
-          customerName: savedAddress.receiverName,
-          successUrl: `${window.location.origin}/payments/success`,
-          failUrl: `${window.location.origin}/payments/fail`,
-          // easyPay: "TOSSPAY", // 나중에 간편결제 종류까지 지정하고 싶으면 사용
-        });
-
-        // requestPayment 이후에는 success/fail URL로 리다이렉트된다.
-        // 여기 아래 코드는 보통 실행되지 않는다.
-      } catch (error: any) {
-        console.error(error);
+    try {
+      if (!window.TossPayments) {
         alert(
-          `결제창을 닫았거나 오류가 발생했습니다.\n${error?.message ?? ""}`
+          "결제 모듈이 로드되지 않았습니다. index.html에 TossPayments 스크립트가 추가되어 있는지 확인해 주세요."
         );
-      } finally {
-        setIsPaying(false);
+        return;
       }
 
-      return; // 토스페이 분기는 여기서 끝
-    }
+      const tossPayments = window.TossPayments(TOSS_CLIENT_KEY);
 
-    // ─────────────────────────────
-    // 2) 그 외 결제수단: 현재는 목업 결제
-    //    나중에 /api/orders/pay 연결하면 여기 분기에서 처리
-    // ─────────────────────────────
-    try {
-      // ============================
-      // 🔥 현재: 목업 결제 처리
-      // ============================
-      const mockPayment: OrdersPayResponse = {
-        paymentId: "tspay_20251024_0001",
-        status: "SUCCESS",
-        paidAt: "2025-10-24T15:21:00",
-      };
+      // 실제 서비스에서 orderId는 백엔드에서 관리하는 유니크 값으로 맞추면 된다.
+      const orderId = `ORDER-${Date.now()}`;
 
-      console.log("결제 목업 응답:", mockPayment);
-      alert("결제가 완료되었습니다! (목업)");
-
-      // ============================
-      // 🔁 나중에 실제 결제 API 연결 시
-      // ============================
-      /*
-      const res = await fetch("/api/orders/pay", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          orderId: 101,             // 실제 주문 ID로 교체
-          method: paymentMethod,    // "TOSS_PAY" | "CARD" | ...
-          amount: totalAmount,
-        }),
+      await tossPayments.requestPayment("CARD", {
+        // 간편결제(토스페이)도 보통 "CARD" 타입으로 호출
+        amount: totalAmount,
+        orderId,
+        orderName: "BuyLink 구매대행 결제",
+        customerName: savedAddress.receiverName,
+        successUrl: `${window.location.origin}/payments/success`,
+        failUrl: `${window.location.origin}/payments/fail`,
+        // easyPay: "TOSSPAY", // 나중에 간편결제 종류까지 지정하고 싶으면 사용
       });
 
-      if (!res.ok) {
-        throw new Error("결제 요청 실패");
-      }
-
-      const json: OrdersPayResponse = await res.json();
-
-      if (json.status !== "SUCCESS") {
-        throw new Error("결제에 실패했습니다.");
-      }
-
-      console.log("실제 결제 응답:", json);
-      alert("결제가 완료되었습니다!");
-      */
-    } catch (e) {
-      console.error(e);
-      alert("결제 처리 중 문제가 발생했습니다.");
+      // requestPayment 이후에는 success/fail URL로 리다이렉트된다.
+    } catch (error: any) {
+      console.error(error);
+      alert(
+        `결제창을 닫았거나 오류가 발생했습니다.\n${error?.message ?? ""}`
+      );
     } finally {
       setIsPaying(false);
     }
@@ -343,71 +274,48 @@ export default function CheckoutPage() {
             )}
           </div>
 
-          {/* 구매대행 상품 */}
+          {/* 구매대행 상품 (지금은 ORDER_ITEMS 사용) */}
           <div className="bg-white rounded-2xl shadow p-6 border border-gray-200">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-[#111111]">
                 구매대행 상품
               </h2>
               <span className="text-xs text-[#767676]">
-                {MOCK_ORDER_ITEMS.length}건
+                {ORDER_ITEMS.length}건
               </span>
             </div>
 
-            <div className="space-y-4">
-              {MOCK_ORDER_ITEMS.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex gap-4 border border-[#f1f1f5] rounded-xl p-3"
-                >
-                  <img
-                    src={item.imageUrl}
-                    alt={item.productName}
-                    className="w-16 h-16 rounded-lg object-cover"
-                  />
-                  <div className="flex-1 text-sm">
-                    <p className="font-medium text-[#111111] line-clamp-2">
-                      {item.productName}
-                    </p>
-                    <p className="mt-1 text-[#111111] font-semibold">
-                      {formatKRW(item.priceKRW)}
-                    </p>
-                    <p className="mt-1 text-xs text-[#767676]">
-                      수량: {item.quantity}개
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* 결제 수단 */}
-          <div className="bg-white rounded-2xl shadow p-6 border border-gray-200">
-            <h2 className="text-lg font-semibold text-[#111111] mb-4">
-              결제 수단
-            </h2>
-
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-              {PAYMENT_METHODS.map((m) => {
-                const selected = paymentMethod === m.id;
-
-                return (
-                  <button
-                    key={m.id}
-                    onClick={() => setPaymentMethod(m.id)}
-                    type="button"
-                    className={[
-                      "w-full py-3.5 rounded-xl text-sm border transition-all",
-                      selected
-                        ? "border-[#ffcc4c] bg-[#fff7d6] text-[#111111] font-semibold shadow-sm"
-                        : "border-[#e5e5ec] bg-[#fafafa] text-[#505050] hover:bg-[#f5f5f5]",
-                    ].join(" ")}
+            {ORDER_ITEMS.length === 0 ? (
+              <div className="border border-dashed border-[#e5e5ec] rounded-xl py-5 px-4 text-sm text-[#767676]">
+                결제할 상품이 없습니다. 장바구니에서 상품을 담아주세요.
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {ORDER_ITEMS.map((item) => (
+                  <div
+                    key={item.id}
+                    className="flex gap-4 border border-[#f1f1f5] rounded-xl p-3"
                   >
-                    {m.label}
-                  </button>
-                );
-              })}
-            </div>
+                    <img
+                      src={item.imageUrl || sampleimg}
+                      alt={item.productName}
+                      className="w-16 h-16 rounded-lg object-cover"
+                    />
+                    <div className="flex-1 text-sm">
+                      <p className="font-medium text-[#111111] line-clamp-2">
+                        {item.productName}
+                      </p>
+                      <p className="mt-1 text-[#111111] font-semibold">
+                        {formatKRW(item.priceKRW)}
+                      </p>
+                      <p className="mt-1 text-xs text-[#767676]">
+                        수량: {item.quantity}개
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* 약관 */}
@@ -526,8 +434,9 @@ function AddressModal({
   const [deliveryRequest, setDeliveryRequest] = useState("");
 
   // =============================
-  // 목업: /api/address/search
+  // 🔥 (주석) 목업 주소 검색
   // =============================
+  /*
   const mockAddressSearch = async (
     keyword: string
   ): Promise<AddressSearchApiResponse> => {
@@ -551,29 +460,25 @@ function AddressModal({
       error: null,
     };
   };
+  */
 
   // =============================
-  // 주소 검색
+  // 주소 검색 (실제 API 호출)
   // =============================
   const handleSearch = async () => {
     if (!query.trim()) return;
 
     try {
-      // 🔥 현재: 목업 사용
-      const json = await mockAddressSearch(query);
-
-      // 🔁 나중에 실제 API 연결 시 (GET /api/address/search)
-      /*
-      const res = await fetch(`/api/address/search?query=${encodeURIComponent(query)}`, {
-        method: "GET",
-      });
+      const res = await fetch(
+        `/api/address/search?query=${encodeURIComponent(query)}`,
+        { method: "GET" }
+      );
 
       if (!res.ok) {
         throw new Error("주소 검색 실패");
       }
 
       const json = (await res.json()) as AddressSearchApiResponse;
-      */
 
       if (json.success && json.data) {
         setSearchResults(json.data.addresses);
@@ -587,8 +492,9 @@ function AddressModal({
   };
 
   // =============================
-  // 목업: /api/orders/address
+  // 🔥 (주석) 목업 배송지 등록
   // =============================
+  /*
   const mockSaveAddress = async (
     payload: Omit<SavedAddress, "id">
   ): Promise<OrdersAddressApiResponse> => {
@@ -608,9 +514,10 @@ function AddressModal({
       error: null,
     };
   };
+  */
 
   // =============================
-  // 배송지 등록
+  // 배송지 등록 (실제 API 호출)
   // =============================
   const handleSubmit = async () => {
     if (!receiverName || !phone || !roadAddress || !postalCode) {
@@ -628,11 +535,6 @@ function AddressModal({
     };
 
     try {
-      // 🔥 현재: 목업 사용
-      const json = await mockSaveAddress(payload);
-
-      // 🔁 나중에 실제 API 연결 시 (POST /api/orders/address)
-      /*
       const res = await fetch("/api/orders/address", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -644,7 +546,6 @@ function AddressModal({
       }
 
       const json = (await res.json()) as OrdersAddressApiResponse;
-      */
 
       if (json.success && json.data) {
         onSaved(json.data);
@@ -773,7 +674,8 @@ function CustomsCodeModal({
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // 목업: /api/orders/customs-code/verify
+  // 🔥 (주석) 목업 검증 로직
+  /*
   const mockVerifyCustomsCode = async (
     c: string
   ): Promise<CustomsVerifyResponse> => {
@@ -785,6 +687,7 @@ function CustomsCodeModal({
     }
     return { isValid: false, name: "" };
   };
+  */
 
   const handleVerify = async () => {
     if (!code.trim()) {
@@ -794,23 +697,17 @@ function CustomsCodeModal({
 
     setLoading(true);
     try {
-      // 🔥 현재: 목업 사용
-      const json = await mockVerifyCustomsCode(code.trim());
-
-      // 🔁 나중에 실제 API 연결 시 (POST /api/orders/customs-code/verify)
-      /*
       const res = await fetch("/api/orders/customs-code/verify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code }),
+        body: JSON.stringify({ code: code.trim() }),
       });
 
       if (!res.ok) {
         throw new Error("개인통관고유번호 검증 요청 실패");
       }
 
-      const json: CustomsVerifyResponse = await res.json();
-      */
+      const json = (await res.json()) as CustomsVerifyResponse;
 
       if (json.isValid) {
         onVerified({ code: code.trim(), name: json.name });

@@ -63,8 +63,9 @@ type PayApiResponse = {
 };
 
 // =============================
-// 목업
+// 🔥 목업 데이터 (이제 사용 X, 참고용으로만 보관)
 // =============================
+/*
 const MOCK_ORDER_DETAIL: OrderDetail = {
   orderId: 20251024723840,
   receiver: "홍길동",
@@ -94,6 +95,7 @@ const MOCK_ORDER_DETAIL: OrderDetail = {
     international: 3540,
   },
 };
+*/
 
 // =============================
 // 유틸 함수
@@ -123,37 +125,30 @@ export default function OrderCompletePage() {
   const orderIdFromState =
     (location.state as { orderId?: number } | undefined)?.orderId;
 
-  const effectiveOrderId =
-    orderIdFromParams ?? orderIdFromState ?? MOCK_ORDER_DETAIL.orderId;
+  // 👉 이제는 목업 기본값 없이, 둘 다 없으면 에러 처리
+  const effectiveOrderId = orderIdFromParams ?? orderIdFromState;
 
   const [order, setOrder] = useState<OrderDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
 
   // =============================
-  // 목업 주문 상세 API
+  // 주문 상세 조회 – 실제 API 사용
   // =============================
-  const mockFetchOrderDetail = async (
-    id: number
-  ): Promise<OrderDetailApiResponse> => {
-    console.log("주문 상세 조회(목업) id:", id);
-    return {
-      ...MOCK_ORDER_DETAIL,
-      orderId: id,
-    };
-  };
-
   useEffect(() => {
     const fetchOrder = async () => {
+      if (!effectiveOrderId) {
+        setOrder(null);
+        setLoadError("주문 번호 정보가 없습니다.");
+        setLoading(false);
+        return;
+      }
+
       try {
         setLoading(true);
         setLoadError(null);
 
-        // 🔥 현재: 목업 사용
-        const data = await mockFetchOrderDetail(effectiveOrderId);
-
-        // 🔁 나중에 실제 API 연결 시 (GET /api/orders/{orderId})
-        /*
+        // GET /api/orders/{orderId}
         const res = await fetch(`/api/orders/${effectiveOrderId}`, {
           method: "GET",
         });
@@ -163,8 +158,6 @@ export default function OrderCompletePage() {
         }
 
         const data = (await res.json()) as OrderDetailApiResponse;
-        */
-
         setOrder(data);
       } catch (e) {
         console.error(e);
@@ -186,10 +179,10 @@ export default function OrderCompletePage() {
   const handleGoHome = () => navigate("/");
 
   const handleRequestMore = () => {
-    // 🔥 FE 전용 리다이렉트 (지금처럼 프론트에서 바로 이동해도 되고)
+    // 추가 구매대행 요청 – FE 전용 리다이렉트
     window.location.href = "/redirect/products/fetch";
 
-    // 🔁 필요하면 실제 GET 호출 후 백엔드에서 302 리다이렉트 처리:
+    // 필요하면 실제 GET 호출 후 백엔드에서 302 리다이렉트 처리:
     /*
     fetch("/redirect/products/fetch", { method: "GET" });
     */
@@ -403,12 +396,14 @@ export default function OrderCompletePage() {
 
 /*
 =============================
-추가: 나중에 CheckoutPage 등에서 쓸 수 있는
-주문 생성 / 결제 요청 API 템플릿 예시
+추가: CheckoutPage 등에서 쓸 수 있는
+주문 생성 / 결제 요청 / 배송지 변경 API 템플릿 예시
 =============================
 
 // 주문 생성: POST /api/orders
-async function createOrder(body: CreateOrderApiRequest): Promise<CreateOrderApiResponse> {
+async function createOrder(
+  body: CreateOrderApiRequest
+): Promise<CreateOrderApiResponse> {
   const res = await fetch("/api/orders", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -435,5 +430,20 @@ async function requestOrderPay(body: PayApiRequest): Promise<PayApiResponse> {
   }
 
   return (await res.json()) as PayApiResponse;
+}
+
+// 배송지 변경: PUT /api/orders/{orderId}/address
+async function updateOrderAddress(orderId: number, address: string, phone: string) {
+  const res = await fetch(`/api/orders/${orderId}/address`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ address, phone }),
+  });
+
+  if (!res.ok) {
+    throw new Error("배송지 변경 실패");
+  }
+
+  return await res.json(); // { message: "배송지 변경 완료" }
 }
 */

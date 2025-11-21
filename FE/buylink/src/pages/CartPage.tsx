@@ -32,7 +32,8 @@ type CartApiGetResponse = {
   error: string | null;
 };
 
-// 🔥 UI 확인용 목업 데이터 (localStorage 없을 때 사용)
+// 🔥 (주석처리) UI 확인용 목업 데이터
+/*
 const MOCK_CART_ITEMS: CartItem[] = [
   {
     id: 1,
@@ -51,6 +52,7 @@ const MOCK_CART_ITEMS: CartItem[] = [
     selected: true,
   },
 ];
+*/
 
 export default function CartPage() {
   const navigate = useNavigate();
@@ -63,9 +65,9 @@ export default function CartPage() {
   const selectedItems = items.filter((i) => i.selected);
 
   // --------------------------------------------------------
-  // 🟡 현재 버전: RequestPage에서 localStorage.cartProducts 사용
-  //    - 없으면 MOCK_CART_ITEMS로 채움
+  // ❌ (주석처리) 기존 localStorage 기반 장바구니 로드
   // --------------------------------------------------------
+  /*
   useEffect(() => {
     const loadCartFromLocal = () => {
       setIsLoading(true);
@@ -95,32 +97,23 @@ export default function CartPage() {
 
     loadCartFromLocal();
   }, []);
+  */
 
   // --------------------------------------------------------
-  // 🔁 나중에 실제 장바구니 조회: GET /api/cart
-  //    resp:
-  //    {
-  //      "success": true,
-  //      "data": { "items": [...], "totalKRW": 19990 },
-  //      "error": null
-  //    }
-  //    👉 localStorage 버전 지우고 아래 useEffect 주석 풀면 됨
+  // 🔥 (활성화됨) 실제 장바구니 조회: GET /api/cart
   // --------------------------------------------------------
-  /*
   useEffect(() => {
     const fetchCartFromServer = async () => {
       setIsLoading(true);
       try {
-        const res = await fetch("/api/cart");
-        if (!res.ok) {
-          throw new Error("장바구니 조회 실패");
-        }
+        const res = await fetch("/api/cart", { credentials: "include" });
+
+        if (!res.ok) throw new Error("장바구니 조회 실패");
 
         const json = (await res.json()) as CartApiGetResponse;
 
-        if (!json.success || !json.data) {
+        if (!json.success || !json.data)
           throw new Error(json.error ?? "장바구니 데이터가 없습니다.");
-        }
 
         setItems(
           json.data.items.map((item) => ({
@@ -141,13 +134,13 @@ export default function CartPage() {
 
     fetchCartFromServer();
   }, []);
-  */
 
+  // --------------------------------------------------------
+  // 선택/토글/삭제
+  // --------------------------------------------------------
   const handleToggleAll = () => {
     const allSelected = items.every((i) => i.selected);
-    setItems((prev) =>
-      prev.map((item) => ({ ...item, selected: !allSelected }))
-    );
+    setItems((prev) => prev.map((item) => ({ ...item, selected: !allSelected })));
   };
 
   const handleToggleOne = (id: number) => {
@@ -165,26 +158,19 @@ export default function CartPage() {
       return;
     }
 
-    // ✅ 현재 버전: 프론트 상태에서만 삭제
+    // 현재 버전: 프론트에서만 삭제
     setItems((prev) => prev.filter((i) => !i.selected));
 
-    // 🔁 나중에 실제 선택 삭제: DELETE /api/cart?ids=1,3,7
-    //     resp: { "success": true, "data": { message, deletedIds, deletedCount }, "error": null }
+    // 🔁 DELETE /api/cart?ids=1,3,7 → 필요하면 주석 해제 가능
     /*
     try {
       const query = ids.join(",");
-      const res = await fetch(`/api/cart?ids=${query}`, {
-        method: "DELETE",
-      });
-
-      if (!res.ok) {
-        throw new Error("선택 상품 삭제 실패");
-      }
+      const res = await fetch(`/api/cart?ids=${query}`, { method: "DELETE" });
+      if (!res.ok) throw new Error("선택 상품 삭제 실패");
 
       const json = await res.json();
       console.log("삭제 결과:", json);
 
-      // Delete 이후에는 GET /api/cart 다시 호출하는 패턴도 가능
       setItems((prev) => prev.filter((i) => !ids.includes(i.id)));
     } catch (e) {
       console.error(e);
@@ -194,19 +180,13 @@ export default function CartPage() {
   };
 
   const handleDeleteOne = async (id: number) => {
-    // ✅ 현재 버전: 프론트 상태에서만 삭제
     setItems((prev) => prev.filter((i) => i.id !== id));
 
-    // 🔁 나중에 실제 단일 삭제: DELETE /api/cart?ids=1
+    // 🔁 DELETE /api/cart?ids=1
     /*
     try {
-      const res = await fetch(`/api/cart?ids=${id}`, {
-        method: "DELETE",
-      });
-
-      if (!res.ok) {
-        throw new Error("상품 삭제 실패");
-      }
+      const res = await fetch(`/api/cart?ids=${id}`, { method: "DELETE" });
+      if (!res.ok) throw new Error("상품 삭제 실패");
 
       const json = await res.json();
       console.log("삭제 결과:", json);
@@ -221,20 +201,18 @@ export default function CartPage() {
 
   const handleGoRequestPage = () => navigate("/request");
 
+  // --------------------------------------------------------
+  // 결제 버튼
+  // --------------------------------------------------------
   const handleGoCheckoutPage = async () => {
     if (selectedItems.length === 0) {
       alert("결제할 상품을 선택해주세요.");
       return;
     }
 
-    // ✅ 현재 버전: 견적은 CartQuotation에서 목업으로 계산
-    //    여기서는 그냥 /checkout으로만 이동
     navigate("/checkout");
 
-    // 🔁 나중에 /api/cart/estimate 연동:
-    //    POST /api/cart/estimate
-    //    body: { "extraPackaging": true, "insurance": false }
-    //    resp: { success, data: CartEstimate, error }
+    // 🔁 /api/cart/estimate (필요 시 주석 해제)
     /*
     try {
       const payload = {
@@ -248,14 +226,12 @@ export default function CartPage() {
         body: JSON.stringify(payload),
       });
 
-      if (!res.ok) {
-        throw new Error("견적 요청 실패");
-      }
+      if (!res.ok) throw new Error("견적 요청 실패");
 
       const json = await res.json();
       console.log("견적 결과:", json);
 
-      // navigate("/checkout", { state: json.data });
+      navigate("/checkout", { state: json.data });
     } catch (e) {
       console.error(e);
       alert("견적 요청 중 문제가 발생했습니다.");
@@ -263,6 +239,9 @@ export default function CartPage() {
     */
   };
 
+  // --------------------------------------------------------
+  // UI
+  // --------------------------------------------------------
   return (
     <motion.main
       key="cart"
@@ -271,29 +250,21 @@ export default function CartPage() {
       transition={{ duration: 0.3 }}
       className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 bg-white"
     >
-      <h1 className="text-2xl lg:text-3xl font-bold text-[#111111] mb-6">
-        장바구니
-      </h1>
+      <h1 className="text-2xl lg:text-3xl font-bold text-[#111111] mb-6">장바구니</h1>
 
       <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
-        {/* 왼쪽: 상품 리스트 + 추가 버튼 */}
+        {/* 왼쪽: 상품 리스트 */}
         <div className="lg:col-span-2 flex flex-col lg:pr-2">
-          {/* 전체 선택 + 선택 삭제 */}
+          {/* 전체 선택 */}
           <div className="bg-white rounded-2xl shadow p-6 border border-gray-200 mb-4">
             <div className="flex items-center justify-between">
-              <button
-                onClick={handleToggleAll}
-                className="flex items-center gap-3"
-              >
+              <button onClick={handleToggleAll} className="flex items-center gap-3">
                 <div className="w-5 h-5 bg-[#ffe788] border border-gray-300 rounded flex items-center justify-center">
-                  {items.length > 0 &&
-                    items.every((i) => i.selected) && (
-                      <span className="text-xs font-bold">✓</span>
-                    )}
+                  {items.length > 0 && items.every((i) => i.selected) && (
+                    <span className="text-xs font-bold">✓</span>
+                  )}
                 </div>
-                <span className="text-sm lg:text-base text-[#111111]">
-                  전체 선택
-                </span>
+                <span className="text-sm lg:text-base text-[#111111]">전체 선택</span>
               </button>
 
               <button
@@ -305,7 +276,7 @@ export default function CartPage() {
             </div>
           </div>
 
-          {/* 상품 카드 리스트 (여기만 스크롤) */}
+          {/* 상품 리스트 */}
           <div className="space-y-6 lg:overflow-y-auto lg:max-h-[60vh] lg:pr-1">
             {isLoading && (
               <p className="text-sm text-[#767676] px-2 py-4">
@@ -324,9 +295,7 @@ export default function CartPage() {
                       onClick={() => handleToggleOne(item.id)}
                       className="w-5 h-5 bg-[#ffe788] border border-gray-300 rounded flex items-center justify-center"
                     >
-                      {item.selected && (
-                        <span className="text-xs font-bold">✓</span>
-                      )}
+                      {item.selected && <span className="text-xs font-bold">✓</span>}
                     </button>
 
                     <button onClick={() => handleDeleteOne(item.id)}>
@@ -341,9 +310,7 @@ export default function CartPage() {
                       className="w-20 h-20 rounded-lg object-cover"
                     />
                     <div className="flex-1">
-                      <p className="font-medium text-[#111111]">
-                        {item.productName}
-                      </p>
+                      <p className="font-medium text-[#111111]">{item.productName}</p>
                       <p className="mt-1 font-semibold text-[#111111]">
                         {item.priceKRW.toLocaleString()}원
                       </p>
@@ -352,9 +319,7 @@ export default function CartPage() {
 
                   <div className="bg-[#f7f7fb] rounded-lg p-3">
                     <p className="text-sm text-[#505050]">
-                      <span className="font-semibold text-[#111111]">
-                        수량:{" "}
-                      </span>
+                      <span className="font-semibold text-[#111111]">수량: </span>
                       {item.quantity}개
                     </p>
                   </div>
@@ -362,7 +327,7 @@ export default function CartPage() {
               ))}
           </div>
 
-          {/* 스크롤 아래 고정 버튼 */}
+          {/* 상품 추가 버튼 */}
           <div className="mt-4">
             <button
               onClick={handleGoRequestPage}
@@ -376,15 +341,13 @@ export default function CartPage() {
           </div>
         </div>
 
-        {/* 오른쪽: 옵션 + 견적서 */}
+        {/* 오른쪽: 옵션 + 견적 */}
         <div className="space-y-4 lg:self-start text-sm">
           <div className="bg-white rounded-2xl shadow p-4 border border-gray-200 space-y-4">
             {/* 포장 옵션 */}
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <h3 className="font-semibold text-[#111111] text-sm">
-                  추가 포장 비용
-                </h3>
+                <h3 className="font-semibold text-[#111111] text-sm">추가 포장 비용</h3>
                 <span className="px-2 py-0.5 rounded text-[11px] bg-[#f1f1f5] text-[#111111] font-[500]">
                   필수
                 </span>
@@ -403,13 +366,9 @@ export default function CartPage() {
                         <div className="w-2 h-2 bg-[#ffe788] rounded-full" />
                       )}
                     </div>
-                    <span className="text-xs text-[#505050]">
-                      추가 포장 비용
-                    </span>
+                    <span className="text-xs text-[#505050]">추가 포장 비용</span>
                   </div>
-                  <span className="text-xs text-[#111111] font-[500]">
-                    +2,000원
-                  </span>
+                  <span className="text-xs text-[#111111] font-[500]">+2,000원</span>
                 </label>
 
                 <label
@@ -424,9 +383,7 @@ export default function CartPage() {
                     </div>
                     <span className="text-xs text-[#505050]">필요 없어요</span>
                   </div>
-                  <span className="text-xs text-[#111111] font-[500]">
-                    0원
-                  </span>
+                  <span className="text-xs text-[#111111] font-[500]">0원</span>
                 </label>
               </div>
             </div>
@@ -442,8 +399,7 @@ export default function CartPage() {
                 </span>
               </div>
               <p className="text-xs text-[#767676] mb-2">
-                본 서비스는 선택 상품입니다. 분실·파손 시 일부 또는 전액 보상을
-                위한 보험료입니다.
+                본 서비스는 선택 상품입니다. 분실·파손 시 일부 또는 전액 보상을 위한 보험료입니다.
               </p>
               <div className="space-y-1.5">
                 <label
@@ -458,9 +414,7 @@ export default function CartPage() {
                     </div>
                     <span className="text-xs text-[#505050]">보험 가입</span>
                   </div>
-                  <span className="text-xs text-[#111111] font-[500]">
-                    +500원
-                  </span>
+                  <span className="text-xs text-[#111111] font-[500]">+500원</span>
                 </label>
 
                 <label
@@ -475,15 +429,12 @@ export default function CartPage() {
                     </div>
                     <span className="text-xs text-[#505050]">필요 없어요</span>
                   </div>
-                  <span className="text-xs text-[#111111] font-[500]">
-                    0원
-                  </span>
+                  <span className="text-xs text-[#111111] font-[500]">0원</span>
                 </label>
               </div>
             </div>
           </div>
 
-          {/* 견적서 컴포넌트 */}
           <CartQuotation
             extraPackaging={extraPackaging}
             insurance={insurance}

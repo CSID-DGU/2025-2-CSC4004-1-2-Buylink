@@ -17,10 +17,8 @@ type CreateOrderResponse = {
   status: "PAID" | "PENDING" | "CANCELLED";
 };
 
-// 👉 실제로는 cartItems, addressId, customsCode를
-//     - localStorage
-//     - Recoil / Context
-//   등에서 가져와야 함. 여기선 목업만.
+// 🔥 예전 목업 데이터 (지금은 사용 X, 참고용으로만 남겨둠)
+/*
 const MOCK_CART_ITEMS = [
   {
     id: 1,
@@ -33,6 +31,7 @@ const MOCK_CART_ITEMS = [
 
 const MOCK_ADDRESS_ID = 10;
 const MOCK_CUSTOMS_CODE = "P123456789012";
+*/
 
 export default function PaymentsSuccessPage() {
   const location = useLocation();
@@ -62,35 +61,16 @@ export default function PaymentsSuccessPage() {
         // 1) 결제 검증 단계 (/api/orders/pay)
         // ─────────────────────────────
 
-        // 🔥 현재: 목업 구현
-        const mockPayRes: OrdersPayResponse = {
-          paymentId: "tspay_20251024_0001",
-          status: "SUCCESS",
-          paidAt: "2025-10-24T15:21:00",
-        };
-
-        console.log("결제 검증 목업 응답:", {
-          paymentKey,
-          orderIdFromToss,
-          amount,
-          mockPayRes,
-        });
-
-        if (mockPayRes.status !== "SUCCESS") {
-          throw new Error("결제 승인에 실패했습니다.");
-        }
-
-        // 🔁 나중에 실제 백엔드 연결 시
-        /*
         const payRes = await fetch("/api/orders/pay", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            orderId: Number(orderIdFromToss), // 백엔드에서 관리하는 주문번호 규칙에 맞게
+            // ⚠️ 백엔드에서 기대하는 주문번호 규칙에 맞게 조정 필요
+            orderId: Number(orderIdFromToss),
             method: "TOSS_PAY",
             amount,
-            // 실제 서비스라면 paymentKey도 같이 보내서
-            // 백엔드에서 토스 서버에 /v1/payments/confirm 호출하게 하는 게 안전
+            // 필요하다면 paymentKey도 같이 보내서
+            // 백엔드에서 Toss 서버에 /v1/payments/confirm 호출하게 하면 됨
             // paymentKey,
           }),
         });
@@ -100,35 +80,30 @@ export default function PaymentsSuccessPage() {
         }
 
         const payJson: OrdersPayResponse = await payRes.json();
+
         if (payJson.status !== "SUCCESS") {
           throw new Error("결제 승인에 실패했습니다.");
         }
-        */
 
         // ─────────────────────────────
         // 2) 주문 생성 단계 (/api/orders)
+        //    cartItems / addressId / customsCode 는
+        //    실제론 장바구니·체크아웃 상태에서 가져와야 함.
+        //    여기서는 빈 값으로만 보내고, 주석으로 TODO 남김.
         // ─────────────────────────────
 
-        // 🔥 현재: 목업 구현
-        const mockOrderRes: CreateOrderResponse = {
-          orderId: 20251024723840,
-          totalAmount: amount,
-          status: "PAID",
-        };
+        const cartItems: any[] = []; // TODO: 전역 상태(장바구니)에서 실제 아이템 목록 가져오기
+        const addressId = 0; // TODO: CheckoutPage에서 선택한 주소 id
+        const customsCode = ""; // TODO: CheckoutPage에서 입력한 개인통관고유부호
 
-        console.log("주문 생성 목업 응답:", mockOrderRes);
-
-        // 🔁 나중에 실제 백엔드 연결 시
-        /*
         const orderRes = await fetch("/api/orders", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            cartItems: MOCK_CART_ITEMS,      // 실제로는 장바구니 상태에서 가져오기
-            addressId: MOCK_ADDRESS_ID,      // CheckoutPage에서 선택한 주소 id
-            customsCode: MOCK_CUSTOMS_CODE,  // CheckoutPage에서 입력한 개인통관부호
+            cartItems,
+            addressId,
+            customsCode,
             paymentInfo: {
-              // /api/orders/pay 응답 전체 or 필요한 필드
               paymentId: payJson.paymentId,
               status: payJson.status,
               paidAt: payJson.paidAt,
@@ -143,16 +118,12 @@ export default function PaymentsSuccessPage() {
         }
 
         const orderJson: CreateOrderResponse = await orderRes.json();
-        */
 
         // ─────────────────────────────
         // 3) 주문완료 페이지로 이동
         // ─────────────────────────────
+        const finalOrderId = orderJson.orderId;
 
-        // 여기서는 목업 orderId 사용
-        const finalOrderId = mockOrderRes.orderId;
-
-        // OrderCompletePage에서 useLocation().state?.orderId 로 쓸 수 있게 넘겨줌
         navigate("/order-complete", {
           replace: true,
           state: {

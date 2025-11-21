@@ -46,6 +46,7 @@ export default function CartQuotation({
 }: CartQuotationProps) {
   const [estimate, setEstimate] = useState<CartEstimate | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const subtotal = estimate
     ? estimate.productTotalKRW +
@@ -53,18 +54,17 @@ export default function CartQuotation({
       estimate.totalShippingFeeKRW
     : 0;
 
-  // 🔸 extraPackaging / insurance 바뀔 때마다 견적 API 호출 (지금은 목업)
+  // 🔸 extraPackaging / insurance 바뀔 때마다 실제 견적 API 호출
   useEffect(() => {
     const fetchEstimate = async () => {
       setIsLoading(true);
+      setErrorMsg(null);
       try {
         const payload = {
           extraPackaging,
           insurance,
         };
 
-        // 🔽 실제 백엔드 연결 시
-        /*
         const res = await fetch("/api/cart/estimate", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -82,66 +82,10 @@ export default function CartQuotation({
         }
 
         setEstimate(json.data);
-        */
-
-        // 🔥 백엔드 연결 전: 목업 데이터로 동작
-        //    → 지금 구조를 실제 응답 예시에 최대한 맞춰서 구성
-        const base: CartEstimate = {
-          // 실제 예시 기준 값
-          productTotalKRW: 11990,
-          serviceFeeKRW: 600,
-
-          totalActualWeightKg: 0.4,
-          totalVolumeM3: 0.003,
-          volumetricWeightKg: 0.6,
-          chargeableWeightKg: 0.6,
-
-          emsYen: 1600,
-          internationalShippingKRW: 16000,
-          domesticShippingKRW: 3000,
-          totalShippingFeeKRW: 19000,
-
-          paymentFeeKRW: 1080,
-          // 옵션별로 변하는 값은 아래에서 다시 세팅
-          extraPackagingFeeKRW: 0,
-          insuranceFeeKRW: 0,
-          grandTotalKRW: 0,
-        };
-
-        // 🔹 실제 예시에서는:
-        //   extraPackaging: true, insurance: false 일 때
-        //   extraPackagingFeeKRW: 2000, insuranceFeeKRW: 0, grandTotalKRW: 32670
-        //   (여기서는 grandTotalKRW는 "상품+수수료+배송+결제수수료" 합계 기반으로 계산)
-        const extraPackagingFeeKRW = extraPackaging ? 2000 : 0;
-        const insuranceFeeKRW = insurance ? 500 : 0; // 보험 true일 때 500원이라고 가정 (FE 목업용)
-
-        const grandTotalKRW =
-          base.productTotalKRW +
-          base.serviceFeeKRW +
-          base.totalShippingFeeKRW +
-          base.paymentFeeKRW +
-          extraPackagingFeeKRW +
-          insuranceFeeKRW;
-
-        const mockResponse: CartEstimateApiResponse = {
-          success: true,
-          data: {
-            ...base,
-            extraPackagingFeeKRW,
-            insuranceFeeKRW,
-            grandTotalKRW,
-          },
-          error: null,
-        };
-
-        // payload 사용 안 해서 린트 경고 나올 수 있어서 더미 사용
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const _unused = payload;
-
-        setEstimate(mockResponse.data);
-      } catch (e) {
+      } catch (e: any) {
         console.error(e);
         setEstimate(null);
+        setErrorMsg(e?.message ?? "견적 정보를 불러오지 못했습니다.");
       } finally {
         setIsLoading(false);
       }
@@ -164,10 +108,10 @@ export default function CartQuotation({
         <p className="text-sm text-[#767676] mt-2">견적을 계산 중입니다...</p>
       )}
 
-      {/* 견적 없음 (API 실패 등) */}
+      {/* 에러 / 견적 없음 */}
       {!isLoading && !estimate && (
         <p className="text-sm text-[#767676] mt-2">
-          견적 정보를 불러오지 못했습니다.
+          {errorMsg ?? "견적 정보를 불러오지 못했습니다."}
         </p>
       )}
 
@@ -211,7 +155,7 @@ export default function CartQuotation({
           </div>
 
           {/* 수수료 / 옵션 비용 */}
-          <div className="space-y-3 text-sm">
+          <div className="space-y-3 text-sm mt-2">
             <div className="flex justify-between">
               <span className="text-[#505050]">+ 결제 수수료(3.4%)</span>
               <span className="text-[#111111] font-[500]">
@@ -259,9 +203,13 @@ export default function CartQuotation({
             whileHover={{ scale: 1.02, y: -2 }}
             whileTap={{ scale: 0.98 }}
             onClick={onCheckout}
-            className="w-full mt-3 py-4 rounded-xl bg-gradient-to-r from-[#ffe788] to-[#ffcc4c] text-[#111111] shadow-lg hover:shadow-xl transition-all duration-300 font-[600]"
+            disabled={isLoading || !estimate}
+            className="w-full mt-3 py-4 rounded-xl bg-gradient-to-r from-[#ffe788] to-[#ffcc4c] text-[#111111] shadow-lg hover:shadow-xl transition-all duration-300 font-[600] flex justify-between items-center disabled:opacity-60"
           >
-            {`${estimate.grandTotalKRW.toLocaleString()}원 결제하기`}
+            <span className="text-sm text-[#505050]">총 결제 예상 금액</span>
+            <span className="text-base font-[700] text-[#111111]">
+              {formatKRW(estimate.grandTotalKRW)}
+            </span>
           </motion.button>
         </>
       )}
