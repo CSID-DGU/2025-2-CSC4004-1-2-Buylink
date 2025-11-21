@@ -1,52 +1,266 @@
 // src/pages/CartPage.tsx
-import { motion } from "motion/react";
-import { Plus, X, Info } from "lucide-react";
-import { useRecoilState } from "recoil";
-import {
-  cartItemsState,
-  selectedPackagingState,
-  selectedInsuranceState,
-} from "../recoil/cartState";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "motion/react";
+import { Plus, X } from "lucide-react";
+import sampleimg from "../assets/cuteeeee.png";
+import CartQuotation from "../components/CartQuotation";
+
+type CartItem = {
+  id: number;
+  productName: string;
+  priceKRW: number;
+  quantity: number;
+  imageUrl: string;
+  selected: boolean;
+};
+
+// /api/cart GET 응답 스펙
+type CartApiItem = {
+  id: number;
+  productName: string;
+  priceKRW: number;
+  imageUrl: string;
+};
+
+type CartApiGetResponse = {
+  success: boolean;
+  data: {
+    items: CartApiItem[];
+    totalKRW: number;
+  } | null;
+  error: string | null;
+};
+
+// 🔥 UI 확인용 목업 데이터 (localStorage 없을 때 사용)
+const MOCK_CART_ITEMS: CartItem[] = [
+  {
+    id: 1,
+    productName: "몬치치 마스코트 키체인 3",
+    priceKRW: 11990,
+    quantity: 1,
+    imageUrl: sampleimg,
+    selected: true,
+  },
+  {
+    id: 2,
+    productName: "상품명은 최대 1줄 노출 길어지면 말줄임",
+    priceKRW: 8000,
+    quantity: 1,
+    imageUrl: sampleimg,
+    selected: true,
+  },
+];
 
 export default function CartPage() {
-  const [cartItems, setCartItems] = useRecoilState(cartItemsState);
-  const [selectedPackaging, setSelectedPackaging] = useRecoilState(
-    selectedPackagingState
-  );
-  const [selectedInsurance, setSelectedInsurance] = useRecoilState(
-    selectedInsuranceState
-  );
-
   const navigate = useNavigate();
 
+  const [items, setItems] = useState<CartItem[]>([]);
+  const [extraPackaging, setExtraPackaging] = useState(true);
+  const [insurance, setInsurance] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const selectedItems = items.filter((i) => i.selected);
+
+  // --------------------------------------------------------
+  // 🟡 현재 버전: RequestPage에서 localStorage.cartProducts 사용
+  //    - 없으면 MOCK_CART_ITEMS로 채움
+  // --------------------------------------------------------
+  useEffect(() => {
+    const loadCartFromLocal = () => {
+      setIsLoading(true);
+      try {
+        const raw = localStorage.getItem("cartProducts");
+        if (raw) {
+          const products: any[] = JSON.parse(raw);
+          const mapped: CartItem[] = products.map((p, index) => ({
+            id: index + 1,
+            productName: p.productName,
+            priceKRW: p.priceKRW,
+            quantity: p.quantity ?? 1,
+            imageUrl: p.imageUrls?.[0] ?? sampleimg,
+            selected: true,
+          }));
+          setItems(mapped);
+        } else {
+          setItems(MOCK_CART_ITEMS);
+        }
+      } catch (e) {
+        console.error(e);
+        setItems(MOCK_CART_ITEMS);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadCartFromLocal();
+  }, []);
+
+  // --------------------------------------------------------
+  // 🔁 나중에 실제 장바구니 조회: GET /api/cart
+  //    resp:
+  //    {
+  //      "success": true,
+  //      "data": { "items": [...], "totalKRW": 19990 },
+  //      "error": null
+  //    }
+  //    👉 localStorage 버전 지우고 아래 useEffect 주석 풀면 됨
+  // --------------------------------------------------------
+  /*
+  useEffect(() => {
+    const fetchCartFromServer = async () => {
+      setIsLoading(true);
+      try {
+        const res = await fetch("/api/cart");
+        if (!res.ok) {
+          throw new Error("장바구니 조회 실패");
+        }
+
+        const json = (await res.json()) as CartApiGetResponse;
+
+        if (!json.success || !json.data) {
+          throw new Error(json.error ?? "장바구니 데이터가 없습니다.");
+        }
+
+        setItems(
+          json.data.items.map((item) => ({
+            id: item.id,
+            productName: item.productName,
+            priceKRW: item.priceKRW,
+            quantity: 1,
+            imageUrl: item.imageUrl,
+            selected: true,
+          }))
+        );
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCartFromServer();
+  }, []);
+  */
+
   const handleToggleAll = () => {
-    const allSelected = cartItems.every((item) => item.selected);
-    setCartItems(cartItems.map((item) => ({ ...item, selected: !allSelected })));
+    const allSelected = items.every((i) => i.selected);
+    setItems((prev) =>
+      prev.map((item) => ({ ...item, selected: !allSelected }))
+    );
   };
 
   const handleToggleOne = (id: number) => {
-    setCartItems(
-      cartItems.map((item) =>
+    setItems((prev) =>
+      prev.map((item) =>
         item.id === id ? { ...item, selected: !item.selected } : item
       )
     );
   };
 
-  const handleDeleteSelected = () => {
-    setCartItems(cartItems.filter((item) => !item.selected));
+  const handleDeleteSelected = async () => {
+    const ids = selectedItems.map((i) => i.id);
+    if (ids.length === 0) {
+      alert("삭제할 상품을 선택해주세요.");
+      return;
+    }
+
+    // ✅ 현재 버전: 프론트 상태에서만 삭제
+    setItems((prev) => prev.filter((i) => !i.selected));
+
+    // 🔁 나중에 실제 선택 삭제: DELETE /api/cart?ids=1,3,7
+    //     resp: { "success": true, "data": { message, deletedIds, deletedCount }, "error": null }
+    /*
+    try {
+      const query = ids.join(",");
+      const res = await fetch(`/api/cart?ids=${query}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        throw new Error("선택 상품 삭제 실패");
+      }
+
+      const json = await res.json();
+      console.log("삭제 결과:", json);
+
+      // Delete 이후에는 GET /api/cart 다시 호출하는 패턴도 가능
+      setItems((prev) => prev.filter((i) => !ids.includes(i.id)));
+    } catch (e) {
+      console.error(e);
+      alert("선택 상품 삭제 중 문제가 발생했습니다.");
+    }
+    */
   };
 
-  const handleDeleteOne = (id: number) => {
-    setCartItems(cartItems.filter((item) => item.id !== id));
+  const handleDeleteOne = async (id: number) => {
+    // ✅ 현재 버전: 프론트 상태에서만 삭제
+    setItems((prev) => prev.filter((i) => i.id !== id));
+
+    // 🔁 나중에 실제 단일 삭제: DELETE /api/cart?ids=1
+    /*
+    try {
+      const res = await fetch(`/api/cart?ids=${id}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        throw new Error("상품 삭제 실패");
+      }
+
+      const json = await res.json();
+      console.log("삭제 결과:", json);
+
+      setItems((prev) => prev.filter((i) => i.id !== id));
+    } catch (e) {
+      console.error(e);
+      alert("상품 삭제 중 문제가 발생했습니다.");
+    }
+    */
   };
 
-  const handleGoRequestPage = () => {
-    navigate("/request"); // 🔸 “상품 추가하고 배송비 절약하기” 버튼 클릭 시
-  };
+  const handleGoRequestPage = () => navigate("/request");
 
-  const handleGoCheckoutPage = () => {
-    navigate("/checkout"); // 🔸 “결제하기” / “xx원 결제하기” 버튼 클릭 시
+  const handleGoCheckoutPage = async () => {
+    if (selectedItems.length === 0) {
+      alert("결제할 상품을 선택해주세요.");
+      return;
+    }
+
+    // ✅ 현재 버전: 견적은 CartQuotation에서 목업으로 계산
+    //    여기서는 그냥 /checkout으로만 이동
+    navigate("/checkout");
+
+    // 🔁 나중에 /api/cart/estimate 연동:
+    //    POST /api/cart/estimate
+    //    body: { "extraPackaging": true, "insurance": false }
+    //    resp: { success, data: CartEstimate, error }
+    /*
+    try {
+      const payload = {
+        extraPackaging,
+        insurance,
+      };
+
+      const res = await fetch("/api/cart/estimate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        throw new Error("견적 요청 실패");
+      }
+
+      const json = await res.json();
+      console.log("견적 결과:", json);
+
+      // navigate("/checkout", { state: json.data });
+    } catch (e) {
+      console.error(e);
+      alert("견적 요청 중 문제가 발생했습니다.");
+    }
+    */
   };
 
   return (
@@ -54,408 +268,227 @@ export default function CartPage() {
       key="cart"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.3 }}
-      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12"
+      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 bg-white"
     >
+      <h1 className="text-2xl lg:text-3xl font-bold text-[#111111] mb-6">
+        장바구니
+      </h1>
+
       <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
-        {/* Cart Items - Left Column */}
-        <div className="lg:col-span-2 space-y-6">
-          {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-[#e5e5ec]/50"
-          >
+        {/* 왼쪽: 상품 리스트 + 추가 버튼 */}
+        <div className="lg:col-span-2 flex flex-col lg:pr-2">
+          {/* 전체 선택 + 선택 삭제 */}
+          <div className="bg-white rounded-2xl shadow p-6 border border-gray-200 mb-4">
             <div className="flex items-center justify-between">
-              <motion.div
-                className="flex items-center gap-3 cursor-pointer"
+              <button
                 onClick={handleToggleAll}
-                whileHover={{ x: 4 }}
+                className="flex items-center gap-3"
               >
-                <div className="w-5 h-5 rounded bg-[#ffe788] border border-[#e5e5ec] shadow-sm flex items-center justify-center">
-                  {cartItems.length > 0 &&
-                    cartItems.every((item) => item.selected) && (
-                      <img
-                        src="data:image/svg+xml,%3Csvg%20preserveAspectRatio%3D%22none%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20overflow%3D%22visible%22%20style%3D%22display%3A%20block%3B%22%20viewBox%3D%220%200%2013%2010%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20id%3D%22Vector%22%20d%3D%22M11.6667%201L4.33333%208.33333L1%205%22%20stroke%3D%22%23111111%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3C%2Fsvg%3E%0A"
-                        alt="check"
-                        className="w-3 h-3"
-                      />
+                <div className="w-5 h-5 bg-[#ffe788] border border-gray-300 rounded flex items-center justify-center">
+                  {items.length > 0 &&
+                    items.every((i) => i.selected) && (
+                      <span className="text-xs font-bold">✓</span>
                     )}
                 </div>
-                <p className="text-[#111111] font-[500]">전체 선택</p>
-              </motion.div>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
+                <span className="text-sm lg:text-base text-[#111111]">
+                  전체 선택
+                </span>
+              </button>
+
+              <button
                 onClick={handleDeleteSelected}
-                className="text-[#111111] text-sm underline hover:text-[#505050]"
+                className="text-sm underline text-[#111111] hover:text-[#505050]"
               >
                 선택 상품 삭제
-              </motion.button>
+              </button>
             </div>
-          </motion.div>
+          </div>
 
-          {/* Status Banner */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="bg-gradient-to-r from-[#fff5c9] to-[#ffe788]/30 rounded-2xl shadow-md p-6 border border-[#ffe788]/50"
-          >
-            <p className="text-center text-[#111111] mb-4 font-[500]">
-              지금 바로 주문 가능해요
-            </p>
-            <div className="space-y-2 text-center">
-              <p className="text-[#111111] font-[500]">주문일: 25.09.07</p>
-              <p className="text-[#767676] text-sm">
-                ⏰ 결제 가능 기한: 25.09.08 23:59 까지
+          {/* 상품 카드 리스트 (여기만 스크롤) */}
+          <div className="space-y-6 lg:overflow-y-auto lg:max-h-[60vh] lg:pr-1">
+            {isLoading && (
+              <p className="text-sm text-[#767676] px-2 py-4">
+                장바구니를 불러오는 중입니다...
               </p>
-            </div>
-          </motion.div>
+            )}
 
-          {/* Cart Items */}
-          {cartItems.map((item, index) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 * (index + 2) }}
-              whileHover={{ y: -4 }}
-              className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 border border-[#e5e5ec]/50"
-            >
-              <div className="flex items-start justify-between mb-4">
-                <motion.div
-                  className="w-5 h-5 rounded bg-[#ffe788] border border-[#e5e5ec] shadow-sm cursor-pointer flex items-center justify-center"
-                  onClick={() => handleToggleOne(item.id)}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
+            {!isLoading &&
+              items.map((item) => (
+                <div
+                  key={item.id}
+                  className="bg-white rounded-2xl shadow p-6 border border-gray-200"
                 >
-                  {item.selected && (
+                  <div className="flex items-start justify-between mb-4">
+                    <button
+                      onClick={() => handleToggleOne(item.id)}
+                      className="w-5 h-5 bg-[#ffe788] border border-gray-300 rounded flex items-center justify-center"
+                    >
+                      {item.selected && (
+                        <span className="text-xs font-bold">✓</span>
+                      )}
+                    </button>
+
+                    <button onClick={() => handleDeleteOne(item.id)}>
+                      <X className="w-5 h-5 text-gray-500" />
+                    </button>
+                  </div>
+
+                  <div className="flex gap-4 mb-3">
                     <img
-                      src="data:image/svg+xml,%3Csvg%20preserveAspectRatio%3D%22none%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20overflow%3D%22visible%22%20style%3D%22display%3A%20block%3B%22%20viewBox%3D%220%200%2013%2010%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20id%3D%22Vector%22%20d%3D%22M11.6667%201L4.33333%208.33333L1%205%22%20stroke%3D%22%23111111%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3C%2Fsvg%3E%0A"
-                      alt="check"
-                      className="w-3 h-3"
+                      src={item.imageUrl}
+                      alt={item.productName}
+                      className="w-20 h-20 rounded-lg object-cover"
                     />
-                  )}
-                </motion.div>
-                <motion.button
-                  whileHover={{ scale: 1.1, rotate: 90 }}
-                  whileTap={{ scale: 0.9 }}
-                  onClick={() => handleDeleteOne(item.id)}
-                  className="text-[#767676] hover:text-[#111111]"
-                >
-                  <X className="w-5 h-5" />
-                </motion.button>
-              </div>
+                    <div className="flex-1">
+                      <p className="font-medium text-[#111111]">
+                        {item.productName}
+                      </p>
+                      <p className="mt-1 font-semibold text-[#111111]">
+                        {item.priceKRW.toLocaleString()}원
+                      </p>
+                    </div>
+                  </div>
 
-              <div className="flex gap-4 mb-4">
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  className="relative w-16 h-16 lg:w-20 lg:h-20 rounded-xl overflow-hidden shadow-md flex-shrink-0"
-                >
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-full h-full object-cover"
-                  />
-                </motion.div>
-                <div className="flex-1">
-                  <p className="text-sm text-[#111111] mb-2">{item.name}</p>
-                  <p className="text-[#111111] font-[500]">
-                    {item.price.toLocaleString()}원
-                  </p>
+                  <div className="bg-[#f7f7fb] rounded-lg p-3">
+                    <p className="text-sm text-[#505050]">
+                      <span className="font-semibold text-[#111111]">
+                        수량:{" "}
+                      </span>
+                      {item.quantity}개
+                    </p>
+                  </div>
                 </div>
-              </div>
+              ))}
+          </div>
 
-              <div className="bg-[#f7f7fb] rounded-lg p-3">
-                <p className="text-sm">
-                  <span className="text-[#111111] font-[500]">수량: </span>
-                  <span className="text-[#767676]">{item.quantity}개</span>
-                </p>
+          {/* 스크롤 아래 고정 버튼 */}
+          <div className="mt-4">
+            <button
+              onClick={handleGoRequestPage}
+              className="w-full bg-white rounded-2xl shadow p-6 border border-gray-200 flex flex-col items-center gap-3"
+            >
+              <div className="w-8 h-8 bg-[#ffcc4c]/20 rounded-full flex items-center justify-center">
+                <Plus className="w-5 h-5 text-[#ffcc4c]" />
               </div>
-            </motion.div>
-          ))}
-
-          {/* Add More Products */}
-          <motion.button
-            whileHover={{ scale: 1.01, y: -2 }}
-            whileTap={{ scale: 0.99 }}
-            onClick={handleGoRequestPage}
-            className="w-full bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-[#e5e5ec] flex flex-col items-center gap-3"
-          >
-            <div className="w-8 h-8 rounded-full bg-[#ffcc4c]/20 flex items-center justify-center">
-              <Plus className="w-5 h-5 text-[#ffcc4c]" />
-            </div>
-            <p className="text-[#505050]">상품 추가하고 배송비 절약하기</p>
-          </motion.button>
+              <p className="text-gray-600">상품 추가하고 배송비 절약하기</p>
+            </button>
+          </div>
         </div>
 
-        {/* Summary - Right Column */}
-        <div className="space-y-6">
-          {/* Additional Options */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
-            className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-[#e5e5ec]/50 space-y-6"
-          >
+        {/* 오른쪽: 옵션 + 견적서 */}
+        <div className="space-y-4 lg:self-start text-sm">
+          <div className="bg-white rounded-2xl shadow p-4 border border-gray-200 space-y-4">
             {/* 포장 옵션 */}
             <div>
-              <div className="flex items-center gap-2 mb-4">
-                <h3 className="text-[#111111] font-[600]">추가 포장 비용</h3>
-                <span className="px-2 py-1 bg-[#f1f1f5] rounded text-xs text-[#111111] font-[500]">
+              <div className="flex items-center gap-2 mb-1">
+                <h3 className="font-semibold text-[#111111] text-sm">
+                  추가 포장 비용
+                </h3>
+                <span className="px-2 py-0.5 rounded text-[11px] bg-[#f1f1f5] text-[#111111] font-[500]">
                   필수
                 </span>
               </div>
-              <div className="space-y-3">
-                <motion.label
-                  whileHover={{ x: 4 }}
-                  onClick={() => setSelectedPackaging("yes")}
-                  className="flex items-center justify-between p-3 rounded-lg hover:bg-[#f7f7fb] cursor-pointer transition-all"
+              <p className="text-xs text-[#767676] mb-2">
+                선택하지 않을 시, 일본 판매자가 보낸 패키지 그대로 발송됩니다.
+              </p>
+              <div className="space-y-1.5">
+                <label
+                  onClick={() => setExtraPackaging(true)}
+                  className="flex justify-between items-center px-3 py-2 rounded-lg cursor-pointer hover:bg-gray-50"
                 >
                   <div className="flex items-center gap-3">
-                    <div
-                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center border-[#e5e5ec]`}
-                    >
-                      {selectedPackaging === "yes" && (
-                        <div className="w-2.5 h-2.5 rounded-full bg-[#ffe788]" />
+                    <div className="w-4 h-4 border-2 rounded-full flex items-center justify-center">
+                      {extraPackaging && (
+                        <div className="w-2 h-2 bg-[#ffe788] rounded-full" />
                       )}
                     </div>
-                    <span className="text-[#505050]">추가 포장 비용</span>
+                    <span className="text-xs text-[#505050]">
+                      추가 포장 비용
+                    </span>
                   </div>
-                  <span className="text-[#111111] font-[500]">+2,000원</span>
-                </motion.label>
-                <motion.label
-                  whileHover={{ x: 4 }}
-                  onClick={() => setSelectedPackaging("no")}
-                  className="flex items-center justify-between p-3 rounded-lg hover:bg-[#f7f7fb] cursor-pointer transition-all"
+                  <span className="text-xs text-[#111111] font-[500]">
+                    +2,000원
+                  </span>
+                </label>
+
+                <label
+                  onClick={() => setExtraPackaging(false)}
+                  className="flex justify-between items-center px-3 py-2 rounded-lg cursor-pointer hover:bg-gray-50"
                 >
                   <div className="flex items-center gap-3">
-                    <div
-                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center border-[#e5e5ec]`}
-                    >
-                      {selectedPackaging === "no" && (
-                        <div className="w-2.5 h-2.5 rounded-full bg-[#ffe788]" />
+                    <div className="w-4 h-4 border-2 rounded-full flex items-center justify-center">
+                      {!extraPackaging && (
+                        <div className="w-2 h-2 bg-[#ffe788] rounded-full" />
                       )}
                     </div>
-                    <span className="text-[#505050]">필요 없어요</span>
+                    <span className="text-xs text-[#505050]">필요 없어요</span>
                   </div>
-                  <span className="text-[#111111] font-[500]">0원</span>
-                </motion.label>
+                  <span className="text-xs text-[#111111] font-[500]">
+                    0원
+                  </span>
+                </label>
               </div>
             </div>
-
-            <div className="h-px bg-[#e5e5ec]" />
 
             {/* 보험 옵션 */}
             <div>
-              <div className="flex items-center gap-2 mb-4">
-                <h3 className="text-[#111111] font-[600]">
+              <div className="flex items-center gap-2 mb-1">
+                <h3 className="font-semibold text-[#111111] text-sm">
                   해외 배송 보상 보험료
                 </h3>
-                <span className="px-2 py-1 bg-[#f1f1f5] rounded text-xs text-[#111111] font-[500]">
+                <span className="px-2 py-0.5 rounded text-[11px] bg-[#f1f1f5] text-[#111111] font-[500]">
                   필수
                 </span>
               </div>
-              <div className="space-y-3">
-                <motion.label
-                  whileHover={{ x: 4 }}
-                  onClick={() => setSelectedInsurance("yes")}
-                  className="flex items-center justify-between p-3 rounded-lg hover:bg-[#f7f7fb] cursor-pointer transition-all"
+              <p className="text-xs text-[#767676] mb-2">
+                본 서비스는 선택 상품입니다. 분실·파손 시 일부 또는 전액 보상을
+                위한 보험료입니다.
+              </p>
+              <div className="space-y-1.5">
+                <label
+                  onClick={() => setInsurance(true)}
+                  className="flex justify-between items-center px-3 py-2 rounded-lg cursor-pointer hover:bg-gray-50"
                 >
                   <div className="flex items-center gap-3">
-                    <div
-                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center border-[#e5e5ec]`}
-                    >
-                      {selectedInsurance === "yes" && (
-                        <div className="w-2.5 h-2.5 rounded-full bg-[#ffe788]" />
+                    <div className="w-4 h-4 border-2 rounded-full flex items-center justify-center">
+                      {insurance && (
+                        <div className="w-2 h-2 bg-[#ffe788] rounded-full" />
                       )}
                     </div>
-                    <span className="text-[#505050]">보험 가입</span>
+                    <span className="text-xs text-[#505050]">보험 가입</span>
                   </div>
-                  <span className="text-[#111111] font-[500]">+500원</span>
-                </motion.label>
-                <motion.label
-                  whileHover={{ x: 4 }}
-                  onClick={() => setSelectedInsurance("no")}
-                  className="flex items-center justify-between p-3 rounded-lg hover:bg-[#f7f7fb] cursor-pointer transition-all"
+                  <span className="text-xs text-[#111111] font-[500]">
+                    +500원
+                  </span>
+                </label>
+
+                <label
+                  onClick={() => setInsurance(false)}
+                  className="flex justify-between items-center px-3 py-2 rounded-lg cursor-pointer hover:bg-gray-50"
                 >
                   <div className="flex items-center gap-3">
-                    <div
-                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center border-[#e5e5ec]`}
-                    >
-                      {selectedInsurance === "no" && (
-                        <div className="w-2.5 h-2.5 rounded-full bg-[#ffe788]" />
+                    <div className="w-4 h-4 border-2 rounded-full flex items-center justify-center">
+                      {!insurance && (
+                        <div className="w-2 h-2 bg-[#ffe788] rounded-full" />
                       )}
                     </div>
-                    <span className="text-[#505050]">필요 없어요</span>
+                    <span className="text-xs text-[#505050]">필요 없어요</span>
                   </div>
-                  <span className="text-[#111111] font-[500]">0원</span>
-                </motion.label>
+                  <span className="text-xs text-[#111111] font-[500]">
+                    0원
+                  </span>
+                </label>
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          {/* Price Summary */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
-            className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-[#e5e5ec]/50 space-y-4 sticky top-24"
-          >
-            <h3 className="text-[#111111] font-[600]">견적서</h3>
-
-            {(() => {
-              const selectedItems = cartItems.filter((item) => item.selected);
-              const itemsTotal = selectedItems.reduce(
-                (sum, item) => sum + item.price * item.quantity,
-                0
-              );
-              const serviceFee = 3000;
-              const shippingFee = 9480;
-              const subtotal = itemsTotal + serviceFee + shippingFee;
-              const paymentFee = Math.round(subtotal * 0.034);
-              const packagingFee = selectedPackaging === "yes" ? 2000 : 0;
-              const insuranceFee = selectedInsurance === "yes" ? 500 : 0;
-              const discount = 840 + 2000 + 500;
-              const finalTotal =
-                subtotal + paymentFee + packagingFee + insuranceFee - discount;
-
-              const discountBase =
-                subtotal + paymentFee + packagingFee + insuranceFee;
-              const discountRate =
-                discountBase > 0
-                  ? ((discount / discountBase) * 100).toFixed(3)
-                  : "0.000";
-
-              return (
-                <>
-                  <div className="space-y-3 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-[#505050]">상품 금액</span>
-                      <span className="text-[#111111] font-[500]">
-                        {itemsTotal.toLocaleString()}원
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-[#505050]">대행 수수료</span>
-                      <span className="text-[#111111] font-[500]">
-                        {serviceFee.toLocaleString()}원
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-[#505050]">해외+국내 배송비</span>
-                      <span className="text-[#111111] font-[500]">
-                        {shippingFee.toLocaleString()}원
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-[#505050]">합배송비</span>
-                      <span className="text-[#111111] font-[500]">-</span>
-                    </div>
-                  </div>
-
-                  <div className="h-px bg-[#e5e5ec]" />
-
-                  <div className="flex justify-between">
-                    <span className="text-[#111111] font-[500]">합계액</span>
-                    <span className="text-[#ffcc4c] font-[600]">
-                      {subtotal.toLocaleString()}원
-                    </span>
-                  </div>
-
-                  <div className="space-y-3">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-[#505050]">
-                        +결제 수수료(3.4%)
-                      </span>
-                      <span className="text-[#111111] font-[500]">
-                        {paymentFee.toLocaleString()}원
-                      </span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-[#505050]">+추가 포장 비용</span>
-                      <span className="text-[#111111] font-[500]">
-                        {packagingFee.toLocaleString()}원
-                      </span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-[#505050]">
-                        +국내 배송 보상 보편초
-                      </span>
-                      <span className="text-[#111111] font-[500]">
-                        {insuranceFee.toLocaleString()}원
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="h-px bg-[#e5e5ec]" />
-
-                  <div>
-                    <div className="flex items-center gap-2 mb-3">
-                      <h4 className="text-[#111111] font-[600]">할인</h4>
-                      <span className="text-[#ffcc4c] font-[600]">
-                        {discountRate}%
-                      </span>
-                    </div>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-[#505050]">
-                          • 결제 수수료(4%)
-                        </span>
-                        <span className="text-[#111111] font-[500]">
-                          840원
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-[#505050]">
-                          • 다음 주기 국가 비용 미지원
-                        </span>
-                        <span className="text-[#111111] font-[500]">
-                          2,000원
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-[#505050]">
-                          • 다음 배송 통관 비용 보편초
-                        </span>
-                        <span className="text-[#111111] font-[500]">
-                          500원
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-gradient-to-r from-[#f7f7fb] to-[#fef9e7] rounded-xl p-4">
-                    <div className="flex justify-between items-center">
-                      <span className="text-[#505050] font-[500]">
-                        최종 결제 금액
-                      </span>
-                      <span className="text-xl text-[#111111] font-[700]">
-                        {finalTotal.toLocaleString()}원
-                      </span>
-                    </div>
-                  </div>
-
-                  <motion.button
-                    whileHover={{ scale: 1.02, y: -2 }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={handleGoCheckoutPage}
-                    className="w-full py-4 rounded-xl bg-gradient-to-r from-[#ffe788] to-[#ffcc4c] text-[#111111] shadow-lg hover:shadow-xl transition-all duration-300 font-[600]"
-                  >
-                    {`${finalTotal.toLocaleString()}원 결제하기`}
-                  </motion.button>
-                </>
-              );
-            })()}
-
-            <div className="flex items-start gap-2 p-3 bg-[#fff5c9]/50 rounded-lg">
-              <Info className="w-4 h-4 text-[#ff9200] flex-shrink-0 mt-0.5" />
-              <p className="text-xs text-[#505050]">
-                배송비는 실무게와 부피 무게 중 더 무거운 쪽으로 계산됩니다.
-              </p>
-            </div>
-          </motion.div>
+          {/* 견적서 컴포넌트 */}
+          <CartQuotation
+            extraPackaging={extraPackaging}
+            insurance={insurance}
+            onCheckout={handleGoCheckoutPage}
+          />
         </div>
       </div>
     </motion.main>

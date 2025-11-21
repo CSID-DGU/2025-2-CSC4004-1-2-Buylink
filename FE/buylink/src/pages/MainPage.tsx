@@ -1,16 +1,10 @@
-// src/pages/MainPage.tsx
 import { motion, AnimatePresence } from "motion/react";
-import { ShoppingCart, Package, ChevronLeft, CheckCircle, TrendingUp,
-    Shield, Zap, Globe, Camera, DollarSign, Users, ArrowRight, AlertCircle,} from "lucide-react";
-import { useState } from "react";
+import { Package, CheckCircle, Shield, Zap, Globe, Camera, DollarSign, ArrowRight, AlertCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import sampleimg from "../assets/cuteeeee.png";
 
-type PageType = "home" | "request" | "cart" | "checkout" | "order-complete";
-
 export default function MainPage() {
-  const [currentPage, setCurrentPage] = useState<PageType>("home");
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // 🔥 react-router navigate
 
   const features = [
     {
@@ -41,116 +35,117 @@ export default function MainPage() {
     <>
       {/* Main Content */}
       <AnimatePresence mode="wait">
-        {currentPage === "home" && (
-          <motion.div
-            key="home"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            {/* Hero Section */}
-            <section className="relative overflow-hidden py-16 lg:py-24">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-                  <motion.div
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className="space-y-8"
-                  >
-                    <div className="space-y-4">
-                      <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.3 }}
-                        className="inline-block"
-                      >
-                        <span className="px-4 py-2 bg-gradient-to-r from-[#ffe788] to-[#ffcc4c] rounded-full text-sm font-[600] text-[#111111]">
-                          해외 직구의 새로운 기준
-                        </span>
-                      </motion.div>
-                      <h1 className="text-5xl lg:text-6xl text-[#111111] font-[700] leading-tight">
-                        복잡한 해외 BUY
-                        <br />
-                        <span className="text-[#111111]">링크 하나로 끝!</span>
-                        <br />
-                        <span className="text-[#ffcc4c]">바이링</span>
-                      </h1>
-                      <p className="text-lg lg:text-xl text-[#505050] leading-relaxed">
-                        AI 기반 무게/부피 자동 계산으로
-                        <br />
-                        투명하고 간편한 해외 구매 대행 서비스
-                      </p>
-                    </div>
-
-                    <div className="flex flex-col sm:flex-row gap-4">
-                      <motion.button
-                        whileHover={{ scale: 1.05, y: -2 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => navigate("request")}
-                        className="px-37 py-4 bg-gradient-to-r from-[#ffe788] to-[#ffcc4c] rounded-xl text-[#111111] font-[600] shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2"
-                      >
-                        지금 주문하러가기
-                        <ArrowRight className="w-5 h-5" />
-                      </motion.button>
-                    </div>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.4 }}
-                    className="relative"
-                  >
-                    <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl p-8 border border-[#e5e5ec]/50">
-                      <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-[#ffe788]/20 to-[#ffcc4c]/20 flex items-center justify-center">
-                        <img
-                          src={sampleimg}
-                          alt="Shopping"
-                          className="w-full h-full object-cover"
-                          loading="lazy"
-                        />
-                      </div>
-                    </div>
-                    {/* Floating elements */}
-                    <motion.div
-                      animate={{ y: [0, -10, 0] }}
-                      transition={{ duration: 3, repeat: Infinity }}
-                      className="absolute -top-4 -right-4 bg-white rounded-2xl shadow-xl p-4 border border-[#e5e5ec]"
-                    >
-                      <Package className="w-8 h-8 text-[#ffcc4c]" />
-                    </motion.div>
-                    <motion.div
-                      animate={{ y: [0, 10, 0] }}
-                      transition={{ duration: 4, repeat: Infinity }}
-                      className="absolute -bottom-4 -left-4 bg-white rounded-2xl shadow-xl p-4 border border-[#e5e5ec]"
-                    >
-                      <Globe className="w-8 h-8 text-[#ffcc4c]" />
-                    </motion.div>
-                  </motion.div>
-                </div>
-              </div>
-            </section>
-
-            {/* Problem Section */}
-            <section className="py-16 lg:py-24 bg-gradient-to-b from-transparent to-[#f7f7fb]/50">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* 🔥 currentPage === "home" 조건 제거 → 항상 렌더링됨 */}
+        <motion.div
+          key="home"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          {/* Hero Section */}
+          <section className="relative overflow-hidden py-16 lg:py-24">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                 <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className="text-center mb-16"
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="space-y-8"
                 >
-                  <h2 className="text-3xl lg:text-5xl font-[700] text-[#ffcc4c] mb-6">
-                    늘어나는 해외구매
-                    <br />
-                    <span className="text-[#111111]">여전히 불편한 경험만 한가득</span>
-                  </h2>
-                  <p className="text-lg text-[#505050]">
-                    1,000명 중 55.9%가 불만 또는 매체 경험
-                  </p>
+                  <div className="space-y-4">
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 }}
+                      className="inline-block"
+                    >
+                      <span className="px-4 py-2 bg-gradient-to-r from-[#ffe788] to-[#ffcc4c] rounded-full text-sm font-[600] text-[#111111]">
+                        해외 직구의 새로운 기준
+                      </span>
+                    </motion.div>
+                    <h1 className="text-5xl lg:text-6xl text-[#111111] font-[700] leading-tight">
+                      복잡한 해외 BUY
+                      <br />
+                      <span className="text-[#111111]">링크 하나로 끝!</span>
+                      <br />
+                      <span className="text-[#ffcc4c]">바이링</span>
+                    </h1>
+                    <p className="text-lg lg:text-xl text-[#505050] leading-relaxed">
+                      AI 기반 무게/부피 자동 계산으로
+                      <br />
+                      투명하고 간편한 해외 구매 대행 서비스
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <motion.button
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                      // 🔥 여기서 router 동작 → /request 로 이동
+                      onClick={() => navigate("/request")}
+                      className="px-37 py-4 bg-gradient-to-r from-[#ffe788] to-[#ffcc4c] rounded-xl text-[#111111] font-[600] shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2"
+                    >
+                      지금 주문하러가기
+                      <ArrowRight className="w-5 h-5" />
+                    </motion.button>
+                  </div>
                 </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.4 }}
+                  className="relative"
+                >
+                  <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl p-8 border border-[#e5e5ec]/50">
+                    <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-[#ffe788]/20 to-[#ffcc4c]/20 flex items-center justify-center">
+                      <img
+                        src={sampleimg}
+                        alt="Shopping"
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  {/* Floating elements */}
+                  <motion.div
+                    animate={{ y: [0, -10, 0] }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                    className="absolute -top-4 -right-4 bg-white rounded-2xl shadow-xl p-4 border border-[#e5e5ec]"
+                  >
+                    <Package className="w-8 h-8 text-[#ffcc4c]" />
+                  </motion.div>
+                  <motion.div
+                    animate={{ y: [0, 10, 0] }}
+                    transition={{ duration: 4, repeat: Infinity }}
+                    className="absolute -bottom-4 -left-4 bg-white rounded-2xl shadow-xl p-4 border border-[#e5e5ec]"
+                  >
+                    <Globe className="w-8 h-8 text-[#ffcc4c]" />
+                  </motion.div>
+                </motion.div>
+              </div>
+            </div>
+          </section>
+
+          {/* Problem Section */}
+          <section className="py-16 lg:py-24 bg-gradient-to-b from-transparent to-[#f7f7fb]/50">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-center mb-16"
+              >
+                <h2 className="text-3xl lg:text-5xl font-[700] text-[#ffcc4c] mb-6 leading-[1.4]">
+                  늘어나는 해외구매
+                  <br />
+                  <span className="text-[#111111]">여전히 불편한 경험만 한가득</span>
+                </h2>
+                <p className="text-lg text-[#505050]">
+                  1,000명 중 55.9%가 불만 또는 매체 경험
+                </p>
+              </motion.div>
 
                 <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
                   <motion.div
@@ -237,7 +232,7 @@ export default function MainPage() {
                   viewport={{ once: true }}
                   className="text-center mb-16"
                 >
-                  <h2 className="text-3xl lg:text-5xl font-[700] text-[#111111] mb-6">
+                  <h2 className="text-3xl lg:text-5xl font-[700] text-[#111111] mb-6 leading-[1.4]">
                     복잡한 해외구매,
                     <br />
                     <span className="text-[#ffcc4c]">링크 하나로 끝!</span>
@@ -381,7 +376,6 @@ export default function MainPage() {
               </div>
             </footer>
           </motion.div>
-        )}
       </AnimatePresence>
     </>
   );
