@@ -23,21 +23,23 @@ public class CartQueryServiceImpl implements CartQueryService {
     public CartResponse getCart(String proxySid) {
         List<CartItem> items = repo.findByProxySidOrderByCreatedAtDesc(proxySid);
 
-        // DTO에 quantity 없음: (id, productName, priceKRW, imageUrl)
+        // DTO에 AI 필드까지 포함해서 매핑
         List<CartItemDto> dtoList = items.stream()
                 .map(e -> new CartItemDto(
                         e.getId(),
                         e.getProductName(),
                         e.getPriceKRW(),
-                        e.getImageUrl()
+                        e.getImageUrl(),
+                        e.getAiWeightKg(),   // ← 추가
+                        e.getAiVolumeM3()    // ← 추가
                 ))
                 .toList();
 
-        // 합계 = 단가 합 (수량은 항상 1)
         int total = dtoList.stream()
                 .mapToInt(i -> i.getPriceKRW() == null ? 0 : i.getPriceKRW())
                 .sum();
 
         return new CartResponse(dtoList, total);
     }
+
 }

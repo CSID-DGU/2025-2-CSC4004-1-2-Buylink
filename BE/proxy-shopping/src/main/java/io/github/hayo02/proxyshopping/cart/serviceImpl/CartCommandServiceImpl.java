@@ -157,12 +157,15 @@ public class CartCommandServiceImpl implements CartCommandService {
     // 공통 응답 빌더
     private CartResponse buildResponse(String proxySid) {
         List<CartItem> items = repo.findByProxySidOrderByCreatedAtDesc(proxySid);
+
         List<CartItemDto> dtoList = items.stream()
                 .map(i -> new CartItemDto(
                         i.getId(),
                         i.getProductName(),
                         i.getPriceKRW(),
-                        i.getImageUrl()
+                        i.getImageUrl(),
+                        i.getAiWeightKg(),   // ← AI 무게
+                        i.getAiVolumeM3()    // ← AI 부피
                 ))
                 .toList();
 
@@ -172,4 +175,5 @@ public class CartCommandServiceImpl implements CartCommandService {
 
         return new CartResponse(dtoList, total);
     }
+
 }
