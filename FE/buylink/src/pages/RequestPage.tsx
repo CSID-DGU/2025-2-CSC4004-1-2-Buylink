@@ -26,11 +26,11 @@ type ApiResponse<T> = {
   error: string | null;
 };
 
-// /api/products/predict 응답 타입
-type PredictResponse = {
-  weight: number; // kg
-  volume: number; // m3
-};
+// // /api/products/predict 응답 타입
+// type PredictResponse = {
+//   weight: number; // kg
+//   volume: number; // m3
+// };
 
 export default function RequestPage() {
   const navigate = useNavigate();
@@ -73,43 +73,50 @@ export default function RequestPage() {
   // 🔗 실제 백엔드 /api/products/fetch, /api/products/predict
   // --------------------------------------------------------
 
-  type ServerProduct = Omit<Product, "quantity">;
+ type ServerProduct = Omit<Product, "quantity">;
 
-  // 1) 상품 정보 크롤링: POST /api/products/fetch
-  const fetchProductFromServer = async (
-    url: string
-  ): Promise<ApiResponse<ServerProduct>> => {
-    const res = await fetch("/api/products/fetch", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ url }),
-      credentials: "include", // ← 세션/쿠키 쓰면 필요
-    });
+// 1) 상품 정보 크롤링: POST /api/products/fetch
+const fetchProductFromServer = async (
+  url: string
+): Promise<ApiResponse<ServerProduct>> => {
+  // DEV일 때만 백엔드 IP 사용, PROD(배포)에서는 빈 문자열
+  const base = import.meta.env.DEV ? import.meta.env.VITE_API_BASE_URL ?? "" : "";
 
-    if (!res.ok) {
-      throw new Error("상품 정보를 불러오는데 실패했습니다.");
-    }
+  const finalUrl = `${base}/api/products/fetch`;
+  console.log("[fetchProductFromServer] DEV:", import.meta.env.DEV);
+  console.log("[fetchProductFromServer] Final URL:", finalUrl);
 
-    return (await res.json()) as ApiResponse<ServerProduct>;
-  };
+  const res = await fetch(finalUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ url }),
+    credentials: "include",
+  });
 
-  // 2) AI 예측 호출 (선택)
-  const predictProductFromServer = async (
-    fetchResult: ApiResponse<ServerProduct>
-  ): Promise<PredictResponse> => {
-    const res = await fetch("/api/products/predict", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(fetchResult),
-      credentials: "include",
-    });
+  if (!res.ok) {
+    throw new Error("상품 정보를 불러오는데 실패했습니다.");
+  }
 
-    if (!res.ok) {
-      throw new Error("AI 예측 요청에 실패했습니다.");
-    }
+  return (await res.json()) as ApiResponse<ServerProduct>;
+};
 
-    return (await res.json()) as PredictResponse;
-  };
+  // // 2) AI 예측 호출 (선택)
+  // const predictProductFromServer = async (
+  //   fetchResult: ApiResponse<ServerProduct>
+  // ): Promise<PredictResponse> => {
+  //   const res = await fetch("/api/products/predict", {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify(fetchResult),
+  //     credentials: "include",
+  //   });
+
+  //   if (!res.ok) {
+  //     throw new Error("AI 예측 요청에 실패했습니다.");
+  //   }
+
+  //   return (await res.json()) as PredictResponse;
+  // };
 
   // --------------------------------------------------------
   // URL 입력 후 “불러오기”

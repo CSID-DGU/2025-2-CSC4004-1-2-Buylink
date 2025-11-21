@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "motion/react";
 import { Plus, X } from "lucide-react";
-import sampleimg from "../assets/cuteeeee.png";
 import CartQuotation from "../components/CartQuotation";
 
 type CartItem = {
