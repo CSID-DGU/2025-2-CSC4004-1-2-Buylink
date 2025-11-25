@@ -1,3 +1,4 @@
+// src/main/java/io/github/hayo02/proxyshopping/cart/serviceImpl/CartEstimateServiceImpl.java
 package io.github.hayo02.proxyshopping.cart.serviceImpl;
 
 import io.github.hayo02.proxyshopping.cart.dto.CartEstimateRequest;
@@ -42,9 +43,23 @@ public class CartEstimateServiceImpl implements CartEstimateService {
 
     @Override
     public CartEstimateResponse estimate(String proxySid, CartEstimateRequest request) {
-        List<CartItem> items = cartItemRepository.findByProxySidOrderByCreatedAtDesc(proxySid);
-        if (items == null || items.isEmpty()) {
-            throw new IllegalArgumentException("장바구니가 비어 있습니다.");
+
+        // 0) 선택된 itemIds 기준으로 장바구니 아이템 조회
+        List<Long> itemIds = request.getItemIds();
+        List<CartItem> items;
+
+        if (itemIds != null && !itemIds.isEmpty()) {
+            // 체크된 상품만 조회
+            items = cartItemRepository.findByProxySidAndIdIn(proxySid, itemIds);
+            if (items == null || items.isEmpty()) {
+                throw new IllegalArgumentException("선택한 상품이 장바구니에 없습니다.");
+            }
+        } else {
+            // itemIds가 비어 있으면 기존처럼 전체 장바구니 기준
+            items = cartItemRepository.findByProxySidOrderByCreatedAtDesc(proxySid);
+            if (items == null || items.isEmpty()) {
+                throw new IllegalArgumentException("장바구니가 비어 있습니다.");
+            }
         }
 
         // 1) 상품 금액 합계
@@ -73,7 +88,6 @@ public class CartEstimateServiceImpl implements CartEstimateService {
 
         // 5) 국내 배송비 = 3,000원 고정
         long domesticShippingKRW = DOMESTIC_SHIPPING_FEE_KRW;
-
         long totalShippingFeeKRW = internationalShippingKRW + domesticShippingKRW;
 
         // 6) 결제 수수료 (3.4%, 10원 단위 올림)
