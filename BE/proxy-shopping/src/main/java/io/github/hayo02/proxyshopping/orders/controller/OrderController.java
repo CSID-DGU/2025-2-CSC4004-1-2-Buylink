@@ -1,4 +1,3 @@
-// src/main/java/io/github/hayo02/proxyshopping/orders/controller/OrderController.java
 package io.github.hayo02.proxyshopping.orders.controller;
 
 import io.github.hayo02.proxyshopping.common.ApiResponse;
@@ -19,6 +18,7 @@ public class OrderController {
         this.orderService = orderService;
     }
 
+    // 주문 생성 (기존 그대로)
     @PostMapping
     public ApiResponse<OrderCreateResponse> createOrder(
             @RequestHeader(value = "PROXY_SID", required = false) String proxySidHeader,
@@ -28,31 +28,27 @@ public class OrderController {
         String proxySid = (proxySidHeader != null && !proxySidHeader.isBlank())
                 ? proxySidHeader
                 : proxySidCookie;
-
         if (proxySid == null || proxySid.isBlank()) {
             throw new IllegalArgumentException("proxy_sid 가 필요합니다.");
         }
-
         OrderCreateResponse resp = orderService.createOrder(proxySid, request);
         return ApiResponse.ok(resp);
     }
 
     // 주문 상세 조회
-    @GetMapping("/{orderNumber}")
+    //
+    // GET /api/orders/{orderId}?receiver=홍길동&phone=010-1234-5678
+    //
+    // - orderId  → PathVariable
+    // - receiver → QueryString
+    // - phone    → QueryString
+    @GetMapping("/{orderId}")
     public ApiResponse<OrderDetailResponse> getOrderDetail(
-            @PathVariable String orderNumber,
-            @RequestHeader(value = "PROXY_SID", required = false) String proxySidHeader,
-            @CookieValue(value = "proxy_sid", required = false) String proxySidCookie
+            @PathVariable("orderId") String orderId,
+            @RequestParam("receiver") String receiver,
+            @RequestParam("phone") String phone
     ) {
-        String proxySid = (proxySidHeader != null && !proxySidHeader.isBlank())
-                ? proxySidHeader
-                : proxySidCookie;
-
-        if (proxySid == null || proxySid.isBlank()) {
-            throw new IllegalArgumentException("proxy_sid 가 필요합니다.");
-        }
-
-        OrderDetailResponse resp = orderService.getOrderDetail(proxySid, orderNumber);
+        OrderDetailResponse resp = orderService.getOrderDetail(orderId, receiver, phone);
         return ApiResponse.ok(resp);
     }
 }

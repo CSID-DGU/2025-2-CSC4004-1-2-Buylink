@@ -1,4 +1,3 @@
-// src/main/java/io/github/hayo02/proxyshopping/orders/serviceImpl/OrderServiceImpl.java
 package io.github.hayo02.proxyshopping.orders.serviceImpl;
 
 import io.github.hayo02.proxyshopping.cart.entity.CartItem;
@@ -39,8 +38,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderCreateResponse createOrder(String proxySid, OrderCreateRequest request) {
-
-        // 1) 배송지 검증
+        // 1) 배송지 검증 (해당 세션의 주소인지 체크)
         ShippingAddress address = shippingAddressRepository
                 .findByIdAndProxySid(request.getAddressId(), proxySid)
                 .orElseThrow(() -> new IllegalArgumentException("배송지를 찾을 수 없습니다."));
@@ -100,13 +98,31 @@ public class OrderServiceImpl implements OrderService {
         return OrderCreateResponse.from(saved);
     }
 
-    // 🔹 여기 추가된 메서드
+    // 주문 상세 조회: 주문번호 + 이름 + 전화번호
     @Override
     @Transactional(readOnly = true)
-    public OrderDetailResponse getOrderDetail(String proxySid, String orderNumber) {
+    public OrderDetailResponse getOrderDetail(String orderId, String receiver, String phone) {
         Order order = orderRepository
-                .findByOrderNumberAndProxySid(orderNumber, proxySid)
+                .findByOrderNumber(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("주문을 찾을 수 없습니다."));
+
+        // 이름 검증 (공백만 제거)
+        if (receiver != null && !receiver.isBlank()) {
+            String inputName = receiver.trim();
+            String savedName = order.getReceiverName() == null ? "" : order.getReceiverName().trim();
+            if (!savedName.equals(inputName)) {
+                throw new IllegalArgumentException("주문자 이름이 일치하지 않습니다.");
+            }
+        }
+
+        // 전화번호 검증 (숫자만 비교)
+        if (phone != null && !phone.isBlank()) {
+            String inputPhone = normalizePhone(phone);
+            String savedPhone = normalizePhone(order.getPhone());
+            if (!savedPhone.equals(inputPhone)) {
+                throw new IllegalArgumentException("전화번호가 일치하지 않습니다.");
+            }
+        }
 
         return OrderDetailResponse.from(order);
     }
@@ -116,5 +132,11 @@ public class OrderServiceImpl implements OrderService {
                 .format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
         int rand = new Random().nextInt(10_000);
         return ts + String.format("%04d", rand);
+    }
+
+    private String normalizePhone(String value) {
+        if (value == null) return "";
+        // 숫자만 남기고 제거
+        return value.replaceAll("[^0-9]", "");
     }
 }

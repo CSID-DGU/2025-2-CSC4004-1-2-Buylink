@@ -1,4 +1,3 @@
-// src/main/java/io/github/hayo02/proxyshopping/orders/dto/OrderItemDetailDto.java
 package io.github.hayo02.proxyshopping.orders.dto;
 
 import io.github.hayo02.proxyshopping.orders.entity.OrderItem;
@@ -11,7 +10,7 @@ public class OrderItemDetailDto {
 
     private Long id;
     private String productName;
-    private Integer priceKrw;
+    private Integer price;   // priceKrw → price 로 노출
     private Integer quantity;
     private String imageUrl;
 
@@ -19,7 +18,7 @@ public class OrderItemDetailDto {
         return OrderItemDetailDto.builder()
                 .id(item.getId())
                 .productName(item.getProductName())
-                .priceKrw(item.getPriceKrw())
+                .price(item.getPriceKrw())
                 .quantity(item.getQuantity())
                 .imageUrl(item.getImageUrl())
                 .build();
