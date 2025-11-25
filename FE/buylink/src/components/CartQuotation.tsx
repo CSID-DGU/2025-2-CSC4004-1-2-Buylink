@@ -39,6 +39,12 @@ type CartEstimateApiResponse = {
 
 const formatKRW = (v: number) => `${v.toLocaleString()}원`;
 
+// 🔹 DEV/PROD 공통 API base URL
+const API_BASE_URL =
+  import.meta.env.DEV ? import.meta.env.VITE_API_BASE_URL ?? "" : "";
+
+const buildApiUrl = (path: string) => `${API_BASE_URL}${path}`;
+
 export default function CartQuotation({
   extraPackaging,
   insurance,
@@ -65,10 +71,14 @@ export default function CartQuotation({
           insurance,
         };
 
-        const res = await fetch("/api/cart/estimate", {
+        const finalUrl = buildApiUrl("/api/cart/estimate");
+        console.log("[CartQuotation] POST /api/cart/estimate:", finalUrl);
+
+        const res = await fetch(finalUrl, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
+          credentials: "include",
         });
 
         if (!res.ok) {
@@ -111,8 +121,8 @@ export default function CartQuotation({
       {/* 에러 / 견적 없음 */}
       {!isLoading && !estimate && (
         <p className="text-sm text-[#767676] mt-2">
-          {errorMsg ?? "견적 정보를 불러오지 못했습니다."}
-        </p>
+          {errorMsg ?? "견적 정보를 불러오지 못했습니다."
+        }</p>
       )}
 
       {/* 견적 표시 */}

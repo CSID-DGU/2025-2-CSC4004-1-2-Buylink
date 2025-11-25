@@ -1,7 +1,11 @@
 // src/pages/CheckoutPage.tsx
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import sampleimg from "../assets/cuteeeee.png";
+// 🔹 추가: 주소 유효성 검사 util
+// 🔹 주소 + 개인통관고유번호 유효성 검사 util
+import { validateAddress, type AddressFormValues, validateCustomsCode,} from "../utils/validation";
+
 
 // =============================
 // TossPayments 전역 타입 선언
@@ -16,6 +20,12 @@ declare global {
 
 // 🔹 토스페이먼츠 테스트 클라이언트 키 (프론트에서 써도 되는 키)
 const TOSS_CLIENT_KEY = "test_ck_kYG57Eba3GmNoeeGjpWErpWDOxmA";
+
+// 🔹 DEV/PROD 공통 API base URL
+const API_BASE_URL =
+  import.meta.env.DEV ? import.meta.env.VITE_API_BASE_URL ?? "" : "";
+
+const buildApiUrl = (path: string) => `${API_BASE_URL}${path}`;
 
 // =============================
 // 타입
@@ -74,6 +84,53 @@ type CustomsVerifyResponse = {
   name: string;
 };
 
+// 🔹 /api/cart GET 응답 타입 (CartPage와 동일 스펙)
+type CartApiItem = {
+  id: number;
+  productName: string;
+  priceKRW: number;
+  imageUrl: string;
+  aiWeightKg: number;
+  aiVolumeM3: number;
+};
+
+type CartApiGetResponse = {
+  success: boolean;
+  data: {
+    items: CartApiItem[];
+    totalKRW: number;
+  } | null;
+  error: string | null;
+};
+
+// 🔹 /api/cart/estimate 응답 타입
+type CartEstimate = {
+  productTotalKRW: number;
+  serviceFeeKRW: number;
+
+  totalActualWeightKg: number;
+  totalVolumeM3: number;
+  volumetricWeightKg: number;
+  chargeableWeightKg: number;
+
+  emsYen: number;
+  internationalShippingKRW: number;
+  domesticShippingKRW: number;
+  totalShippingFeeKRW: number;
+
+  paymentFeeKRW: number;
+  extraPackagingFeeKRW: number;
+  insuranceFeeKRW: number;
+
+  grandTotalKRW: number;
+};
+
+type CartEstimateApiResponse = {
+  success: boolean;
+  data: CartEstimate | null;
+  error: string | null;
+};
+
 // 🔹 /api/orders/pay 응답 타입 (지금은 사용 X, 나중용)
 /*
 type OrdersPayResponse = {
@@ -82,31 +139,6 @@ type OrdersPayResponse = {
   paidAt?: string;
 };
 */
-
-// =============================
-// 🔥 목업 주문 상품 → 전부 주석 처리
-// =============================
-/*
-const MOCK_ORDER_ITEMS: OrderItem[] = [
-  {
-    id: 1,
-    productName: "몬치치 마스코트 키체인 3",
-    priceKRW: 50,
-    quantity: 1,
-    imageUrl: sampleimg,
-  },
-  {
-    id: 2,
-    productName: "상품명은 최대 1줄 노출 길어지면 말줄임",
-    priceKRW: 50,
-    quantity: 1,
-    imageUrl: sampleimg,
-  },
-];
-*/
-
-// 👉 실제에선 백엔드에서 주문/장바구니 데이터를 받아와 채울 예정
-const ORDER_ITEMS: OrderItem[] = [];
 
 const formatKRW = (v: number) => `${v.toLocaleString()}원`;
 
@@ -124,16 +156,106 @@ export default function CheckoutPage() {
 
   const [isPaying, setIsPaying] = useState(false);
 
+  // 🔹 장바구니에서 불러온 주문 상품 / 견적
+  const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
+  const [estimate, setEstimate] = useState<CartEstimate | null>(null);
+  const [isLoadingOrder, setIsLoadingOrder] = useState(false);
+
   // ==============================
-  // 결제 금액 (지금은 ORDER_ITEMS 기준, 비어있으면 0원)
+  // 주문/견적 불러오기
+  //  - GET /api/cart → 주문 상품 리스트
+  //  - POST /api/cart/estimate → 결제 금액 및 수수료/배송비 정보
   // ==============================
-  const productTotal = ORDER_ITEMS.reduce(
+  useEffect(() => {
+    const fetchOrderAndEstimate = async () => {
+      setIsLoadingOrder(true);
+      try {
+        // 1) 장바구니 아이템 불러오기
+        const cartUrl = buildApiUrl("/api/cart");
+        console.log("[CheckoutPage] GET /api/cart:", cartUrl);
+
+        const cartRes = await fetch(cartUrl, {
+          method: "GET",
+          credentials: "include",
+        });
+
+        if (!cartRes.ok) {
+          throw new Error("장바구니 조회 실패");
+        }
+
+        const cartJson = (await cartRes.json()) as CartApiGetResponse;
+        console.log("[CheckoutPage] /api/cart response:", cartJson);
+
+        if (!cartJson.success || !cartJson.data) {
+          throw new Error(cartJson.error ?? "장바구니 데이터가 없습니다.");
+        }
+
+        const mappedItems: OrderItem[] = cartJson.data.items.map((item) => ({
+          id: item.id,
+          productName: item.productName,
+          priceKRW: item.priceKRW,
+          // 백엔드 스펙에 quantity가 없으니 일단 1로 고정
+          quantity: 1,
+          imageUrl: item.imageUrl,
+        }));
+
+        setOrderItems(mappedItems);
+
+        // 2) 견적 불러오기
+        const estimateUrl = buildApiUrl("/api/cart/estimate");
+        console.log("[CheckoutPage] POST /api/cart/estimate:", estimateUrl);
+
+        const estimateRes = await fetch(estimateUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            // CheckoutPage에서는 옵션 상태를 아직 모르니까,
+            // 기본값(추가포장 true, 보험 true/false)은 서비스 정책에 맞춰서 수정 가능
+            extraPackaging: true,
+            insurance: true,
+          }),
+          credentials: "include",
+        });
+
+        if (!estimateRes.ok) {
+          throw new Error("견적 계산 요청 실패");
+        }
+
+        const estimateJson = (await estimateRes.json()) as CartEstimateApiResponse;
+        console.log("[CheckoutPage] /api/cart/estimate response:", estimateJson);
+
+        if (!estimateJson.success || !estimateJson.data) {
+          throw new Error(estimateJson.error ?? "견적 계산 실패");
+        }
+
+        setEstimate(estimateJson.data);
+      } catch (e) {
+        console.error("[CheckoutPage] fetchOrderAndEstimate error:", e);
+        // 실패해도 UI는 그대로, 금액 0으로 노출
+        setOrderItems([]);
+        setEstimate(null);
+      } finally {
+        setIsLoadingOrder(false);
+      }
+    };
+
+    fetchOrderAndEstimate();
+  }, []);
+
+  // ==============================
+  // 결제 금액
+  //  - 기본: 견적 grandTotalKRW 사용
+  //  - 견적 없으면 fallback으로 상품 합계 사용
+  // ==============================
+  const productTotal = orderItems.reduce(
     (sum, item) => sum + item.priceKRW * item.quantity,
     0
   );
   const discount = 0;
   const shippingFee = 0;
-  const totalAmount = productTotal - discount + shippingFee;
+
+  const fallbackTotal = productTotal - discount + shippingFee;
+  const totalAmount = estimate ? estimate.grandTotalKRW : fallbackTotal;
 
   // 코드 일부 마스킹용 (P1234*****890 이런 느낌)
   const maskCustomsCode = (code: string) => {
@@ -158,6 +280,10 @@ export default function CheckoutPage() {
     }
     if (!agree) {
       alert("주문정보 확인 및 약관에 동의해 주세요.");
+      return;
+    }
+    if (!totalAmount || totalAmount <= 0) {
+      alert("결제할 상품 또는 금액 정보가 유효하지 않습니다.");
       return;
     }
 
@@ -274,24 +400,28 @@ export default function CheckoutPage() {
             )}
           </div>
 
-          {/* 구매대행 상품 (지금은 ORDER_ITEMS 사용) */}
+          {/* 구매대행 상품 (장바구니에서 불러온 orderItems 사용) */}
           <div className="bg-white rounded-2xl shadow p-6 border border-gray-200">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-[#111111]">
                 구매대행 상품
               </h2>
               <span className="text-xs text-[#767676]">
-                {ORDER_ITEMS.length}건
+                {orderItems.length}건
               </span>
             </div>
 
-            {ORDER_ITEMS.length === 0 ? (
+            {isLoadingOrder ? (
+              <div className="border border-dashed border-[#e5e5ec] rounded-xl py-5 px-4 text-sm text-[#767676]">
+                결제할 상품 정보를 불러오는 중입니다...
+              </div>
+            ) : orderItems.length === 0 ? (
               <div className="border border-dashed border-[#e5e5ec] rounded-xl py-5 px-4 text-sm text-[#767676]">
                 결제할 상품이 없습니다. 장바구니에서 상품을 담아주세요.
               </div>
             ) : (
               <div className="space-y-4">
-                {ORDER_ITEMS.map((item) => (
+                {orderItems.map((item) => (
                   <div
                     key={item.id}
                     className="flex gap-4 border border-[#f1f1f5] rounded-xl p-3"
@@ -359,7 +489,11 @@ export default function CheckoutPage() {
 
               <div className="flex justify-between">
                 <span className="text-[#505050]">배송비</span>
-                <span className="text-[#111111] font-medium">무료</span>
+                <span className="text-[#111111] font-medium">
+                  {/* estimate가 있으면 배송비 포함된 형태지만,
+                      여기서는 디자인 그대로 "무료" 표기 유지 */}
+                  무료
+                </span>
               </div>
             </div>
 
@@ -375,7 +509,7 @@ export default function CheckoutPage() {
 
           <button
             onClick={handlePay}
-            disabled={isPaying}
+            disabled={isPaying || isLoadingOrder}
             className="w-full py-4 rounded-xl bg-gradient-to-r from-[#ffe788] to-[#ffcc4c] text-[#111111] font-semibold shadow-lg hover:shadow-xl transition-all disabled:opacity-60"
           >
             {isPaying
@@ -430,37 +564,8 @@ function AddressModal({
   const [searchResults, setSearchResults] = useState<AddressResult[]>([]);
   const [roadAddress, setRoadAddress] = useState("");
   const [postalCode, setPostalCode] = useState("");
-  const [detailAddress, setDetailAddress] = useState("");
+  const [detailAddress] = useState("");
   const [deliveryRequest, setDeliveryRequest] = useState("");
-
-  // =============================
-  // 🔥 (주석) 목업 주소 검색
-  // =============================
-  /*
-  const mockAddressSearch = async (
-    keyword: string
-  ): Promise<AddressSearchApiResponse> => {
-    console.log("주소 검색 키워드(목업):", keyword);
-
-    return {
-      success: true,
-      data: {
-        currentPage: 1,
-        countPerPage: 10,
-        totalCount: 1,
-        addresses: [
-          {
-            roadAddress:
-              "서울특별시 광진구 아차산로 549 (광장동, 광장현대파크빌)",
-            jibunAddress: "서울특별시 광진구 광장동 577 광장현대파크빌",
-            zipCode: "04983",
-          },
-        ],
-      },
-      error: null,
-    };
-  };
-  */
 
   // =============================
   // 주소 검색 (실제 API 호출)
@@ -469,10 +574,12 @@ function AddressModal({
     if (!query.trim()) return;
 
     try {
-      const res = await fetch(
-        `/api/address/search?query=${encodeURIComponent(query)}`,
-        { method: "GET" }
+      const url = buildApiUrl(
+        `/api/address/search?keyword=${encodeURIComponent(query)}`
       );
+      console.log("[AddressModal] GET /api/address/search:", url);
+
+      const res = await fetch(url, { method: "GET", credentials: "include" });
 
       if (!res.ok) {
         throw new Error("주소 검색 실패");
@@ -492,53 +599,45 @@ function AddressModal({
   };
 
   // =============================
-  // 🔥 (주석) 목업 배송지 등록
-  // =============================
-  /*
-  const mockSaveAddress = async (
-    payload: Omit<SavedAddress, "id">
-  ): Promise<OrdersAddressApiResponse> => {
-    console.log("배송지 등록 payload(목업):", payload);
-
-    return {
-      success: true,
-      data: {
-        id: 5,
-        receiverName: payload.receiverName,
-        phone: payload.phone,
-        postalCode: payload.postalCode,
-        roadAddress: payload.roadAddress,
-        detailAddress: payload.detailAddress,
-        deliveryRequest: payload.deliveryRequest,
-      },
-      error: null,
-    };
-  };
-  */
-
-  // =============================
-  // 배송지 등록 (실제 API 호출)
+  // 배송지 등록 (실제 API 호출) + 유효성 검사
   // =============================
   const handleSubmit = async () => {
-    if (!receiverName || !phone || !roadAddress || !postalCode) {
-      alert("이름, 전화번호, 주소, 우편번호를 입력해 주세요.");
+    // 🔹 유효성 검사용 값 구성
+    const values: AddressFormValues = {
+      receiverName: receiverName.trim(),
+      phone: phone.trim(),
+      roadAddress: roadAddress.trim(),
+      postalCode: postalCode.trim(),
+      detailAddress: detailAddress.trim(),
+      deliveryRequest: deliveryRequest.trim(),
+    };
+
+    const errors = validateAddress(values);
+    const firstError = Object.values(errors).find((msg) => msg);
+
+    if (firstError) {
+      alert(firstError);
       return;
     }
 
     const payload: Omit<SavedAddress, "id"> = {
-      receiverName,
-      phone,
-      postalCode,
-      roadAddress,
-      detailAddress,
-      deliveryRequest,
+      receiverName: values.receiverName,
+      phone: values.phone, // 하이픈 포함 그대로 서버로 전송
+      postalCode: values.postalCode,
+      roadAddress: values.roadAddress,
+      detailAddress: values.detailAddress,
+      deliveryRequest: values.deliveryRequest,
     };
 
     try {
-      const res = await fetch("/api/orders/address", {
+      const url = buildApiUrl("/api/orders/address");
+      console.log("[AddressModal] POST /api/orders/address:", url);
+
+      const res = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
+        credentials: "include",
       });
 
       if (!res.ok) {
@@ -613,23 +712,24 @@ function AddressModal({
           </div>
         )}
 
+
         <input
           value={roadAddress}
-          onChange={(e) => setRoadAddress(e.target.value)}
+          readOnly
           placeholder="도로명 주소"
           className="w-full border rounded-lg px-4 py-2 text-sm"
         />
 
         <input
           value={postalCode}
-          onChange={(e) => setPostalCode(e.target.value)}
+          readOnly
           placeholder="우편번호"
           className="w-full border rounded-lg px-4 py-2 text-sm"
         />
 
         <input
           value={detailAddress}
-          onChange={(e) => setDetailAddress(e.target.value)}
+          readOnly
           placeholder="상세 주소"
           className="w-full border rounded-lg px-4 py-2 text-sm"
         />
@@ -674,33 +774,29 @@ function CustomsCodeModal({
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // 🔥 (주석) 목업 검증 로직
-  /*
-  const mockVerifyCustomsCode = async (
-    c: string
-  ): Promise<CustomsVerifyResponse> => {
-    console.log("개인통관고유번호 검증(목업):", c);
-
-    // 간단하게 "P"로 시작하고 길이 13이면 유효하다고 가정
-    if (c.startsWith("P") && c.length === 13) {
-      return { isValid: true, name: "홍길동" };
-    }
-    return { isValid: false, name: "" };
-  };
-  */
-
   const handleVerify = async () => {
-    if (!code.trim()) {
-      alert("개인통관고유번호를 입력해 주세요.");
+    const trimmed = code.trim();
+
+    // 🔹 형식 유효성 검사 (P + 12자리 숫자)
+    const validationError = validateCustomsCode(trimmed);
+    if (validationError) {
+      alert(validationError);
       return;
     }
 
     setLoading(true);
     try {
-      const res = await fetch("/api/orders/customs-code/verify", {
+      const url = buildApiUrl("/api/orders/customs-code/verify");
+      console.log(
+        "[CustomsCodeModal] POST /api/orders/customs-code/verify:",
+        url
+      );
+
+      const res = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code: code.trim() }),
+        body: JSON.stringify({ code: trimmed }),
+        credentials: "include",
       });
 
       if (!res.ok) {
@@ -710,7 +806,7 @@ function CustomsCodeModal({
       const json = (await res.json()) as CustomsVerifyResponse;
 
       if (json.isValid) {
-        onVerified({ code: code.trim(), name: json.name });
+        onVerified({ code: trimmed, name: json.name });
       } else {
         alert("올바르지 않은 번호입니다. 다시 확인해주세요.");
       }
@@ -721,6 +817,7 @@ function CustomsCodeModal({
       setLoading(false);
     }
   };
+
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50">

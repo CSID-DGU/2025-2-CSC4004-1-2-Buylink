@@ -1,7 +1,5 @@
 // src/layouts/MainLayout.tsx
 import { Outlet, useNavigate } from "react-router-dom";
-import { Package } from "lucide-react";
-import type { ReactNode } from "react";
 
 export default function MainLayout() {
   const navigate = useNavigate();
