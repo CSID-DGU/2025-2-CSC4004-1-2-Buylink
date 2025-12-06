@@ -1,8 +1,5 @@
 package io.github.hayo02.proxyshopping.cart.dto;
 
-/**
- * 장바구니 견적 계산 결과 응답 DTO
- */
 public class CartEstimateResponse {
 
     // 1) 기본 금액
