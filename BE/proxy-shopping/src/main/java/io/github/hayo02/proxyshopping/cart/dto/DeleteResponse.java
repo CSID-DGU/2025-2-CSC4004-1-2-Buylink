@@ -1,4 +1,3 @@
-// src/main/java/io/github/hayo02/proxyshopping/cart/dto/DeleteResponse.java
 package io.github.hayo02.proxyshopping.cart.dto;
 
 import lombok.AllArgsConstructor;
