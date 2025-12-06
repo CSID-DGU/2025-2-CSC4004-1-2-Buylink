@@ -1,35 +1,43 @@
+server:
+  port: 17788
+
 spring:
   datasource:
-    url: jdbc:h2:mem:proxyshopping;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-    generate-unique-name: false
-
-  h2:
-    console:
-      enabled: true
-      path: /my-h2-console
+    url: jdbc:mariadb://localhost:3306/proxyshopping?characterEncoding=utf8mb4
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: root        # 서버의 MariaDB root (또는 전용 계정)
+    password: root        # 서버에 설정한 비번으로
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 20000
+      idle-timeout: 300000
+      max-lifetime: 1200000
+      leak-detection-threshold: 60000
 
   jpa:
     open-in-view: false
     hibernate:
       ddl-auto: update
-    defer-datasource-initialization: true
     properties:
-      hibernate.format_sql: true
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
+        format_sql: true
+
+  transaction:
+    default-timeout: 30
 
   sql:
     init:
-      mode: always
-
-app:
-  cart:
-    default-sid: sid-demo-1
+      mode: never
 
 python:
   crawler:
+    enabled: true
     base-url: http://localhost:5001
+    work-dir: /new_data/bm/buylink/BE/proxy-shopping/python-crawler
+    command: .venv/bin/python
+    health-url: http://localhost:5001/health
 
 juso:
   api-key: "devU01TX0FVVEgyMDI1MTExNDA1MDE1MzExNjQ0OTI="
@@ -38,7 +46,5 @@ toss:
   secret-key: test_sk_Z61JOxRQVEm6YlzZJzn2VW0X9bAq
   base-url: https://api.tosspayments.com
 
-
 # ai:
 #   base-url:
-#     # (AI 준비되면 예: http://localhost:7001 로 채우세요)
