@@ -13,7 +13,7 @@ import java.util.List;
 @Component
 public class EmsShippingCalculator {
 
-    // 1엔 = 10원 가정 (필요하면 나중에 상수만 변경)
+    // 1엔 = 10원 가정
     private static final double YEN_TO_KRW = 10.0;
 
     // EMS 무게 구간(kg)과 요금(엔) - 10kg까지
