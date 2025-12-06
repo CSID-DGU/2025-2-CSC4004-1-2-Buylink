@@ -6,15 +6,15 @@ public class CartAddRequest {
     // 1) 필수: 상품 URL
     private String url;
 
-    // 2) 상품 정보 스냅샷 (FE가 /api/products/fetch 응답에서 채워줌)
+    // 2) 상품 정보 스냅샷
     private String productName;
     private Integer priceKRW;
-    private String imageUrl;          // 대표 이미지 (없으면 imageUrls[0] 사용 가능)
-    private List<String> imageUrls;   // 전체 이미지 리스트
+    private String imageUrl;
+    private List<String> imageUrls;
     private String description;
     private Boolean hasShippingFee;
     private String category;
-    private Boolean isSoldOut;        // 품절 여부
+    private Boolean isSoldOut;
 
     public String getUrl() { return url; }
     public void setUrl(String url) { this.url = url; }
