@@ -1,9 +1,12 @@
-// src/main/java/io/github/hayo02/proxyshopping/cart/serviceImpl/CartEstimateServiceImpl.java
 package io.github.hayo02.proxyshopping.cart.serviceImpl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.hayo02.proxyshopping.cart.dto.CartEstimateRequest;
 import io.github.hayo02.proxyshopping.cart.dto.CartEstimateResponse;
+import io.github.hayo02.proxyshopping.cart.entity.CartEstimate;
 import io.github.hayo02.proxyshopping.cart.entity.CartItem;
+import io.github.hayo02.proxyshopping.cart.repository.CartEstimateRepository;
 import io.github.hayo02.proxyshopping.cart.repository.CartItemRepository;
 import io.github.hayo02.proxyshopping.cart.service.CartEstimateService;
 import io.github.hayo02.proxyshopping.cart.support.EmsShippingCalculator;
@@ -11,9 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class CartEstimateServiceImpl implements CartEstimateService {
 
     // AI 값이 null일 때 사용할 기본값들
@@ -33,12 +37,18 @@ public class CartEstimateServiceImpl implements CartEstimateService {
     private static final long DOMESTIC_SHIPPING_FEE_KRW = 3000L;
 
     private final CartItemRepository cartItemRepository;
+    private final CartEstimateRepository cartEstimateRepository;
     private final EmsShippingCalculator emsShippingCalculator;
+    private final ObjectMapper objectMapper;
 
     public CartEstimateServiceImpl(CartItemRepository cartItemRepository,
-                                   EmsShippingCalculator emsShippingCalculator) {
+                                   CartEstimateRepository cartEstimateRepository,
+                                   EmsShippingCalculator emsShippingCalculator,
+                                   ObjectMapper objectMapper) {
         this.cartItemRepository = cartItemRepository;
+        this.cartEstimateRepository = cartEstimateRepository;
         this.emsShippingCalculator = emsShippingCalculator;
+        this.objectMapper = objectMapper;
     }
 
     @Override
@@ -106,6 +116,12 @@ public class CartEstimateServiceImpl implements CartEstimateService {
                 + extraPackagingFeeKRW
                 + insuranceFeeKRW;
 
+        // 9) 견적 결과를 DB에 저장 (Upsert: proxySid 기준 1개만 유지)
+        saveEstimate(proxySid, items, request, productTotalKRW, serviceFeeKRW,
+                totalActualWeightKg, totalVolumeM3, volumetricWeightKg, chargeableWeightKg,
+                emsYen, internationalShippingKRW, domesticShippingKRW, totalShippingFeeKRW,
+                paymentFeeKRW, extraPackagingFeeKRW, insuranceFeeKRW, grandTotalKRW);
+
         return CartEstimateResponse.of(
                 productTotalKRW,
                 serviceFeeKRW,
@@ -122,6 +138,52 @@ public class CartEstimateServiceImpl implements CartEstimateService {
                 insuranceFeeKRW,
                 grandTotalKRW
         );
+    }
+
+    /**
+     * 견적 결과를 DB에 저장 (Upsert)
+     */
+    private void saveEstimate(String proxySid, List<CartItem> items, CartEstimateRequest request,
+                              long productTotalKRW, long serviceFeeKRW,
+                              double totalActualWeightKg, double totalVolumeM3,
+                              double volumetricWeightKg, double chargeableWeightKg,
+                              long emsYen, long internationalShippingKRW,
+                              long domesticShippingKRW, long totalShippingFeeKRW,
+                              long paymentFeeKRW, long extraPackagingFeeKRW,
+                              long insuranceFeeKRW, long grandTotalKRW) {
+
+        // 장바구니 아이템 ID 목록을 JSON 문자열로 변환
+        String itemIdsJson;
+        try {
+            List<Long> ids = items.stream().map(CartItem::getId).collect(Collectors.toList());
+            itemIdsJson = objectMapper.writeValueAsString(ids);
+        } catch (JsonProcessingException e) {
+            itemIdsJson = "[]";
+        }
+
+        // 기존 견적이 있으면 업데이트, 없으면 생성
+        CartEstimate estimate = cartEstimateRepository.findByProxySid(proxySid)
+                .orElse(CartEstimate.builder().proxySid(proxySid).build());
+
+        estimate.setItemIds(itemIdsJson);
+        estimate.setProductTotalKRW(productTotalKRW);
+        estimate.setServiceFeeKRW(serviceFeeKRW);
+        estimate.setTotalActualWeightKg(totalActualWeightKg);
+        estimate.setTotalVolumeM3(totalVolumeM3);
+        estimate.setVolumetricWeightKg(volumetricWeightKg);
+        estimate.setChargeableWeightKg(chargeableWeightKg);
+        estimate.setEmsYen(emsYen);
+        estimate.setInternationalShippingKRW(internationalShippingKRW);
+        estimate.setDomesticShippingKRW(domesticShippingKRW);
+        estimate.setTotalShippingFeeKRW(totalShippingFeeKRW);
+        estimate.setPaymentFeeKRW(paymentFeeKRW);
+        estimate.setExtraPackagingFeeKRW(extraPackagingFeeKRW);
+        estimate.setInsuranceFeeKRW(insuranceFeeKRW);
+        estimate.setGrandTotalKRW(grandTotalKRW);
+        estimate.setExtraPackaging(request.isExtraPackaging());
+        estimate.setInsurance(request.isInsurance());
+
+        cartEstimateRepository.save(estimate);
     }
 
     private long roundUpTo10Won(double value) {
