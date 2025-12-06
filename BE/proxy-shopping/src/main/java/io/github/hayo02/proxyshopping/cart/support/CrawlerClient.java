@@ -1,4 +1,3 @@
-// src/main/java/io/github/hayo02/proxyshopping/cart/support/CrawlerClient.java
 // 잘못만듦.. 사용 안함.
 package io.github.hayo02.proxyshopping.cart.support;
 
