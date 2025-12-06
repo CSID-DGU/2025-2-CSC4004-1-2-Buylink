@@ -165,7 +165,8 @@ class MercariCrawler:
 
             # 5) 이미지
             try:
-                image_urls = set()
+                # 순서 유지용 리스트
+                image_urls = []
                 th_selectors = [
                     'div[data-testid^="imageThumbnail-"] img',
                     'div[class*="itemThumbnail"] img',
@@ -178,7 +179,9 @@ class MercariCrawler:
                         for img in imgs:
                             src = img.get_attribute("src")
                             if src and "mercdn.net/item/detail" in src and "/photos/" in src:
-                                image_urls.add(src)
+                                # 중복 제거는 리스트에서 직접 체크
+                                if src not in image_urls:
+                                    image_urls.append(src)
                         if image_urls:
                             break
                     except Exception:
@@ -191,13 +194,15 @@ class MercariCrawler:
                         for img in all_imgs:
                             src = img.get_attribute("src")
                             if src and "mercdn.net/item/detail" in src and "/photos/" in src:
-                                image_urls.add(src)
+                                if src not in image_urls:
+                                    image_urls.append(src)
                     except Exception:
                         pass
 
-                product_info["images"] = list(image_urls)
+                product_info["images"] = image_urls
             except Exception:
                 pass
+
 
             # 6) 카테고리 경로
             try:
