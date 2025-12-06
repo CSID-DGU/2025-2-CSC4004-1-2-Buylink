@@ -1,4 +1,3 @@
-// cart/dto/CartResponse.java
 package io.github.hayo02.proxyshopping.cart.dto;
 
 import java.util.List;
