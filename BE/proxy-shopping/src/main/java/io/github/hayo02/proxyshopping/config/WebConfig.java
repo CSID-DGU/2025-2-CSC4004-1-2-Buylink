@@ -8,7 +8,12 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry reg) {
         reg.addMapping("/api/**")
-                .allowedOrigins("http://localhost:3000")
+                .allowedOrigins(
+                        "http://localhost:3000",
+                        "http://localhost:17780",
+                        "http://211.188.56.255:17780",
+                        "https://dgu-buylink.vercel.app"
+                )
                 .allowedMethods("GET","POST","PUT","DELETE","PATCH","OPTIONS")
                 .allowCredentials(true);
     }
