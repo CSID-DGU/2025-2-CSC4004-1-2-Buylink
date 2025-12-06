@@ -1,4 +1,3 @@
-// src/main/java/io/github/hayo02/proxyshopping/cart/repository/CartItemRepository.java
 package io.github.hayo02.proxyshopping.cart.repository;
 
 import io.github.hayo02.proxyshopping.cart.entity.CartItem;
