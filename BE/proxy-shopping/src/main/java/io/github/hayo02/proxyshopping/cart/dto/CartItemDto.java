@@ -6,7 +6,7 @@ public class CartItemDto {
     private Integer priceKRW;
     private String imageUrl;
 
-    // AI 예측 값 추가
+    // AI 예측 값
     private Double aiWeightKg; // kg
     private Double aiVolumeM3; // m^3
 
