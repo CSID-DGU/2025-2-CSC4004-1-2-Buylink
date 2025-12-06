@@ -1,4 +1,3 @@
-// src/main/java/io/github/hayo02/proxyshopping/cart/controller/CartController.java
 package io.github.hayo02.proxyshopping.cart.controller;
 
 import io.github.hayo02.proxyshopping.cart.dto.CartAddRequest;
