@@ -11,7 +11,7 @@ public class ProductInfoDto {
     private Boolean hasShippingFee;
     private String category;
     private List<String> imageUrls;
-    private Boolean isSoldOut;     // ← 추가됨
+    private Boolean isSoldOut;
 
     // getters/setters
     public String getProductURL() { return productURL; }
@@ -35,7 +35,6 @@ public class ProductInfoDto {
     public List<String> getImageUrls() { return imageUrls; }
     public void setImageUrls(List<String> imageUrls) { this.imageUrls = imageUrls; }
 
-    // isSoldOut getter/setter (추가)
     public Boolean getIsSoldOut() { return isSoldOut; }
     public void setIsSoldOut(Boolean isSoldOut) { this.isSoldOut = isSoldOut; }
 }

@@ -1,6 +1,6 @@
+// src/main/java/io/github/hayo02/proxyshopping/productfetch/service/ProductFetchServiceImpl.java
 package io.github.hayo02.proxyshopping.productfetch.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.hayo02.proxyshopping.productfetch.dto.ProductFetchRequest;
 import io.github.hayo02.proxyshopping.productfetch.dto.ProductInfoDto;
 import org.springframework.stereotype.Service;
@@ -25,6 +25,7 @@ public class ProductFetchServiceImpl implements ProductFetchService {
             throw new IllegalArgumentException("url is required");
         }
 
+        @SuppressWarnings("unchecked")
         Map<String, Object> resp = crawlerWebClient.post()
                 .uri("/crawl")
                 .bodyValue(Map.of("url", req.getUrl()))
@@ -37,6 +38,7 @@ public class ProductFetchServiceImpl implements ProductFetchService {
             throw new IllegalStateException("크롤링 실패: " + err);
         }
 
+        @SuppressWarnings("unchecked")
         Map<String, Object> data = (Map<String, Object>) resp.get("data");
 
         ProductInfoDto dto = new ProductInfoDto();
@@ -44,10 +46,14 @@ public class ProductFetchServiceImpl implements ProductFetchService {
         dto.setProductName((String) data.getOrDefault("productName", null));
         dto.setProductDescription((String) data.getOrDefault("description", null));
 
-        // 1) priceKRW 그대로 사용
-        dto.setPriceKRW(asInt(data.get("priceKRW")));
+        // 1) 가격 (필수값 - null이면 에러)
+        Integer priceKRW = asInt(data.get("priceKRW"));
+        if (priceKRW == null) {
+            throw new IllegalStateException("상품 정보를 찾을 수 없습니다. 상품 상세 페이지 URL을 입력해주세요.");
+        }
+        dto.setPriceKRW(priceKRW);
 
-        // 2) 배송비 처리
+        // 2) 배송비 여부
         Boolean hasShippingFee = asBoolean(data.get("hasShippingFee"));
         if (hasShippingFee != null) {
             dto.setHasShippingFee(hasShippingFee);
@@ -60,42 +66,69 @@ public class ProductFetchServiceImpl implements ProductFetchService {
         List<String> cats = asStringList(data.get("categories"));
         dto.setCategory(cats != null && !cats.isEmpty() ? String.join(" > ", cats) : null);
 
-        // 4) 이미지 리스트
-        dto.setImageUrls(asStringList(data.get("images")));
+        // 4) 이미지 리스트 - 크롤러 순서 그대로 전달
+        List<String> images = asStringList(data.get("images"));
+        dto.setImageUrls(images);
 
-        // 5) 품절 여부 추가 (새로 추가된 부분)
+        // 5) 품절 여부
         dto.setIsSoldOut(asBoolean(data.get("isSoldOut")));
 
         return dto;
     }
 
-    private Integer asInt(Object o) {
-        if (o == null) return null;
-        if (o instanceof Integer i) return i;
-        if (o instanceof Number n) return (int) Math.round(n.doubleValue());
-        if (o instanceof String s && !s.isBlank()) {
-            try { return (int) Math.round(Double.parseDouble(s.trim())); } catch (Exception ignored) {}
+    private Integer asInt(Object value) {
+        if (value == null) return null;
+        if (value instanceof Number n) {
+            return n.intValue();
+        }
+        try {
+            String s = String.valueOf(value).trim();
+            if (s.isEmpty()) return null;
+            return Integer.parseInt(s);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
+    private Boolean asBoolean(Object value) {
+        if (value == null) return null;
+        if (value instanceof Boolean b) {
+            return b;
+        }
+        String s = String.valueOf(value).trim().toLowerCase();
+        if (s.isEmpty()) return null;
+
+        if ("true".equals(s) || "y".equals(s) || "yes".equals(s) || "1".equals(s)) {
+            return true;
+        }
+        if ("false".equals(s) || "n".equals(s) || "no".equals(s) || "0".equals(s)) {
+            return false;
         }
         return null;
     }
 
-    private Boolean asBoolean(Object o) {
-        if (o instanceof Boolean b) return b;
-        if (o instanceof String s) {
-            String t = s.trim().toLowerCase();
-            if ("true".equals(t)) return true;
-            if ("false".equals(t)) return false;
-        }
-        return null;
-    }
+    private List<String> asStringList(Object value) {
+        if (value == null) return null;
 
-    @SuppressWarnings("unchecked")
-    private List<String> asStringList(Object o) {
-        if (o instanceof List<?> list) {
-            List<String> out = new ArrayList<>();
-            for (Object each : list) if (each != null) out.add(String.valueOf(each));
-            return out;
+        List<String> result = new ArrayList<>();
+
+        if (value instanceof List<?> list) {
+            for (Object o : list) {
+                if (o != null) result.add(String.valueOf(o));
+            }
+            return result;
         }
-        return null;
+
+        if (value.getClass().isArray()) {
+            Object[] arr = (Object[]) value;
+            for (Object o : arr) {
+                if (o != null) result.add(String.valueOf(o));
+            }
+            return result;
+        }
+
+        // 단일 값인 경우
+        result.add(String.valueOf(value));
+        return result;
     }
 }
