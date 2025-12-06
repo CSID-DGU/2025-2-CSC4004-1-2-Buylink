@@ -1,4 +1,3 @@
-// src/main/java/io/github/hayo02/proxyshopping/cart/dto/CrawledProduct.java
 package io.github.hayo02.proxyshopping.cart.dto;
 
 import java.util.List;
