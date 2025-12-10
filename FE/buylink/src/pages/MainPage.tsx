@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import sampleimg from "../assets/cuteeeee.png";
 
 export default function MainPage() {
-  const navigate = useNavigate(); // 🔥 react-router navigate
+  const navigate = useNavigate();
 
   const features = [
     {
@@ -35,7 +35,6 @@ export default function MainPage() {
     <>
       {/* Main Content */}
       <AnimatePresence mode="wait">
-        {/* 🔥 currentPage === "home" 조건 제거 → 항상 렌더링됨 */}
         <motion.div
           key="home"
           initial={{ opacity: 0 }}
@@ -82,7 +81,6 @@ export default function MainPage() {
                     <motion.button
                       whileHover={{ scale: 1.05, y: -2 }}
                       whileTap={{ scale: 0.95 }}
-                      // 🔥 여기서 router 동작 → /request 로 이동
                       onClick={() => navigate("/request")}
                       className="px-37 py-4 bg-gradient-to-r from-[#ffe788] to-[#ffcc4c] rounded-xl text-[#111111] font-[600] shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2"
                     >
@@ -334,11 +332,11 @@ export default function MainPage() {
                         복잡한 해외 구매, 바이링으로 쉽고 빠르게 해결하세요
                     </p>
 
-                    {/* ✅ 클릭 시 RequestPage로 이동 */}
+                    {/* 클릭 시 RequestPage로 이동 */}
                     <motion.button
                         whileHover={{ scale: 1.05, y: -2 }}
                         whileTap={{ scale: 0.95 }}
-                        onClick={() => navigate("/request")} // ✅ 수정 포인트
+                        onClick={() => navigate("/request")}
                         className="px-12 py-5 bg-[#111111] text-white rounded-xl font-[600] text-lg shadow-xl hover:shadow-2xl transition-all inline-flex items-center gap-3"
                     >
                         지금 주문하러가기
