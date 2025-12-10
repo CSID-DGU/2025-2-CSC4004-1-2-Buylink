@@ -1,16 +1,22 @@
-// src/pages/OrderCompletePage.tsx
-import { useEffect, useState } from "react";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "motion/react";
 import sampleimg from "../assets/cuteeeee.png";
+import {
+  validateOrderHistory,
+  hasAnyError,
+  type OrderHistoryFormValues,
+} from "../utils/validation";
 
-// =============================
-// 타입 정의
-// =============================
+const API_BASE_URL =
+  import.meta.env.DEV ? import.meta.env.VITE_API_BASE_URL ?? "" : "";
+
+const buildApiUrl = (path: string) => `${API_BASE_URL}${path}`;
+
 type OrderItem = {
   id: number;
   productName: string;
-  priceKRW: number;
+  price: number;
   quantity: number;
   imageUrl?: string;
 };
@@ -21,86 +27,40 @@ type ShippingInfo = {
 };
 
 type OrderDetail = {
-  orderId: number;
+  orderId: string;
   receiver: string;
-  receiverPhone?: string;
-  address?: string;
+  phone: string;
+  postalCode: string;
+  roadAddress: string;
+  detailAddress: string;
+  deliveryRequest?: string;
   paymentMethod: string;
+
+  productTotalKRW: number;
+  serviceFeeKRW: number;
+
+  volumetricWeightKg: number;
+  chargeableWeightKg: number;
+
+  emsYen: number;
+  internationalShippingKRW: number;
+  domesticShippingKRW: number;
+  totalShippingFeeKRW: number;
+
+  paymentFeeKRW: number;
+  extraPackagingFeeKRW: number;
+  insuranceFeeKRW: number;
+
+  grandTotalKRW: number;
   totalAmount: number;
+
   items: OrderItem[];
   shipping: ShippingInfo;
   createdAt?: string;
 };
 
-// 🔹 GET /api/orders/{orderId} 응답
-type OrderDetailApiResponse = OrderDetail;
-
-/*  🔥 템플릿 타입들 → 지금은 사용하지 않으므로 통째로 주석 처리
-// 🔹 POST /api/orders 요청/응답 (다른 페이지에서 사용할 템플릿용)
-type CreateOrderApiRequest = {
-  cartItems: any[];
-  addressId: number;
-  customsCode: string;
-  paymentInfo: any;
-};
-
-type CreateOrderApiResponse = {
-  orderId: number;
-  totalAmount: number;
-  status: "PAID" | "PENDING" | "FAILED";
-};
-
-// 🔹 POST /api/orders/pay 요청/응답 (다른 페이지에서 사용할 템플릿용)
-type PayApiRequest = {
-  orderId: number;
-  method: "TOSS_PAY" | "CARD" | "BANK_TRANSFER" | string;
-  amount: number;
-};
-
-type PayApiResponse = {
-  paymentId: string;
-  status: "SUCCESS" | "FAIL";
-  paidAt: string;
-};
-*/
-
-// =============================
-// 목업
-// =============================
-const MOCK_ORDER_DETAIL: OrderDetail = {
-  orderId: 20251024723840,
-  receiver: "홍길동",
-  receiverPhone: "010-1234-5678",
-  address: "[02000] 서울특별시 중구 퇴계로 265, B205",
-  paymentMethod: "네이버페이-KB카드(일시불)",
-  totalAmount: 14440,
-  createdAt: "2025-07-25T12:34:56",
-  items: [
-    {
-      id: 1,
-      productName: "상품명은 최대 1줄 노출 상품명은 최대 1줄 노출...",
-      priceKRW: 8000,
-      quantity: 1,
-      imageUrl: sampleimg,
-    },
-    {
-      id: 2,
-      productName: "상품명은 최대 1줄 노출 상품명은 최대 1줄 노출...",
-      priceKRW: 8000,
-      quantity: 1,
-      imageUrl: sampleimg,
-    },
-  ],
-  shipping: {
-    domestic: 2900,
-    international: 3540,
-  },
-};
-
-// =============================
 // 유틸 함수
-// =============================
-const formatKRW = (v: number) => `${v.toLocaleString()}원`;
+const formatKRW = (v?: number | null) => `${(v ?? 0).toLocaleString()}원`;
 
 const formatOrderDate = (iso?: string) => {
   if (!iso) return "";
@@ -112,283 +72,334 @@ const formatOrderDate = (iso?: string) => {
   return `${yy}.${mm}.${dd}`;
 };
 
-// =============================
-// 메인 컴포넌트
-// =============================
-export default function OrderCompletePage() {
+export default function OrderHistoryPage() {
   const navigate = useNavigate();
-  const params = useParams<{ orderId?: string }>();
-  const location = useLocation();
 
-  // /order-complete/:orderId or navigate(..., { state: { orderId } })
-  const orderIdFromParams = params.orderId ? Number(params.orderId) : undefined;
-  const orderIdFromState =
-    (location.state as { orderId?: number } | undefined)?.orderId;
-
-  const effectiveOrderId =
-    orderIdFromParams ?? orderIdFromState ?? MOCK_ORDER_DETAIL.orderId;
+  const [receiverName, setReceiverName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [orderIdInput, setOrderIdInput] = useState("");
 
   const [order, setOrder] = useState<OrderDetail | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [loadError, setLoadError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // =============================
-  // 목업 주문 상세 API
-  // =============================
-  const mockFetchOrderDetail = async (
-    id: number
-  ): Promise<OrderDetailApiResponse> => {
-    console.log("주문 상세 조회(목업) id:", id);
-    return {
-      ...MOCK_ORDER_DETAIL,
-      orderId: id,
+  const handleSearch = async () => {
+    const values: OrderHistoryFormValues = {
+      receiverName: receiverName.trim(),
+      phone: phone.trim(),
+      orderId: orderIdInput.trim(),
     };
-  };
 
-  useEffect(() => {
-    const fetchOrder = async () => {
-      try {
-        setLoading(true);
-        setLoadError(null);
+    const errors = validateOrderHistory(values);
 
-        // 🔥 현재: 목업 사용
-        const data = await mockFetchOrderDetail(effectiveOrderId);
-
-        // 🔁 나중에 실제 API 연결 시 (GET /api/orders/{orderId})
-        /*
-        const res = await fetch(`/api/orders/${effectiveOrderId}`, {
-          method: "GET",
-        });
-
-        if (!res.ok) {
-          throw new Error("주문 상세 조회 실패");
-        }
-
-        const data = (await res.json()) as OrderDetailApiResponse;
-        */
-
-        setOrder(data);
-      } catch (e) {
-        console.error(e);
-        setLoadError("주문 정보를 불러오는 중 문제가 발생했습니다.");
-      } finally {
-        setLoading(false);
+    if (hasAnyError(errors)) {
+      const firstError = Object.values(errors).find((msg) => !!msg);
+      if (firstError) {
+        alert(firstError);
       }
-    };
+      return;
+    }
 
-    fetchOrder();
-  }, [effectiveOrderId]);
+    const trimmedName = values.receiverName;
+    const trimmedPhone = values.phone;
+    const trimmedOrderId = values.orderId;
 
-  const handleCopyOrderId = () => {
-    if (!order) return;
-    navigator.clipboard.writeText(String(order.orderId));
-    alert("주문번호가 복사되었어요!");
+    try {
+      setIsLoading(true);
+      setOrder(null);
+
+      const params = new URLSearchParams({
+        receiver: trimmedName,
+        phone: trimmedPhone,
+      });
+
+      const url = buildApiUrl(
+        `/api/orders/${encodeURIComponent(trimmedOrderId)}?${params.toString()}`
+      );
+
+      // 요청 정보 로그
+      console.log("OrderHistoryPage 요청 정보", {
+        url,
+        receiver: trimmedName,
+        phone: trimmedPhone,
+        orderId: trimmedOrderId,
+      });
+
+      const res = await fetch(url, {
+        method: "GET",
+        credentials: "include",
+      });
+
+      // HTTP 상태 코드 로그
+      console.log("OrderHistoryPage HTTP status", res.status, res.statusText);
+
+      const json = (await res.json()) as {
+        success: boolean;
+        data: OrderDetail | null;
+        error: string | null;
+      };
+
+      // 백엔드 응답 로그
+      console.log("OrderHistoryPage 백엔드 응답:", json);
+
+      if (!json.success || !json.data) {
+        throw new Error(json.error ?? "주문 정보를 찾을 수 없습니다.");
+      }
+
+      setOrder(json.data);
+    } catch (e) {
+      console.error("OrderHistoryPage handleSearch error:", e);
+      alert("주문 정보를 찾을 수 없어요. 입력한 정보를 다시 확인해 주세요.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleGoHome = () => navigate("/");
-
-  const handleRequestMore = () => {
-    navigate("/request");
-  };
-
-  if (loading) {
-    return (
-      <main className="min-h-screen flex items-center justify-center bg-white px-4">
-        <p className="text-sm text-[#505050]">불러오는 중...</p>
-      </main>
-    );
-  }
-
-  if (!order || loadError) {
-    return (
-      <main className="min-h-screen flex items-center justify-center bg-white px-4">
-        <div className="bg-white rounded-2xl shadow p-6 max-w-md w-full text-center border border-gray-200">
-          <p className="text-sm text-[#505050] mb-4">
-            {loadError ?? "주문 정보를 찾을 수 없습니다."}
-          </p>
-          <button
-            onClick={handleGoHome}
-            className="w-full py-3 rounded-xl bg-[#ffe788] text-[#111111] text-sm font-semibold"
-          >
-            홈으로 가기
-          </button>
-        </div>
-      </main>
-    );
-  }
-
-  const productTotal = order.items.reduce(
-    (sum, item) => sum + item.priceKRW * item.quantity,
-    0
-  );
-  const shippingTotal = order.shipping.domestic + order.shipping.international;
-  const discount = productTotal + shippingTotal - order.totalAmount;
-  const orderDateLabel = formatOrderDate(order.createdAt) || "";
+  const handleRequestMore = () => navigate("/request");
+  
+  const subtotal =
+    (order?.productTotalKRW ?? 0) +
+    (order?.serviceFeeKRW ?? 0) +
+    (order?.totalShippingFeeKRW ?? 0);
+    const orderDateLabel = formatOrderDate(order?.createdAt) || "";
 
   return (
     <motion.main
-      key="order-complete"
+      key="order-history"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 bg-white"
+      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-1 bg-white"
     >
-      {/* 타이틀 (주문내역이라고 크게) */}
-      <h2 className="text-2xl lg:text-3xl font-bold text-[#111111] mb-2">
-        주문내역
-      </h2>
+      {/* 주문정보 입력 폼*/}
+      <motion.div
+        initial={{ y: "30vh", opacity: 0 }}
+        animate={{
+          y: order ? 0 : "30vh",
+          opacity: 1,
+        }}
+        transition={{ type: "spring", stiffness: 80, damping: 15 }}
+        className="w-full max-w-2xl mx-auto text-center mb-10"
+      >
+        <h1 className="text-2xl font-bold text-[#111111] mb-6">
+          주문내역 조회하기
+        </h1>
+        <div className="bg-white rounded-2xl shadow-lg border border-gray-300 p-6 text-left">
+          <h3 className="text-lg font-semibold mb-4">주문내역 확인</h3>
 
-      {/* 주문 완료 문구 */}
-      <h1 className="text-center text-2xl lg:text-3xl font-bold text-[#111111] mb-2">
-        주문 완료!
-      </h1>
-      <p className="text-center text-sm text-[#767676] mb-6">
-        주문내역을 확인하려면 주문번호를 복사해두세요.
-      </p>
+          <div className="space-y-3">
+            <input
+              type="text"
+              value={receiverName}
+              onChange={(e) => setReceiverName(e.target.value)}
+              placeholder="이름"
+              className="w-full rounded-xl border border-[#DBDBDB] px-4 py-2.5 text-sm"
+            />
+            <input
+              type="text"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="전화번호 (예: 010-1234-5678)"
+              className="w-full rounded-xl border border-[#DBDBDB] px-4 py-2.5 text-sm"
+            />
+            <input
+              type="text"
+              value={orderIdInput}
+              onChange={(e) => setOrderIdInput(e.target.value)}
+              placeholder="주문번호"
+              className="w-full rounded-xl border border-[#DBDBDB] px-4 py-2.5 text-sm"
+            />
 
-      {/* 상단 주문 완료 박스 */}
-      <section className="bg-white rounded-2xl shadow p-6 border border-gray-200 mb-6 text-center">
-        <button
-          onClick={handleRequestMore}
-          className="w-full py-4 rounded-xl bg-[#ffe788] text-[#111111] text-sm font-semibold hover:brightness-95"
-        >
-          추가로 구매대행 요청
-        </button>
-      </section>
-
-      <div className="grid lg:grid-cols-[2fr,1fr] gap-6 lg:gap-8">
-        {/* LEFT */}
-        <div className="space-y-6">
-          {/* 주문정보 */}
-          <section className="bg-white rounded-2xl shadow p-6 border border-gray-200 text-sm space-y-2">
-            <p className="text-[#767676]">
-              주문 상세 내역 - {orderDateLabel}
-            </p>
-
-            <p className="text-lg font-semibold text-[#111111]">
-              주문 번호{" "}
-              <button
-                onClick={handleCopyOrderId}
-                className="text-[#111111] font-medium underline underline-offset-2"
-              >
-                {order.orderId}
-              </button>
-            </p>
-          </section>
-
-          {/* 배송지 */}
-          <section className="bg-white rounded-2xl shadow p-6 border border-gray-200 text-sm space-y-1">
-            <h2 className="mb-3 text-lg font-semibold text-[#111111]">
-              배송지
-            </h2>
-            <p>받는 분: {order.receiver}</p>
-            {order.receiverPhone && <p>연락처: {order.receiverPhone}</p>}
-            {order.address && <p>주소: {order.address}</p>}
-          </section>
-
-          {/* 구매대행 상품 */}
-          <section className="bg-white rounded-2xl shadow p-6 border border-gray-200">
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="text-lg font-semibold text-[#111111]">
-                구매대행 상품
-              </h2>
-              <span className="text-xs text-[#767676]">
-                {order.items.length}건
-              </span>
-            </div>
-
-            <div className="space-y-4">
-              {order.items.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex gap-4 border border-[#f1f1f5] rounded-xl p-3"
-                >
-                  <img
-                    src={item.imageUrl ?? sampleimg}
-                    alt={item.productName}
-                    className="w-16 h-16 rounded-lg object-cover"
-                  />
-                  <div className="flex-1 text-sm">
-                    <p className="font-medium text-[#111111] line-clamp-2">
-                      {item.productName}
-                    </p>
-                    <p className="mt-1 text-[#111111] font-semibold">
-                      {formatKRW(item.priceKRW)}
-                    </p>
-                    <p className="mt-1 text-xs text-[#767676]">
-                      수량: {item.quantity}개
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* 결제 수단 */}
-          <section className="bg-white rounded-2xl shadow p-6 border border-gray-200 text-sm">
-            <h2 className="text-lg font-semibold text-[#111111] mb-2">
-              결제 수단
-            </h2>
-            <p className="text-[#111111]">{order.paymentMethod}</p>
-          </section>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={handleSearch}
+              disabled={isLoading}
+              className="mt-2 w-full px-6 py-2.5 bg-[#ffe788] rounded-xl font-medium text-[#111111] disabled:opacity-50"
+            >
+              {isLoading ? "조회 중..." : "주문내역 확인하기"}
+            </motion.button>
+          </div>
         </div>
+      </motion.div>
 
-        {/* RIGHT Summary */}
-        <aside className="space-y-6">
-          <div className="bg-white rounded-2xl shadow p-6 border border-gray-200 text-sm space-y-3">
-            <h2 className="text-lg font-semibold text-[#111111] mb-2">
-              결제 금액
-            </h2>
-            <div className="flex justify-between">
-              <span className="text-[#505050]">상품 금액</span>
-              <span className="text-[#111111] font-medium">
-                {formatKRW(productTotal)}
-              </span>
-            </div>
+      {/* order 있을 때만 상세 표시 */}
+      {order && (
+        <div className="grid lg:grid-cols-[2fr,1fr] gap-6 lg:gap-8">
+          {/* LEFT 영역 */}
+          <div className="space-y-6">
+            {/* 주문정보 */}
+            <section className="bg-white rounded-2xl shadow p-6 border border-gray-200 text-sm space-y-2">
+              <p className="text-[#767676]">
+                주문 상세 내역 {orderDateLabel && `- ${orderDateLabel}`}
+              </p>
 
-            <div className="flex justify-between">
-              <span className="text-[#505050]">할인 금액</span>
-              <span className="text-[#ff4c4c] font-medium">
-                {discount > 0
-                  ? `-${Math.abs(discount).toLocaleString()}원`
-                  : "0원"}
-              </span>
-            </div>
+              <p className="text-lg font-semibold text-[#111111]">
+                주문 번호 {order.orderId}
+              </p>
+            </section>
 
-            <div className="flex justify-between">
-              <span className="text-[#505050]">배송비</span>
-              <span className="text-[#111111] font-medium">
-                {formatKRW(shippingTotal)}
-              </span>
-            </div>
+            {/* 배송지 */}
+            <section className="bg-white rounded-2xl shadow p-6 border border-gray-200 text-sm space-y-1">
+              <h2 className="mb-3 text-lg font-semibold text-[#111111]">
+                배송지
+              </h2>
+              <p>받는 분: {order.receiver}</p>
+              <p>연락처: {order.phone}</p>
+              <p>
+                주소: ({order.postalCode}) {order.roadAddress}{" "}
+                {order.detailAddress}
+              </p>
+              {order.deliveryRequest && (
+                <p>요청사항: {order.deliveryRequest}</p>
+              )}
+            </section>
 
-            <div className="h-px bg-[#e5e5ec] my-2" />
+            {/* 구매대행 상품 */}
+            <section className="bg-white rounded-2xl shadow p-6 border border-gray-200">
+              <div className="flex items-center justify-between mb-3">
+                <h2 className="text-lg font-semibold text-[#111111]">
+                  구매대행 상품
+                </h2>
+                <span className="text-xs text-[#767676]">
+                  {order.items.length}건
+                </span>
+              </div>
 
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-[#505050]">총 결제 금액</span>
-              <span className="text-xl font-bold text-[#111111]">
-                {formatKRW(order.totalAmount)}
-              </span>
-            </div>
+              <div className="space-y-4">
+                {order.items.map((item) => (
+                  <div
+                    key={item.id}
+                    className="flex gap-4 border border-[#f1f1f5] rounded-xl p-3"
+                  >
+                    <img
+                      src={item.imageUrl ?? sampleimg}
+                      alt={item.productName}
+                      className="w-16 h-16 rounded-lg object-cover"
+                    />
+                    <div className="flex-1 text-sm">
+                      <p className="font-medium text-[#111111] line-clamp-2">
+                        {item.productName}
+                      </p>
+                      <p className="mt-1 text-[#111111] font-semibold">
+                        {formatKRW(item.price)}
+                      </p>
+                      <p className="mt-1 text-xs text-[#767676]">
+                        수량: {item.quantity}개
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* 결제 수단 */}
+            <section className="bg-white rounded-2xl shadow p-6 border border-gray-200 text-sm">
+              <h2 className="text-lg font-semibold text-[#111111] mb-2">
+                결제 수단
+              </h2>
+              <p className="text-[#111111]">{order.paymentMethod}</p>
+            </section>
           </div>
 
-          <div className="flex flex-col gap-3">
-            <button
-              onClick={handleRequestMore}
-              className="w-full py-5 rounded-xl bg-[#ffe788] text-[#111111] text-sm font-semibold hover:brightness-95"
-            >
-              추가로 구매대행 요청
-            </button>
+          {/* RIGHT - 결제 금액 */}
+          <aside className="space-y-6">
+            <div className="bg-white rounded-2xl shadow p-6 border border-gray-200 text-sm space-y-3">
+              <h2 className="text-lg font-semibold text-[#111111] mb-2">
+                결제 금액
+              </h2>
 
-            <button
-              onClick={handleGoHome}
-              className="w-full py-5 rounded-xl border border-[#e5e5ec] bg-white text-[#505050] text-sm font-medium hover:bg-[#f9f9fb]"
-            >
-              홈으로 가기
-            </button>
-          </div>
-        </aside>
-      </div>
+              {/* 상단 합계 전까지 */}
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-[#505050]">상품 금액</span>
+                  <span className="text-[#111111] font-medium">
+                    {formatKRW(order.productTotalKRW)}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#505050]">대행 수수료</span>
+                  <span className="text-[#111111] font-medium">
+                    {formatKRW(order.serviceFeeKRW)}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#505050]">해외+국내 배송비</span>
+                  <span className="text-[#111111] font-medium">
+                    {formatKRW(order.totalShippingFeeKRW)}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#505050]">합배송비</span>
+                  <span className="text-[#111111] font-medium">-</span>
+                </div>
+              </div>
+
+              <div className="h-px bg-[#e5e5ec]" />
+
+              {/* 합계액 */}
+              <div className="flex justify-between">
+                <span className="text-[#111111] font-medium">합계액</span>
+                <span className="text-[#ffcc4c] font-semibold">
+                  {formatKRW(subtotal)}
+                </span>
+              </div>
+
+              {/* 수수료 / 옵션 비용 */}
+              <div className="space-y-3 text-sm mt-2">
+                <div className="flex justify-between">
+                  <span className="text-[#505050]">+ 결제 수수료(3.4%)</span>
+                  <span className="text-[#111111] font-medium">
+                    {formatKRW(order.paymentFeeKRW)}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#505050]">+ [선택] 추가 포장 비용</span>
+                  <span className="text-[#111111] font-medium">
+                    {formatKRW(order.extraPackagingFeeKRW)}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#505050]">
+                    + [선택] 해외 배송 보상 보험료
+                  </span>
+                  <span className="text-[#111111] font-medium">
+                    {formatKRW(order.insuranceFeeKRW)}
+                  </span>
+                </div>
+              </div>
+
+              <div className="h-px bg-[#e5e5ec]" />
+
+              {/* 최종 결제 금액 */}
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-[#505050]">
+                  최종 결제 금액
+                </span>
+                <span className="text-lg font-bold text-[#111111]">
+                  {formatKRW(order.totalAmount)}
+                </span>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <button
+                onClick={handleRequestMore}
+                className="w-full py-5 rounded-xl bg-[#ffe788] text-[#111111] text-sm font-semibold hover:brightness-95"
+              >
+                추가로 구매대행 요청
+              </button>
+
+              <button
+                onClick={handleGoHome}
+                className="w-full py-5 rounded-xl border border-[#e5e5ec] bg-white text-[#505050] text-sm font-medium hover:bg-[#f9f9fb]"
+              >
+                홈으로 가기
+              </button>
+            </div>
+          </aside>
+        </div>
+      )}
     </motion.main>
   );
 }
