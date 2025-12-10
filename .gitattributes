@@ -1,6 +1,12 @@
-/* .gitattributes */
+# 0) 기본적으로 모든 파일 제외
+* linguist-detectable=false
 
-* linguist-vendored
-*.py linguist-vendored=false
-*.tsx linguist-vendored=false
-*.js linguist-vendored=false
+# Python 포함
+*.py linguist-detectable=true linguist-language=Python
+
+# TypeScript 포함
+*.ts  linguist-detectable=true linguist-language=TypeScript
+*.tsx linguist-detectable=true linguist-language=TypeScript
+
+# Java 포함
+*.java linguist-detectable=true linguist-language=Java
