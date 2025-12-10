@@ -1,4 +1,6 @@
-*.ts  linguist-detectable=true linguist-language=TypeScript
-*.tsx linguist-detectable=true linguist-language=TypeScript
-*.html linguist-language=HTML linguist-detectable=true
-*.java linguist-language=Java linguist-detectable=true
+/* .gitattributes */
+
+* linguist-vendored
+*.py linguist-vendored=false
+*.tsx linguist-vendored=false
+*.js linguist-vendored=false
