@@ -17,7 +17,6 @@ public class ShippingAddress {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // 익명 세션 식별용
     @Column(nullable = false, length = 100)
     private String proxySid;
 
