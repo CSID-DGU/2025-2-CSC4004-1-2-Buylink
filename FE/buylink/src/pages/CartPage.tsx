@@ -361,7 +361,7 @@ export default function CartPage() {
                     <span className="text-xs text-[#505050]">보험 가입</span>
                   </div>
                   <span className="text-xs text-[#111111] font-[500]">
-                    +500원
+                    +5,000원
                   </span>
                 </label>
 
