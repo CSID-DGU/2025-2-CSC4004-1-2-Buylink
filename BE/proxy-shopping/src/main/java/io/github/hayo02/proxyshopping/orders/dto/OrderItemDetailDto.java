@@ -10,7 +10,7 @@ public class OrderItemDetailDto {
 
     private Long id;
     private String productName;
-    private Integer price;   // priceKrw → price 로 노출
+    private Integer price;
     private Integer quantity;
     private String imageUrl;
 
