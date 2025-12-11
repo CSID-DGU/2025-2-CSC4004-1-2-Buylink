@@ -1,15 +1,27 @@
-package io.github.hayo02.proxyshopping.ai.config;
+package io.github.hayo02.proxyshopping.orders.controller;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.*;
-import org.springframework.web.reactive.function.client.WebClient;
+import io.github.hayo02.proxyshopping.common.ApiResponse;
+import io.github.hayo02.proxyshopping.orders.dto.AddressSearchResponse;
+import io.github.hayo02.proxyshopping.orders.service.AddressSearchService;
+import org.springframework.web.bind.annotation.*;
 
-@Configuration
-public class AiClientConfig {
+@RestController
+@RequestMapping("/api/address")
+public class AddressSearchController {
 
-    @Bean(name = "aiWebClient")                   // ← 이름 고정!
-    @Conditional(AiUrlPresent.class)
-    public WebClient aiWebClient(@Value("${ai.base-url}") String baseUrl) {
-        return WebClient.builder().baseUrl(baseUrl).build();
+    private final AddressSearchService addressSearchService;
+
+    public AddressSearchController(AddressSearchService addressSearchService) {
+        this.addressSearchService = addressSearchService;
+    }
+
+    @GetMapping("/search")
+    public ApiResponse<AddressSearchResponse> search(
+            @RequestParam("keyword") String keyword,
+            @RequestParam(name = "page", defaultValue = "1") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size
+    ) {
+        AddressSearchResponse response = addressSearchService.search(keyword, page, size);
+        return ApiResponse.ok(response);
     }
 }
