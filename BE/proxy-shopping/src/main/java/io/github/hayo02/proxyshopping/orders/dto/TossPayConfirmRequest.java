@@ -1,4 +1,3 @@
-// src/main/java/io/github/hayo02/proxyshopping/orders/dto/TossPayConfirmRequest.java
 package io.github.hayo02.proxyshopping.orders.dto;
 
 public class TossPayConfirmRequest {
