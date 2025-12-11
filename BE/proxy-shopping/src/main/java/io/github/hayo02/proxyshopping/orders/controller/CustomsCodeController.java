@@ -1,4 +1,3 @@
-// src/main/java/io/github/hayo02/proxyshopping/orders/controller/CustomsCodeController.java
 package io.github.hayo02.proxyshopping.orders.controller;
 
 import io.github.hayo02.proxyshopping.orders.dto.CustomsCodeVerifyRequest;
