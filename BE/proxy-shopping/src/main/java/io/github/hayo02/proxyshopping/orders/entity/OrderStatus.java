@@ -1,4 +1,3 @@
-// src/main/java/io/github/hayo02/proxyshopping/orders/entity/OrderStatus.java
 package io.github.hayo02.proxyshopping.orders.entity;
 
 public enum OrderStatus {
