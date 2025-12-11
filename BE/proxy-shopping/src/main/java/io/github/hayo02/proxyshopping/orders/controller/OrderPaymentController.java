@@ -1,4 +1,3 @@
-// src/main/java/io/github/hayo02/proxyshopping/orders/controller/OrderPaymentController.java
 package io.github.hayo02.proxyshopping.orders.controller;
 
 import io.github.hayo02.proxyshopping.common.ApiResponse;
@@ -19,12 +18,6 @@ public class OrderPaymentController {
 
     @PostMapping("/pay")
     public ApiResponse<TossPayConfirmResponse> pay(@RequestBody TossPayConfirmRequest req) {
-
-        // 나중에 여기서
-        // 1) orderId로 우리 주문 테이블 조회
-        // 2) amount 일치 여부 검증
-        // 3) 주문 상태 업데이트
-        // 이런 도메인 로직 추가하면 됨.
 
         TossPayConfirmResponse resp = paymentService.confirm(req);
         return ApiResponse.ok(resp);
