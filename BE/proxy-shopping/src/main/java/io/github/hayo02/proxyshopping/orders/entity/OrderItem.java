@@ -1,4 +1,3 @@
-// src/main/java/io/github/hayo02/proxyshopping/orders/entity/OrderItem.java
 package io.github.hayo02.proxyshopping.orders.entity;
 
 import jakarta.persistence.*;
