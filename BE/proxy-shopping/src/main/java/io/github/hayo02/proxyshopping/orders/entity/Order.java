@@ -15,7 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class Order {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,7 +28,7 @@ public class Order {
     private String proxySid;
 
     @Column(nullable = false)
-    private Long totalAmount;   // 최종 결제 금액(견적/토스와 동일해야 함)
+    private Long totalAmount; // 최종 결제 금액(견적/토스와 동일해야 함)
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
@@ -60,6 +59,24 @@ public class Order {
 
     private LocalDateTime createdAt;
     private LocalDateTime paidAt;
+
+    // ===== 견적/비용 관련 필드들 =====
+    // (OrderDetailResponse 와 타입/이름 맞추기)
+    private Long productTotalKRW;
+    private Long serviceFeeKRW;
+
+    // 단위 변경: g
+    private Double volumetricWeightG;
+    private Double chargeableWeightG;
+
+    private Long emsYen;
+    private Long internationalShippingKRW;
+    private Long domesticShippingKRW;
+    private Long totalShippingFeeKRW;
+    private Long paymentFeeKRW;
+    private Long extraPackagingFeeKRW;
+    private Long insuranceFeeKRW;
+    private Long grandTotalKRW;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
