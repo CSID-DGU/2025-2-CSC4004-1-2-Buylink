@@ -1,4 +1,3 @@
-// ai/config/AiClientConfig.java
 package io.github.hayo02.proxyshopping.ai.config;
 
 import org.springframework.beans.factory.annotation.Value;
