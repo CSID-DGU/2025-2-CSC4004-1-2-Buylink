@@ -34,6 +34,7 @@ export default function RequestPage() {
   const [urlInput, setUrlInput] = useState("");
   const [isLoading, setIsLoading] = useState(false); // 상품 불러오기 로딩
   const [isNavigating, setIsNavigating] = useState(false); // Cart 이동 로딩
+  const [isAddingToCart, setIsAddingToCart] = useState(false); // 버튼 중복 방지
 
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
@@ -137,12 +138,16 @@ export default function RequestPage() {
 
   // 장바구니 POST 후 CartPage 이동
   const handleAddToCart = async () => {
+    // ⭐ 누르자마자 즉시 비활성화
+    setIsAddingToCart(true);
+
     const selectedProducts = products.filter(
       (p) => selectedIds.has(p.productURL) && !p.isSoldOut
     );
 
     if (selectedProducts.length === 0) {
       alert("장바구니에 담을 상품을 선택하세요!");
+      setIsAddingToCart(false);
       return;
     }
 
@@ -173,14 +178,15 @@ export default function RequestPage() {
         await res.json();
       }
 
-      // ⭐ 이동 로딩 활성화
+      // 이동 로딩
       setIsNavigating(true);
 
       setTimeout(() => {
         navigate("/cart");
       }, 300);
-    } catch (e) {
+    } catch {
       alert("장바구니에 담는 중 문제가 발생했습니다.");
+      setIsAddingToCart(false);
     }
   };
 
@@ -227,9 +233,9 @@ export default function RequestPage() {
         </div>
       </motion.div>
 
-      {/* 첫 로딩 스피너 */}
+      {/* ⭐ URL 첫 로딩 스피너 (위치 원래대로 복구: mt-40 제거) */}
       {isLoading && products.length === 0 && (
-        <div className="w-full max-w-2xl flex flex-col items-center justify-center py-16 mt-40">
+        <div className="w-full max-w-2xl flex flex-col items-center justify-center py-16">
           <img src={imgSpinner} alt="loading" className="w-20" />
           <p className="mt-4 text-[#505050]">상품을 불러오고 있어요...</p>
         </div>
@@ -293,17 +299,20 @@ export default function RequestPage() {
             </motion.div>
           ))}
 
-          {/* 버튼 */}
+          {/* 장바구니 버튼 */}
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.97 }}
             onClick={handleAddToCart}
-            className="w-full mt-6 py-4 rounded-xl bg-gradient-to-r from-[#ffe788] to-[#ffcc4c] text-[#111] font-semibold shadow-md"
+            disabled={isAddingToCart}
+            className={`w-full mt-6 py-4 rounded-xl bg-gradient-to-r from-[#ffe788] to-[#ffcc4c]
+              text-[#111] font-semibold shadow-md
+              ${isAddingToCart ? "opacity-50 cursor-not-allowed" : ""}`}
           >
-            장바구니에 담고 견적 확인하기
+            {isAddingToCart ? "처리 중..." : "장바구니에 담고 견적 확인하기"}
           </motion.button>
 
-          {/* 버튼 바로 아래 로딩 표시 */}
+          {/* 이동 로딩 */}
           {isNavigating && (
             <div className="flex flex-col items-center justify-center py-10">
               <img src={imgSpinner} alt="loading" className="w-16 h-16" />
