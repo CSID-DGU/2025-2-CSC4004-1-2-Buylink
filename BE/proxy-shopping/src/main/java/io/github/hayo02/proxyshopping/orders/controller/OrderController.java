@@ -18,7 +18,7 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    // 주문 생성 (기존 그대로)
+
     @PostMapping
     public ApiResponse<OrderCreateResponse> createOrder(
             @RequestHeader(value = "PROXY_SID", required = false) String proxySidHeader,
@@ -35,13 +35,7 @@ public class OrderController {
         return ApiResponse.ok(resp);
     }
 
-    // 주문 상세 조회
-    //
-    // GET /api/orders/{orderId}?receiver=홍길동&phone=010-1234-5678
-    //
-    // - orderId  → PathVariable
-    // - receiver → QueryString
-    // - phone    → QueryString
+
     @GetMapping("/{orderId}")
     public ApiResponse<OrderDetailResponse> getOrderDetail(
             @PathVariable("orderId") String orderId,
