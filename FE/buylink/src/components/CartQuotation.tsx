@@ -64,6 +64,15 @@ export default function CartQuotation({
       estimate.totalShippingFeeKRW
     : 0;
 
+  // 예측 무게(g), 예측 부피(cm³) - estimate가 있을 때만 의미 있음
+  const predictedWeightGrams = estimate
+  ? estimate.totalActualWeightKg * 1000
+  : 0;
+
+  const predictedVolumeCm3 = estimate
+    ? estimate.totalVolumeM3 * 1_000_000
+    : 0;
+
   // extraPackaging / insurance / selectedItems 바뀔 때마다 견적 API 호출
   useEffect(() => {
     // 선택된 상품이 없으면 API 안 부르고 상태만 정리
@@ -78,7 +87,7 @@ export default function CartQuotation({
       setErrorMsg(null);
       try {
         const payload = {
-          itemIds: selectedItems.map((item) => item.id), //선택된 id만 전송
+          itemIds: selectedItems.map((item) => item.id), // 선택된 id만 전송
           extraPackaging,
           insurance,
         };
@@ -116,6 +125,31 @@ export default function CartQuotation({
 
     fetchEstimate();
   }, [extraPackaging, insurance, selectedItems]);
+
+  useEffect(() => {
+    if (!estimate) return;
+
+    const predictedWeightGrams = Math.round(
+      estimate.totalActualWeightKg * 1000
+    );
+    const predictedVolumeCm3 = Math.round(estimate.totalVolumeM3 * 1_000_000);
+
+    console.log("[CartQuotation] estimate:", estimate);
+    console.log(
+      "[CartQuotation] predictedWeightGrams:",
+      predictedWeightGrams,
+      "(from",
+      estimate.totalActualWeightKg,
+      "kg)"
+    );
+    console.log(
+      "[CartQuotation] predictedVolumeCm3:",
+      predictedVolumeCm3,
+      "(from",
+      estimate.totalVolumeM3,
+      "m³)"
+    );
+  }, [estimate]);
 
   return (
     <motion.div
@@ -161,9 +195,19 @@ export default function CartQuotation({
                 {formatKRW(estimate.totalShippingFeeKRW)}
               </span>
             </div>
+
+            {/* 예측 무게/부피 */}
             <div className="flex justify-between">
-              <span className="text-[#505050]">합배송비</span>
-              <span className="text-[#111111] font-[500]">-</span>
+              <span className="text-[#505050]">예측 무게</span>
+              <span className="text-[#111111] font-[500]">
+                {predictedWeightGrams.toLocaleString()}g
+              </span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-[#505050]">예측 부피</span>
+              <span className="text-[#111111] font-[500]">
+                {predictedVolumeCm3.toLocaleString()}cm³
+              </span>
             </div>
           </div>
 
@@ -236,7 +280,9 @@ export default function CartQuotation({
               disabled:opacity-60
             "
           >
-            <span className="text-sm text-[#505050] whitespace-nowrap">총 결제 예상 금액</span>
+            <span className="text-sm text-[#505050] whitespace-nowrap">
+              총 결제 예상 금액
+            </span>
 
             <span className="text-base font-[700] text-[#111111] whitespace-nowrap">
               {formatKRW(estimate.grandTotalKRW)}
