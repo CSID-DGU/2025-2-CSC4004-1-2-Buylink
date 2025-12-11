@@ -1,40 +1,60 @@
+// src/main/java/io/github/hayo02/proxyshopping/orders/dto/OrderDetailResponse.java
 package io.github.hayo02.proxyshopping.orders.dto;
 
 import io.github.hayo02.proxyshopping.orders.entity.Order;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class OrderDetailResponse {
-
-    // 주문번호 (Order.orderNumber) → orderId 로 노출
     private String orderId;
-
-    // 수령인 이름
     private String receiver;
-
-    // 결제수단 (아직 저장 X, 나중에 확장)
+    private String phone;
+    private String postalCode;
+    private String roadAddress;
+    private String detailAddress;
+    private String deliveryRequest;
     private String paymentMethod;
-
-    // 최종 결제 금액
     private Long totalAmount;
 
-    // 주문 상품 목록
     private List<OrderItemDetailDto> items;
-
-    // 배송비 요약
     private ShippingSummary shipping;
 
+    // ====== 견적/비용 관련 필드들 ======
+    private Long productTotalKRW;
+    private Long serviceFeeKRW;
+
+    // 단위: g
+    private Double volumetricWeightG;
+    private Double chargeableWeightG;
+
+    private Long emsYen;
+    private Long internationalShippingKRW;
+    private Long domesticShippingKRW;
+    private Long totalShippingFeeKRW;
+    private Long paymentFeeKRW;
+    private Long extraPackagingFeeKRW;
+    private Long insuranceFeeKRW;
+    private Long grandTotalKRW;
+
     public static OrderDetailResponse from(Order order) {
-        // TODO: paymentMethod, shipping 값은 나중에 실제 값으로 교체
         return OrderDetailResponse.builder()
                 .orderId(order.getOrderNumber())
                 .receiver(order.getReceiverName())
-                .paymentMethod(null) // 나중에 토스/결제정보 연동 시 세팅
+                .phone(order.getPhone())
+                .postalCode(order.getPostalCode())
+                .roadAddress(order.getRoadAddress())
+                .detailAddress(order.getDetailAddress())
+                .deliveryRequest(order.getDeliveryRequest())
+                .paymentMethod("toss")
                 .totalAmount(order.getTotalAmount())
                 .items(
                         order.getItems().stream()
@@ -43,17 +63,32 @@ public class OrderDetailResponse {
                 )
                 .shipping(
                         ShippingSummary.builder()
-                                .domestic(0L)
-                                .international(0L)
+                                .domestic(order.getDomesticShippingKRW())
+                                .international(order.getInternationalShippingKRW())
                                 .build()
                 )
+                // 견적 필드 매핑
+                .productTotalKRW(order.getProductTotalKRW())
+                .serviceFeeKRW(order.getServiceFeeKRW())
+                .volumetricWeightG(order.getVolumetricWeightG())
+                .chargeableWeightG(order.getChargeableWeightG())
+                .emsYen(order.getEmsYen())
+                .internationalShippingKRW(order.getInternationalShippingKRW())
+                .domesticShippingKRW(order.getDomesticShippingKRW())
+                .totalShippingFeeKRW(order.getTotalShippingFeeKRW())
+                .paymentFeeKRW(order.getPaymentFeeKRW())
+                .extraPackagingFeeKRW(order.getExtraPackagingFeeKRW())
+                .insuranceFeeKRW(order.getInsuranceFeeKRW())
+                .grandTotalKRW(order.getGrandTotalKRW())
                 .build();
     }
 
     @Getter
     @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class ShippingSummary {
-        private Long domestic;      // 국내 배송비
-        private Long international; // 국제 배송비
+        private Long domestic;
+        private Long international;
     }
 }
