@@ -1,4 +1,3 @@
-// src/components/CartQuotation.tsx
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { Info } from "lucide-react";
@@ -24,13 +23,18 @@ export interface CartEstimate {
   grandTotalKRW: number;
 }
 
+// CartPage에서 넘어오는 선택 상품 타입
+type SelectedCartItem = {
+  id: number;
+};
+
 interface CartQuotationProps {
   extraPackaging: boolean;
   insurance: boolean;
   onCheckout: () => void;
+  selectedItems: SelectedCartItem[]; // 선택된 아이템 목록
 }
 
-// 🔹 /api/cart/estimate 응답 모양
 type CartEstimateApiResponse = {
   success: boolean;
   data: CartEstimate | null;
@@ -39,7 +43,6 @@ type CartEstimateApiResponse = {
 
 const formatKRW = (v: number) => `${v.toLocaleString()}원`;
 
-// 🔹 DEV/PROD 공통 API base URL
 const API_BASE_URL =
   import.meta.env.DEV ? import.meta.env.VITE_API_BASE_URL ?? "" : "";
 
@@ -49,6 +52,7 @@ export default function CartQuotation({
   extraPackaging,
   insurance,
   onCheckout,
+  selectedItems,
 }: CartQuotationProps) {
   const [estimate, setEstimate] = useState<CartEstimate | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -60,19 +64,28 @@ export default function CartQuotation({
       estimate.totalShippingFeeKRW
     : 0;
 
-  // 🔸 extraPackaging / insurance 바뀔 때마다 실제 견적 API 호출
+  // extraPackaging / insurance / selectedItems 바뀔 때마다 견적 API 호출
   useEffect(() => {
+    // 선택된 상품이 없으면 API 안 부르고 상태만 정리
+    if (selectedItems.length === 0) {
+      setEstimate(null);
+      setErrorMsg("선택된 상품이 없습니다. 상품을 선택해 주세요.");
+      return;
+    }
+
     const fetchEstimate = async () => {
       setIsLoading(true);
       setErrorMsg(null);
       try {
         const payload = {
+          itemIds: selectedItems.map((item) => item.id), //선택된 id만 전송
           extraPackaging,
           insurance,
         };
 
         const finalUrl = buildApiUrl("/api/cart/estimate");
         console.log("[CartQuotation] POST /api/cart/estimate:", finalUrl);
+        console.log("[CartQuotation] payload:", payload);
 
         const res = await fetch(finalUrl, {
           method: "POST",
@@ -102,7 +115,7 @@ export default function CartQuotation({
     };
 
     fetchEstimate();
-  }, [extraPackaging, insurance]);
+  }, [extraPackaging, insurance, selectedItems]);
 
   return (
     <motion.div
@@ -121,8 +134,8 @@ export default function CartQuotation({
       {/* 에러 / 견적 없음 */}
       {!isLoading && !estimate && (
         <p className="text-sm text-[#767676] mt-2">
-          {errorMsg ?? "견적 정보를 불러오지 못했습니다."
-        }</p>
+          {errorMsg ?? "견적 정보를 불러오지 못했습니다."}
+        </p>
       )}
 
       {/* 견적 표시 */}
@@ -214,10 +227,18 @@ export default function CartQuotation({
             whileTap={{ scale: 0.98 }}
             onClick={onCheckout}
             disabled={isLoading || !estimate}
-            className="w-full mt-3 py-4 rounded-xl bg-gradient-to-r from-[#ffe788] to-[#ffcc4c] text-[#111111] shadow-lg hover:shadow-xl transition-all duration-300 font-[600] flex justify-between items-center disabled:opacity-60"
+            className="
+              w-full mt-3 py-4 px-6
+              rounded-xl bg-gradient-to-r from-[#ffe788] to-[#ffcc4c]
+              text-[#111111] shadow-lg hover:shadow-xl
+              transition-all duration-300 font-[600]
+              flex items-center justify-between
+              disabled:opacity-60
+            "
           >
-            <span className="text-sm text-[#505050]">총 결제 예상 금액</span>
-            <span className="text-base font-[700] text-[#111111]">
+            <span className="text-sm text-[#505050] whitespace-nowrap">총 결제 예상 금액</span>
+
+            <span className="text-base font-[700] text-[#111111] whitespace-nowrap">
               {formatKRW(estimate.grandTotalKRW)}
             </span>
           </motion.button>
