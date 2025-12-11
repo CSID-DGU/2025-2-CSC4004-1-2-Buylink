@@ -1,13 +1,12 @@
-// src/main/java/io/github/hayo02/proxyshopping/orders/dto/TossPayConfirmResponse.java
 package io.github.hayo02.proxyshopping.orders.dto;
 
 public class TossPayConfirmResponse {
 
     private String paymentKey;
     private String orderId;
-    private String status;      // 예: "DONE"
-    private Long totalAmount;   // 최종 결제 금액
-    private String approvedAt;  // ISO-8601 문자열
+    private String status;
+    private Long totalAmount;
+    private String approvedAt;
 
     public String getPaymentKey() {
         return paymentKey;
