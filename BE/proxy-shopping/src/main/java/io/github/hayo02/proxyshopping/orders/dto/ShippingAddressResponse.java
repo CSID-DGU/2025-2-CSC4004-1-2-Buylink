@@ -7,7 +7,6 @@ import lombok.Getter;
 @Getter
 @Builder
 public class ShippingAddressResponse {
-
     private Long id;
     private String receiverName;
     private String phone;
