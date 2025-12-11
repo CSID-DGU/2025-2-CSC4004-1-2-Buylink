@@ -24,4 +24,4 @@ public class AddressSearchController {
         AddressSearchResponse response = addressSearchService.search(keyword, page, size);
         return ApiResponse.ok(response);
     }
-}
+} // 기존 컨트롤러
