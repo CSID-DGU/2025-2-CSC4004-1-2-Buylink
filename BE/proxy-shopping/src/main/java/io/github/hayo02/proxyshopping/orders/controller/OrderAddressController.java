@@ -28,7 +28,6 @@ public class OrderAddressController {
                 : proxySidCookie;
 
         if (proxySid == null || proxySid.isBlank()) {
-            // 전역 예외 핸들러에서 BadRequest로 처리하도록 던져도 됨
             throw new IllegalArgumentException("proxy_sid 가 필요합니다.");
         }
 
