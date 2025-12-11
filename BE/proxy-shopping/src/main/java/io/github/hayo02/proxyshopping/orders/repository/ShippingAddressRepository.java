@@ -13,7 +13,6 @@ public interface ShippingAddressRepository extends JpaRepository<ShippingAddress
 
     Optional<ShippingAddress> findTopByProxySidOrderByCreatedAtDesc(String proxySid);
 
-    // 추가: 해당 세션의 주소인지 검증용
     Optional<ShippingAddress> findByIdAndProxySid(Long id, String proxySid);
 }
 
