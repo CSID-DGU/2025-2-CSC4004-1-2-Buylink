@@ -1,0 +1,6582 @@
+{
+  "チケット|株主優待券・割引券|その他": {
+    "category": {
+      "root": "チケット",
+      "parent": "株主優待券・割引券",
+      "name": "その他"
+    },
+    "count": 5,
+    "weight": {
+      "count": 5,
+      "mean": 10422.4,
+      "std": 19793.36249958556,
+      "min": 2.0,
+      "max": 50000.0,
+      "median": 410.0,
+      "percentile_25": 400.0,
+      "percentile_75": 1300.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "コスメ・美容|メイクアップ|アイシャドウ": {
+    "category": {
+      "root": "コスメ・美容",
+      "parent": "メイクアップ",
+      "name": "アイシャドウ"
+    },
+    "count": 51,
+    "weight": {
+      "count": 49,
+      "mean": 21.3965306122449,
+      "std": 51.26301055564972,
+      "min": 1.2,
+      "max": 304.0,
+      "median": 6.0,
+      "percentile_25": 3.3,
+      "percentile_75": 11.75
+    },
+    "volume": {
+      "count": 2,
+      "mean": 897.7065,
+      "std": 753.4185,
+      "min": 144.288,
+      "max": 1651.125,
+      "median": 897.7065,
+      "percentile_25": 520.99725,
+      "percentile_75": 1274.4157500000001
+    },
+    "dimensions": {
+      "length": {
+        "mean": 211.0,
+        "std": 44.0
+      },
+      "width": {
+        "mean": 119.5,
+        "std": 65.5
+      },
+      "height": {
+        "mean": 25.5,
+        "std": 9.5
+      }
+    }
+  },
+  "コスメ・美容|メイクアップ|メイク道具・化粧小物": {
+    "category": {
+      "root": "コスメ・美容",
+      "parent": "メイクアップ",
+      "name": "メイク道具・化粧小物"
+    },
+    "count": 32,
+    "weight": {
+      "count": 27,
+      "mean": 693.9444444444445,
+      "std": 1037.6542685247598,
+      "min": 2.6,
+      "max": 4500.0,
+      "median": 360.0,
+      "percentile_25": 106.5,
+      "percentile_75": 427.5
+    },
+    "volume": {
+      "count": 5,
+      "mean": 4152.375,
+      "std": 2406.9557562406503,
+      "min": 1449.0,
+      "max": 7752.0,
+      "median": 4780.875,
+      "percentile_25": 1500.0,
+      "percentile_75": 5280.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 229.0,
+        "std": 42.941821107167776
+      },
+      "width": {
+        "mean": 156.0,
+        "std": 24.372115213907882
+      },
+      "height": {
+        "mean": 107.0,
+        "std": 46.0
+      }
+    }
+  },
+  "コスメ・美容|スキンケア・基礎化粧品|美容液": {
+    "category": {
+      "root": "コスメ・美容",
+      "parent": "スキンケア・基礎化粧品",
+      "name": "美容液"
+    },
+    "count": 50,
+    "weight": {
+      "count": 49,
+      "mean": 104.86122448979592,
+      "std": 278.0466051202726,
+      "min": 2.0,
+      "max": 2000.0,
+      "median": 55.0,
+      "percentile_25": 27.0,
+      "percentile_75": 105.0
+    },
+    "volume": {
+      "count": 1,
+      "mean": 28.0,
+      "std": 0.0,
+      "min": 28.0,
+      "max": 28.0,
+      "median": 28.0,
+      "percentile_25": 28.0,
+      "percentile_75": 28.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 70.0,
+        "std": 0.0
+      },
+      "width": {
+        "mean": 20.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 20.0,
+        "std": 0.0
+      }
+    }
+  },
+  "コスメ・美容|美容家電|ヘアドライヤー": {
+    "category": {
+      "root": "コスメ・美容",
+      "parent": "美容家電",
+      "name": "ヘアドライヤー"
+    },
+    "count": 65,
+    "weight": {
+      "count": 44,
+      "mean": 577.75,
+      "std": 631.888767721604,
+      "min": 105.0,
+      "max": 3800.0,
+      "median": 443.5,
+      "percentile_25": 362.25,
+      "percentile_75": 500.0
+    },
+    "volume": {
+      "count": 21,
+      "mean": 9359.365571428572,
+      "std": 27257.732693544047,
+      "min": 543.32,
+      "max": 131008.0,
+      "median": 3014.85,
+      "percentile_25": 2146.6379999999995,
+      "percentile_75": 3588.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 302.95238095238096,
+        "std": 292.8704371740541
+      },
+      "width": {
+        "mean": 182.52380952380952,
+        "std": 64.80198339676183
+      },
+      "height": {
+        "mean": 85.33333333333333,
+        "std": 41.90616880755128
+      }
+    }
+  },
+  "本・雑誌・漫画|雑誌|暮らし・生活": {
+    "category": {
+      "root": "本・雑誌・漫画",
+      "parent": "雑誌",
+      "name": "暮らし・生活"
+    },
+    "count": 18,
+    "weight": {
+      "count": 16,
+      "mean": 605.75,
+      "std": 577.70802530344,
+      "min": 51.0,
+      "max": 2000.0,
+      "median": 334.5,
+      "percentile_25": 274.75,
+      "percentile_75": 661.25
+    },
+    "volume": {
+      "count": 2,
+      "mean": 470.158,
+      "std": 167.84199999999998,
+      "min": 302.31600000000003,
+      "max": 638.0,
+      "median": 470.158,
+      "percentile_25": 386.237,
+      "percentile_75": 554.079
+    },
+    "dimensions": {
+      "length": {
+        "mean": 263.0,
+        "std": 27.0
+      },
+      "width": {
+        "mean": 201.5,
+        "std": 18.5
+      },
+      "height": {
+        "mean": 8.5,
+        "std": 1.5
+      }
+    }
+  },
+  "本・雑誌・漫画|雑誌|情報誌": {
+    "category": {
+      "root": "本・雑誌・漫画",
+      "parent": "雑誌",
+      "name": "情報誌"
+    },
+    "count": 30,
+    "weight": {
+      "count": 30,
+      "mean": 631.4,
+      "std": 405.4940690071804,
+      "min": 60.0,
+      "max": 1300.0,
+      "median": 743.0,
+      "percentile_25": 247.75,
+      "percentile_75": 1000.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "本・雑誌・漫画|雑誌|音楽・芸能": {
+    "category": {
+      "root": "本・雑誌・漫画",
+      "parent": "雑誌",
+      "name": "音楽・芸能"
+    },
+    "count": 8,
+    "weight": {
+      "count": 7,
+      "mean": 1853.7142857142858,
+      "std": 3337.6843433000377,
+      "min": 130.0,
+      "max": 10000.0,
+      "median": 537.0,
+      "percentile_25": 282.5,
+      "percentile_75": 872.0
+    },
+    "volume": {
+      "count": 1,
+      "mean": 472.5,
+      "std": 0.0,
+      "min": 472.5,
+      "max": 472.5,
+      "median": 472.5,
+      "percentile_25": 472.5,
+      "percentile_75": 472.5
+    },
+    "dimensions": {
+      "length": {
+        "mean": 210.0,
+        "std": 0.0
+      },
+      "width": {
+        "mean": 150.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 15.0,
+        "std": 0.0
+      }
+    }
+  },
+  "本・雑誌・漫画|雑誌|女性情報誌": {
+    "category": {
+      "root": "本・雑誌・漫画",
+      "parent": "雑誌",
+      "name": "女性情報誌"
+    },
+    "count": 13,
+    "weight": {
+      "count": 13,
+      "mean": 769.2692307692307,
+      "std": 670.6973011892065,
+      "min": 2.5,
+      "max": 2000.0,
+      "median": 760.0,
+      "percentile_25": 182.0,
+      "percentile_75": 1000.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "本・雑誌・漫画|雑誌|趣味": {
+    "category": {
+      "root": "本・雑誌・漫画",
+      "parent": "雑誌",
+      "name": "趣味"
+    },
+    "count": 15,
+    "weight": {
+      "count": 14,
+      "mean": 448.7857142857143,
+      "std": 259.39577553874494,
+      "min": 90.0,
+      "max": 1000.0,
+      "median": 400.0,
+      "percentile_25": 316.5,
+      "percentile_75": 460.0
+    },
+    "volume": {
+      "count": 1,
+      "mean": 374.84999999999997,
+      "std": 0.0,
+      "min": 374.84999999999997,
+      "max": 374.84999999999997,
+      "median": 374.84999999999997,
+      "percentile_25": 374.84999999999997,
+      "percentile_75": 374.84999999999997
+    },
+    "dimensions": {
+      "length": {
+        "mean": 255.0,
+        "std": 0.0
+      },
+      "width": {
+        "mean": 210.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 7.0,
+        "std": 0.0
+      }
+    }
+  },
+  "本・雑誌・漫画|雑誌|学習テキスト": {
+    "category": {
+      "root": "本・雑誌・漫画",
+      "parent": "雑誌",
+      "name": "学習テキスト"
+    },
+    "count": 20,
+    "weight": {
+      "count": 19,
+      "mean": 871.0526315789474,
+      "std": 741.317211290978,
+      "min": 100.0,
+      "max": 2400.0,
+      "median": 425.0,
+      "percentile_25": 310.0,
+      "percentile_75": 1251.0
+    },
+    "volume": {
+      "count": 1,
+      "mean": 2144.52,
+      "std": 0.0,
+      "min": 2144.52,
+      "max": 2144.52,
+      "median": 2144.52,
+      "percentile_25": 2144.52,
+      "percentile_75": 2144.52
+    },
+    "dimensions": {
+      "length": {
+        "mean": 276.0,
+        "std": 0.0
+      },
+      "width": {
+        "mean": 210.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 37.0,
+        "std": 0.0
+      }
+    }
+  },
+  "本・雑誌・漫画|雑誌|男性情報誌": {
+    "category": {
+      "root": "本・雑誌・漫画",
+      "parent": "雑誌",
+      "name": "男性情報誌"
+    },
+    "count": 8,
+    "weight": {
+      "count": 7,
+      "mean": 1699.857142857143,
+      "std": 2629.965639567582,
+      "min": 71.0,
+      "max": 7700.0,
+      "median": 290.0,
+      "percentile_25": 212.5,
+      "percentile_75": 1706.5
+    },
+    "volume": {
+      "count": 1,
+      "mean": 396.9,
+      "std": 0.0,
+      "min": 396.9,
+      "max": 396.9,
+      "median": 396.9,
+      "percentile_25": 396.9,
+      "percentile_75": 396.9
+    },
+    "dimensions": {
+      "length": {
+        "mean": 270.0,
+        "std": 0.0
+      },
+      "width": {
+        "mean": 210.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 7.0,
+        "std": 0.0
+      }
+    }
+  },
+  "本・雑誌・漫画|雑誌|週刊誌": {
+    "category": {
+      "root": "本・雑誌・漫画",
+      "parent": "雑誌",
+      "name": "週刊誌"
+    },
+    "count": 50,
+    "weight": {
+      "count": 49,
+      "mean": 932.8979591836735,
+      "std": 225.63662722806217,
+      "min": 117.0,
+      "max": 1000.0,
+      "median": 1000.0,
+      "percentile_25": 1000.0,
+      "percentile_75": 1000.0
+    },
+    "volume": {
+      "count": 1,
+      "mean": 421.2,
+      "std": 0.0,
+      "min": 421.2,
+      "max": 421.2,
+      "median": 421.2,
+      "percentile_25": 421.2,
+      "percentile_75": 421.2
+    },
+    "dimensions": {
+      "length": {
+        "mean": 225.0,
+        "std": 0.0
+      },
+      "width": {
+        "mean": 208.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 9.0,
+        "std": 0.0
+      }
+    }
+  },
+  "本・雑誌・漫画|漫画|少女漫画": {
+    "category": {
+      "root": "本・雑誌・漫画",
+      "parent": "漫画",
+      "name": "少女漫画"
+    },
+    "count": 4,
+    "weight": {
+      "count": 4,
+      "mean": 539.0,
+      "std": 324.3038698504845,
+      "min": 126.0,
+      "max": 1000.0,
+      "median": 515.0,
+      "percentile_25": 316.5,
+      "percentile_75": 737.5
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "本・雑誌・漫画|漫画|青年漫画": {
+    "category": {
+      "root": "本・雑誌・漫画",
+      "parent": "漫画",
+      "name": "青年漫画"
+    },
+    "count": 1,
+    "weight": {
+      "count": 1,
+      "mean": 424.0,
+      "std": 0.0,
+      "min": 424.0,
+      "max": 424.0,
+      "median": 424.0,
+      "percentile_25": 424.0,
+      "percentile_75": 424.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "本・雑誌・漫画|漫画|ボーイズラブ": {
+    "category": {
+      "root": "本・雑誌・漫画",
+      "parent": "漫画",
+      "name": "ボーイズラブ"
+    },
+    "count": 2,
+    "weight": {
+      "count": 2,
+      "mean": 150.0,
+      "std": 0.0,
+      "min": 150.0,
+      "max": 150.0,
+      "median": 150.0,
+      "percentile_25": 150.0,
+      "percentile_75": 150.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "本・雑誌・漫画|漫画|全巻セット": {
+    "category": {
+      "root": "本・雑誌・漫画",
+      "parent": "漫画",
+      "name": "全巻セット"
+    },
+    "count": 7,
+    "weight": {
+      "count": 6,
+      "mean": 854.1666666666666,
+      "std": 1241.4862620620854,
+      "min": 160.0,
+      "max": 3600.0,
+      "median": 241.0,
+      "percentile_25": 188.5,
+      "percentile_75": 594.25
+    },
+    "volume": {
+      "count": 1,
+      "mean": 278.53000000000003,
+      "std": 0.0,
+      "min": 278.53000000000003,
+      "max": 278.53000000000003,
+      "median": 278.53000000000003,
+      "percentile_25": 278.53000000000003,
+      "percentile_75": 278.53000000000003
+    },
+    "dimensions": {
+      "length": {
+        "mean": 173.0,
+        "std": 0.0
+      },
+      "width": {
+        "mean": 115.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 14.0,
+        "std": 0.0
+      }
+    }
+  },
+  "本・雑誌・漫画|漫画|女性漫画": {
+    "category": {
+      "root": "本・雑誌・漫画",
+      "parent": "漫画",
+      "name": "女性漫画"
+    },
+    "count": 2,
+    "weight": {
+      "count": 2,
+      "mean": 2665.0,
+      "std": 2335.0,
+      "min": 330.0,
+      "max": 5000.0,
+      "median": 2665.0,
+      "percentile_25": 1497.5,
+      "percentile_75": 3832.5
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "本・雑誌・漫画|本|文学・小説": {
+    "category": {
+      "root": "本・雑誌・漫画",
+      "parent": "本",
+      "name": "文学・小説"
+    },
+    "count": 8,
+    "weight": {
+      "count": 7,
+      "mean": 919.5714285714286,
+      "std": 519.9131403122908,
+      "min": 280.0,
+      "max": 2000.0,
+      "median": 1000.0,
+      "percentile_25": 578.5,
+      "percentile_75": 1000.0
+    },
+    "volume": {
+      "count": 1,
+      "mean": 793.8000000000001,
+      "std": 0.0,
+      "min": 793.8000000000001,
+      "max": 793.8000000000001,
+      "median": 793.8000000000001,
+      "percentile_25": 793.8000000000001,
+      "percentile_75": 793.8000000000001
+    },
+    "dimensions": {
+      "length": {
+        "mean": 210.0,
+        "std": 0.0
+      },
+      "width": {
+        "mean": 210.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 18.0,
+        "std": 0.0
+      }
+    }
+  },
+  "本・雑誌・漫画|本|ビジネス・経済": {
+    "category": {
+      "root": "本・雑誌・漫画",
+      "parent": "本",
+      "name": "ビジネス・経済"
+    },
+    "count": 24,
+    "weight": {
+      "count": 22,
+      "mean": 649.5909090909091,
+      "std": 413.9739406698434,
+      "min": 210.0,
+      "max": 2000.0,
+      "median": 520.0,
+      "percentile_25": 380.0,
+      "percentile_75": 970.0
+    },
+    "volume": {
+      "count": 2,
+      "mean": 433.40999999999997,
+      "std": 62.91,
+      "min": 370.5,
+      "max": 496.32,
+      "median": 433.40999999999997,
+      "percentile_25": 401.955,
+      "percentile_75": 464.865
+    },
+    "dimensions": {
+      "length": {
+        "mean": 189.0,
+        "std": 1.0
+      },
+      "width": {
+        "mean": 131.0,
+        "std": 1.0
+      },
+      "height": {
+        "mean": 17.5,
+        "std": 2.5
+      }
+    }
+  },
+  "本・雑誌・漫画|本|語学・辞書・学習参考書": {
+    "category": {
+      "root": "本・雑誌・漫画",
+      "parent": "本",
+      "name": "語学・辞書・学習参考書"
+    },
+    "count": 11,
+    "weight": {
+      "count": 10,
+      "mean": 970.4,
+      "std": 834.6988918166838,
+      "min": 172.0,
+      "max": 3000.0,
+      "median": 639.0,
+      "percentile_25": 416.75,
+      "percentile_75": 1026.75
+    },
+    "volume": {
+      "count": 1,
+      "mean": 157.5,
+      "std": 0.0,
+      "min": 157.5,
+      "max": 157.5,
+      "median": 157.5,
+      "percentile_25": 157.5,
+      "percentile_75": 157.5
+    },
+    "dimensions": {
+      "length": {
+        "mean": 150.0,
+        "std": 0.0
+      },
+      "width": {
+        "mean": 105.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 10.0,
+        "std": 0.0
+      }
+    }
+  },
+  "本・雑誌・漫画|本|人文": {
+    "category": {
+      "root": "本・雑誌・漫画",
+      "parent": "本",
+      "name": "人文"
+    },
+    "count": 27,
+    "weight": {
+      "count": 25,
+      "mean": 1649.68,
+      "std": 3004.086905800163,
+      "min": 150.0,
+      "max": 16000.0,
+      "median": 1000.0,
+      "percentile_25": 440.0,
+      "percentile_75": 2000.0
+    },
+    "volume": {
+      "count": 2,
+      "mean": 319.481,
+      "std": 110.15099999999998,
+      "min": 209.33000000000004,
+      "max": 429.632,
+      "median": 319.481,
+      "percentile_25": 264.4055,
+      "percentile_75": 374.5565
+    },
+    "dimensions": {
+      "length": {
+        "mean": 184.5,
+        "std": 11.5
+      },
+      "width": {
+        "mean": 123.5,
+        "std": 13.5
+      },
+      "height": {
+        "mean": 13.5,
+        "std": 2.5
+      }
+    }
+  },
+  "本・雑誌・漫画|本|洋書": {
+    "category": {
+      "root": "本・雑誌・漫画",
+      "parent": "本",
+      "name": "洋書"
+    },
+    "count": 52,
+    "weight": {
+      "count": 35,
+      "mean": 1729.4071428571428,
+      "std": 551.438333832903,
+      "min": 1.25,
+      "max": 2000.0,
+      "median": 2000.0,
+      "percentile_25": 2000.0,
+      "percentile_75": 2000.0
+    },
+    "volume": {
+      "count": 17,
+      "mean": 877.8633374117647,
+      "std": 657.0214609358777,
+      "min": 297.0,
+      "max": 2974.252116000001,
+      "median": 553.5,
+      "percentile_25": 483.87,
+      "percentile_75": 1176.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 207.7294117647059,
+        "std": 39.703841341878224
+      },
+      "width": {
+        "mean": 166.65294117647062,
+        "std": 47.14583279753377
+      },
+      "height": {
+        "mean": 23.0,
+        "std": 7.549912348536785
+      }
+    }
+  },
+  "本・雑誌・漫画|本|その他": {
+    "category": {
+      "root": "本・雑誌・漫画",
+      "parent": "本",
+      "name": "その他"
+    },
+    "count": 3,
+    "weight": {
+      "count": 1,
+      "mean": 11000.0,
+      "std": 0.0,
+      "min": 11000.0,
+      "max": 11000.0,
+      "median": 11000.0,
+      "percentile_25": 11000.0,
+      "percentile_75": 11000.0
+    },
+    "volume": {
+      "count": 2,
+      "mean": 3642.0,
+      "std": 2742.0,
+      "min": 900.0,
+      "max": 6384.0,
+      "median": 3642.0,
+      "percentile_25": 2271.0,
+      "percentile_75": 5013.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 290.0,
+        "std": 90.0
+      },
+      "width": {
+        "mean": 215.0,
+        "std": 65.0
+      },
+      "height": {
+        "mean": 45.0,
+        "std": 15.0
+      }
+    }
+  },
+  "本・雑誌・漫画|本|絵本・児童書": {
+    "category": {
+      "root": "本・雑誌・漫画",
+      "parent": "本",
+      "name": "絵本・児童書"
+    },
+    "count": 18,
+    "weight": {
+      "count": 13,
+      "mean": 1285.2307692307693,
+      "std": 849.5777370911662,
+      "min": 80.0,
+      "max": 2000.0,
+      "median": 2000.0,
+      "percentile_25": 306.0,
+      "percentile_75": 2000.0
+    },
+    "volume": {
+      "count": 5,
+      "mean": 491.922,
+      "std": 172.92945083472623,
+      "min": 200.0,
+      "max": 738.92,
+      "median": 485.985,
+      "percentile_25": 485.985,
+      "percentile_75": 548.72
+    },
+    "dimensions": {
+      "length": {
+        "mean": 216.4,
+        "std": 40.93213896194529
+      },
+      "width": {
+        "mean": 182.6,
+        "std": 18.33684814792335
+      },
+      "height": {
+        "mean": 13.2,
+        "std": 4.995998398718719
+      }
+    }
+  },
+  "ペット用品|猫用品|キャットフード": {
+    "category": {
+      "root": "ペット用品",
+      "parent": "猫用品",
+      "name": "キャットフード"
+    },
+    "count": 100,
+    "weight": {
+      "count": 100,
+      "mean": 1019.93,
+      "std": 1632.9288058883644,
+      "min": 13.0,
+      "max": 8000.0,
+      "median": 160.0,
+      "percentile_25": 70.0,
+      "percentile_75": 2000.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ペット用品|猫用品|トイレ用品": {
+    "category": {
+      "root": "ペット用品",
+      "parent": "猫用品",
+      "name": "トイレ用品"
+    },
+    "count": 13,
+    "weight": {
+      "count": 13,
+      "mean": 8231.615384615385,
+      "std": 5841.672093850443,
+      "min": 11.0,
+      "max": 20000.0,
+      "median": 5000.0,
+      "percentile_25": 5000.0,
+      "percentile_75": 10000.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ペット用品|犬用品|ドッグフード": {
+    "category": {
+      "root": "ペット用品",
+      "parent": "犬用品",
+      "name": "ドッグフード"
+    },
+    "count": 50,
+    "weight": {
+      "count": 50,
+      "mean": 3812.0,
+      "std": 4211.285789399717,
+      "min": 20.0,
+      "max": 16500.0,
+      "median": 2700.0,
+      "percentile_25": 1000.0,
+      "percentile_75": 3600.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ペット用品|犬用品|犬雑貨・オーナーズグッズ": {
+    "category": {
+      "root": "ペット用品",
+      "parent": "犬用品",
+      "name": "犬雑貨・オーナーズグッズ"
+    },
+    "count": 51,
+    "weight": {
+      "count": 49,
+      "mean": 98.44897959183673,
+      "std": 84.8429067482331,
+      "min": 3.5,
+      "max": 410.0,
+      "median": 98.0,
+      "percentile_25": 34.0,
+      "percentile_75": 130.0
+    },
+    "volume": {
+      "count": 2,
+      "mean": 113.75,
+      "std": 0.0,
+      "min": 113.75,
+      "max": 113.75,
+      "median": 113.75,
+      "percentile_25": 113.75,
+      "percentile_75": 113.75
+    },
+    "dimensions": {
+      "length": {
+        "mean": 65.0,
+        "std": 0.0
+      },
+      "width": {
+        "mean": 50.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 35.0,
+        "std": 0.0
+      }
+    }
+  },
+  "ハンドメイド・手芸|趣味・おもちゃ|クラフト・布製品": {
+    "category": {
+      "root": "ハンドメイド・手芸",
+      "parent": "趣味・おもちゃ",
+      "name": "クラフト・布製品"
+    },
+    "count": 28,
+    "weight": {
+      "count": 26,
+      "mean": 50.5,
+      "std": 57.92186381404096,
+      "min": 6.0,
+      "max": 250.0,
+      "median": 35.0,
+      "percentile_25": 35.0,
+      "percentile_75": 37.0
+    },
+    "volume": {
+      "count": 2,
+      "mean": 2129.9,
+      "std": 0.0,
+      "min": 2129.9,
+      "max": 2129.9,
+      "median": 2129.9,
+      "percentile_25": 2129.9,
+      "percentile_75": 2129.9
+    },
+    "dimensions": {
+      "length": {
+        "mean": 295.0,
+        "std": 0.0
+      },
+      "width": {
+        "mean": 190.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 38.0,
+        "std": 0.0
+      }
+    }
+  },
+  "ハンドメイド・手芸|食器・キッチン用品|エプロン": {
+    "category": {
+      "root": "ハンドメイド・手芸",
+      "parent": "食器・キッチン用品",
+      "name": "エプロン"
+    },
+    "count": 32,
+    "weight": {
+      "count": 32,
+      "mean": 179.875,
+      "std": 50.202558450740334,
+      "min": 50.0,
+      "max": 315.0,
+      "median": 173.5,
+      "percentile_25": 141.75,
+      "percentile_75": 207.75
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ハンドメイド・手芸|食器・キッチン用品|その他": {
+    "category": {
+      "root": "ハンドメイド・手芸",
+      "parent": "食器・キッチン用品",
+      "name": "その他"
+    },
+    "count": 18,
+    "weight": {
+      "count": 18,
+      "mean": 265.8611111111111,
+      "std": 263.6988921286484,
+      "min": 10.0,
+      "max": 1000.0,
+      "median": 162.5,
+      "percentile_25": 59.0,
+      "percentile_75": 396.5
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ハンドメイド・手芸|ファッション小物|帽子": {
+    "category": {
+      "root": "ハンドメイド・手芸",
+      "parent": "ファッション小物",
+      "name": "帽子"
+    },
+    "count": 35,
+    "weight": {
+      "count": 35,
+      "mean": 88.22857142857143,
+      "std": 41.84193775510452,
+      "min": 48.0,
+      "max": 231.0,
+      "median": 70.0,
+      "percentile_25": 60.0,
+      "percentile_75": 105.5
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ハンドメイド・手芸|手芸素材・材料|編み物道具・毛糸": {
+    "category": {
+      "root": "ハンドメイド・手芸",
+      "parent": "手芸素材・材料",
+      "name": "編み物道具・毛糸"
+    },
+    "count": 50,
+    "weight": {
+      "count": 50,
+      "mean": 138.52,
+      "std": 250.75176888708086,
+      "min": 10.0,
+      "max": 1500.0,
+      "median": 50.0,
+      "percentile_25": 40.0,
+      "percentile_75": 100.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ハンドメイド・手芸|手芸素材・材料|和洋裁材料": {
+    "category": {
+      "root": "ハンドメイド・手芸",
+      "parent": "手芸素材・材料",
+      "name": "和洋裁材料"
+    },
+    "count": 33,
+    "weight": {
+      "count": 33,
+      "mean": 133.22424242424242,
+      "std": 293.1375104253386,
+      "min": 1.9,
+      "max": 1600.0,
+      "median": 50.0,
+      "percentile_25": 50.0,
+      "percentile_75": 50.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ハンドメイド・手芸|ぬいぐるみ・人形・置物|置物": {
+    "category": {
+      "root": "ハンドメイド・手芸",
+      "parent": "ぬいぐるみ・人形・置物",
+      "name": "置物"
+    },
+    "count": 50,
+    "weight": {
+      "count": 42,
+      "mean": 122.49690476190476,
+      "std": 136.46274639880738,
+      "min": 1.17,
+      "max": 600.0,
+      "median": 75.5,
+      "percentile_25": 27.425,
+      "percentile_75": 156.0
+    },
+    "volume": {
+      "count": 8,
+      "mean": 212.625,
+      "std": 154.19888739870984,
+      "min": 85.5,
+      "max": 445.5,
+      "median": 114.75,
+      "percentile_25": 85.5,
+      "percentile_75": 354.375
+    },
+    "dimensions": {
+      "length": {
+        "mean": 101.25,
+        "std": 9.921567416492215
+      },
+      "width": {
+        "mean": 71.25,
+        "std": 27.810744326608734
+      },
+      "height": {
+        "mean": 27.5,
+        "std": 12.747548783981962
+      }
+    }
+  },
+  "ハンドメイド・手芸|家具|棚・シェルフ・ラック": {
+    "category": {
+      "root": "ハンドメイド・手芸",
+      "parent": "家具",
+      "name": "棚・シェルフ・ラック"
+    },
+    "count": 59,
+    "weight": {
+      "count": 40,
+      "mean": 6681.975,
+      "std": 12927.817484957584,
+      "min": 96.0,
+      "max": 60000.0,
+      "median": 1310.0,
+      "percentile_25": 641.25,
+      "percentile_75": 5000.0
+    },
+    "volume": {
+      "count": 19,
+      "mean": 22309.521789473685,
+      "std": 31044.726670928914,
+      "min": 873.0,
+      "max": 130200.0,
+      "median": 10080.0,
+      "percentile_25": 5536.4400000000005,
+      "percentile_75": 27000.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 386.7368421052632,
+        "std": 147.99603198993054
+      },
+      "width": {
+        "mean": 225.47368421052633,
+        "std": 124.810327010756
+      },
+      "height": {
+        "mean": 176.3684210526316,
+        "std": 94.24503925312311
+      }
+    }
+  },
+  "ハンドメイド・手芸|インテリア・生活道具|その他": {
+    "category": {
+      "root": "ハンドメイド・手芸",
+      "parent": "インテリア・生活道具",
+      "name": "その他"
+    },
+    "count": 51,
+    "weight": {
+      "count": 48,
+      "mean": 219.7229166666667,
+      "std": 241.57788447308883,
+      "min": 10.0,
+      "max": 1088.0,
+      "median": 116.5,
+      "percentile_25": 71.25,
+      "percentile_75": 285.0
+    },
+    "volume": {
+      "count": 3,
+      "mean": 3648.7766666666666,
+      "std": 4284.757177066423,
+      "min": 194.57999999999998,
+      "max": 9687.5,
+      "median": 1064.25,
+      "percentile_25": 629.415,
+      "percentile_75": 5375.875
+    },
+    "dimensions": {
+      "length": {
+        "mean": 233.33333333333334,
+        "std": 14.337208778404378
+      },
+      "width": {
+        "mean": 181.33333333333334,
+        "std": 57.18585683735291
+      },
+      "height": {
+        "mean": 68.16666666666667,
+        "std": 63.587647297953154
+      }
+    }
+  },
+  "CD・DVD・ブルーレイ|DVD|ミュージック": {
+    "category": {
+      "root": "CD・DVD・ブルーレイ",
+      "parent": "DVD",
+      "name": "ミュージック"
+    },
+    "count": 35,
+    "weight": {
+      "count": 33,
+      "mean": 852.2121212121212,
+      "std": 350.1339793413942,
+      "min": 3.0,
+      "max": 1000.0,
+      "median": 1000.0,
+      "percentile_25": 1000.0,
+      "percentile_75": 1000.0
+    },
+    "volume": {
+      "count": 2,
+      "mean": 1153.2109999999998,
+      "std": 13.540999999999826,
+      "min": 1139.67,
+      "max": 1166.7519999999997,
+      "median": 1153.2109999999998,
+      "percentile_25": 1146.4405,
+      "percentile_75": 1159.9814999999999
+    },
+    "dimensions": {
+      "length": {
+        "mean": 206.0,
+        "std": 4.0
+      },
+      "width": {
+        "mean": 157.0,
+        "std": 5.0
+      },
+      "height": {
+        "mean": 35.75,
+        "std": 2.25
+      }
+    }
+  },
+  "CD・DVD・ブルーレイ|DVD|アニメ": {
+    "category": {
+      "root": "CD・DVD・ブルーレイ",
+      "parent": "DVD",
+      "name": "アニメ"
+    },
+    "count": 41,
+    "weight": {
+      "count": 41,
+      "mean": 978.4634146341464,
+      "std": 136.20932555749653,
+      "min": 117.0,
+      "max": 1000.0,
+      "median": 1000.0,
+      "percentile_25": 1000.0,
+      "percentile_75": 1000.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "CD・DVD・ブルーレイ|DVD|邦画・日本映画": {
+    "category": {
+      "root": "CD・DVD・ブルーレイ",
+      "parent": "DVD",
+      "name": "邦画・日本映画"
+    },
+    "count": 25,
+    "weight": {
+      "count": 23,
+      "mean": 940.4782608695652,
+      "std": 199.24375928587253,
+      "min": 146.0,
+      "max": 1000.0,
+      "median": 1000.0,
+      "percentile_25": 1000.0,
+      "percentile_75": 1000.0
+    },
+    "volume": {
+      "count": 2,
+      "mean": 619.53,
+      "std": 206.96999999999997,
+      "min": 412.56000000000006,
+      "max": 826.5,
+      "median": 619.53,
+      "percentile_25": 516.0450000000001,
+      "percentile_75": 723.015
+    },
+    "dimensions": {
+      "length": {
+        "mean": 190.5,
+        "std": 0.5
+      },
+      "width": {
+        "mean": 140.0,
+        "std": 5.0
+      },
+      "height": {
+        "mean": 23.0,
+        "std": 7.0
+      }
+    }
+  },
+  "CD・DVD・ブルーレイ|DVD|TVドラマ": {
+    "category": {
+      "root": "CD・DVD・ブルーレイ",
+      "parent": "DVD",
+      "name": "TVドラマ"
+    },
+    "count": 11,
+    "weight": {
+      "count": 11,
+      "mean": 945.6363636363636,
+      "std": 171.91291279824463,
+      "min": 402.0,
+      "max": 1000.0,
+      "median": 1000.0,
+      "percentile_25": 1000.0,
+      "percentile_75": 1000.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "CD・DVD・ブルーレイ|DVD|キッズ・ファミリー": {
+    "category": {
+      "root": "CD・DVD・ブルーレイ",
+      "parent": "DVD",
+      "name": "キッズ・ファミリー"
+    },
+    "count": 51,
+    "weight": {
+      "count": 50,
+      "mean": 963.0,
+      "std": 140.87228258248675,
+      "min": 150.0,
+      "max": 1000.0,
+      "median": 1000.0,
+      "percentile_25": 1000.0,
+      "percentile_75": 1000.0
+    },
+    "volume": {
+      "count": 1,
+      "mean": 359.09999999999997,
+      "std": 0.0,
+      "min": 359.09999999999997,
+      "max": 359.09999999999997,
+      "median": 359.09999999999997,
+      "percentile_25": 359.09999999999997,
+      "percentile_75": 359.09999999999997
+    },
+    "dimensions": {
+      "length": {
+        "mean": 190.0,
+        "std": 0.0
+      },
+      "width": {
+        "mean": 135.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 14.0,
+        "std": 0.0
+      }
+    }
+  },
+  "CD・DVD・ブルーレイ|CD|K-POP・アジア": {
+    "category": {
+      "root": "CD・DVD・ブルーレイ",
+      "parent": "CD",
+      "name": "K-POP・アジア"
+    },
+    "count": 11,
+    "weight": {
+      "count": 10,
+      "mean": 881.0,
+      "std": 241.76227993630437,
+      "min": 310.0,
+      "max": 1000.0,
+      "median": 1000.0,
+      "percentile_25": 1000.0,
+      "percentile_75": 1000.0
+    },
+    "volume": {
+      "count": 1,
+      "mean": 5175.0,
+      "std": 0.0,
+      "min": 5175.0,
+      "max": 5175.0,
+      "median": 5175.0,
+      "percentile_25": 5175.0,
+      "percentile_75": 5175.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 300.0,
+        "std": 0.0
+      },
+      "width": {
+        "mean": 150.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 115.0,
+        "std": 0.0
+      }
+    }
+  },
+  "CD・DVD・ブルーレイ|CD|邦楽": {
+    "category": {
+      "root": "CD・DVD・ブルーレイ",
+      "parent": "CD",
+      "name": "邦楽"
+    },
+    "count": 16,
+    "weight": {
+      "count": 16,
+      "mean": 1000.0,
+      "std": 0.0,
+      "min": 1000.0,
+      "max": 1000.0,
+      "median": 1000.0,
+      "percentile_25": 1000.0,
+      "percentile_75": 1000.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "CD・DVD・ブルーレイ|CD|洋楽": {
+    "category": {
+      "root": "CD・DVD・ブルーレイ",
+      "parent": "CD",
+      "name": "洋楽"
+    },
+    "count": 34,
+    "weight": {
+      "count": 34,
+      "mean": 998.5588235294117,
+      "std": 8.27892852001069,
+      "min": 951.0,
+      "max": 1000.0,
+      "median": 1000.0,
+      "percentile_25": 1000.0,
+      "percentile_75": 1000.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "CD・DVD・ブルーレイ|ブルーレイ|洋画・外国映画": {
+    "category": {
+      "root": "CD・DVD・ブルーレイ",
+      "parent": "ブルーレイ",
+      "name": "洋画・外国映画"
+    },
+    "count": 22,
+    "weight": {
+      "count": 22,
+      "mean": 784.9090909090909,
+      "std": 539.083642446809,
+      "min": 12.0,
+      "max": 2400.0,
+      "median": 1000.0,
+      "percentile_25": 255.0,
+      "percentile_75": 1000.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "CD・DVD・ブルーレイ|ブルーレイ|アニメ": {
+    "category": {
+      "root": "CD・DVD・ブルーレイ",
+      "parent": "ブルーレイ",
+      "name": "アニメ"
+    },
+    "count": 11,
+    "weight": {
+      "count": 11,
+      "mean": 2113.181818181818,
+      "std": 2794.7940831020355,
+      "min": 50.0,
+      "max": 8000.0,
+      "median": 1000.0,
+      "percentile_25": 1000.0,
+      "percentile_75": 1000.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "DIY・工具|ペンチ・プライヤー|ペンチ": {
+    "category": {
+      "root": "DIY・工具",
+      "parent": "ペンチ・プライヤー",
+      "name": "ペンチ"
+    },
+    "count": 34,
+    "weight": {
+      "count": 33,
+      "mean": 555.5151515151515,
+      "std": 641.2622553007949,
+      "min": 200.0,
+      "max": 3060.0,
+      "median": 400.0,
+      "percentile_25": 320.0,
+      "percentile_75": 520.0
+    },
+    "volume": {
+      "count": 1,
+      "mean": 368.99999999999994,
+      "std": 0.0,
+      "min": 368.99999999999994,
+      "max": 368.99999999999994,
+      "median": 368.99999999999994,
+      "percentile_25": 368.99999999999994,
+      "percentile_75": 368.99999999999994
+    },
+    "dimensions": {
+      "length": {
+        "mean": 300.0,
+        "std": 0.0
+      },
+      "width": {
+        "mean": 82.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 15.0,
+        "std": 0.0
+      }
+    }
+  },
+  "DIY・工具|ハンマー・てこ・打刻|その他": {
+    "category": {
+      "root": "DIY・工具",
+      "parent": "ハンマー・てこ・打刻",
+      "name": "その他"
+    },
+    "count": 46,
+    "weight": {
+      "count": 44,
+      "mean": 808.8795454545453,
+      "std": 653.9905915988345,
+      "min": 65.0,
+      "max": 3800.0,
+      "median": 610.95,
+      "percentile_25": 345.0,
+      "percentile_75": 1125.0
+    },
+    "volume": {
+      "count": 2,
+      "mean": 1119.0,
+      "std": 393.0,
+      "min": 726.0,
+      "max": 1512.0,
+      "median": 1119.0,
+      "percentile_25": 922.5,
+      "percentile_75": 1315.5
+    },
+    "dimensions": {
+      "length": {
+        "mean": 262.5,
+        "std": 97.5
+      },
+      "width": {
+        "mean": 125.0,
+        "std": 15.0
+      },
+      "height": {
+        "mean": 35.0,
+        "std": 5.0
+      }
+    }
+  },
+  "DIY・工具|金物・部品|蝶番・丁番・ヒンジ": {
+    "category": {
+      "root": "DIY・工具",
+      "parent": "金物・部品",
+      "name": "蝶番・丁番・ヒンジ"
+    },
+    "count": 27,
+    "weight": {
+      "count": 23,
+      "mean": 4564.217391304348,
+      "std": 10582.633078104167,
+      "min": 5.0,
+      "max": 50000.0,
+      "median": 300.0,
+      "percentile_25": 75.0,
+      "percentile_75": 3500.0
+    },
+    "volume": {
+      "count": 4,
+      "mean": 80.964,
+      "std": 84.44656735474804,
+      "min": 2.7059999999999995,
+      "max": 204.74999999999997,
+      "median": 58.19999999999998,
+      "percentile_25": 3.1065000000000005,
+      "percentile_75": 136.05749999999998
+    },
+    "dimensions": {
+      "length": {
+        "mean": 63.0,
+        "std": 18.774983355518586
+      },
+      "width": {
+        "mean": 37.625,
+        "std": 17.027092382435704
+      },
+      "height": {
+        "mean": 21.5,
+        "std": 19.817921182606415
+      }
+    }
+  },
+  "DIY・工具|ドライバー・レンチ|ソケット": {
+    "category": {
+      "root": "DIY・工具",
+      "parent": "ドライバー・レンチ",
+      "name": "ソケット"
+    },
+    "count": 30,
+    "weight": {
+      "count": 28,
+      "mean": 629.7142857142857,
+      "std": 557.2060312169008,
+      "min": 25.0,
+      "max": 1300.0,
+      "median": 628.0,
+      "percentile_25": 87.5,
+      "percentile_75": 1180.0
+    },
+    "volume": {
+      "count": 2,
+      "mean": 675.52,
+      "std": 572.48,
+      "min": 103.04,
+      "max": 1248.0,
+      "median": 675.52,
+      "percentile_25": 389.28000000000003,
+      "percentile_75": 961.76
+    },
+    "dimensions": {
+      "length": {
+        "mean": 190.0,
+        "std": 50.0
+      },
+      "width": {
+        "mean": 81.0,
+        "std": 49.0
+      },
+      "height": {
+        "mean": 31.5,
+        "std": 8.5
+      }
+    }
+  },
+  "ゲーム・おもちゃ・グッズ|キャラクターグッズ|バッグ・ポーチ": {
+    "category": {
+      "root": "ゲーム・おもちゃ・グッズ",
+      "parent": "キャラクターグッズ",
+      "name": "バッグ・ポーチ"
+    },
+    "count": 53,
+    "weight": {
+      "count": 49,
+      "mean": 106.76530612244898,
+      "std": 91.9603453824825,
+      "min": 14.0,
+      "max": 530.0,
+      "median": 80.0,
+      "percentile_25": 40.0,
+      "percentile_75": 149.0
+    },
+    "volume": {
+      "count": 4,
+      "mean": 2808.90625,
+      "std": 2662.579053073765,
+      "min": 264.0,
+      "max": 6750.0,
+      "median": 2110.8125,
+      "percentile_25": 419.71875,
+      "percentile_75": 4500.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 226.25,
+        "std": 70.47827679505225
+      },
+      "width": {
+        "mean": 108.75,
+        "std": 42.18634257671551
+      },
+      "height": {
+        "mean": 78.75,
+        "std": 49.54480295651604
+      }
+    }
+  },
+  "ゲーム・おもちゃ・グッズ|キャラクターグッズ|キーホルダー・アクリルキーホルダー": {
+    "category": {
+      "root": "ゲーム・おもちゃ・グッズ",
+      "parent": "キャラクターグッズ",
+      "name": "キーホルダー・アクリルキーホルダー"
+    },
+    "count": 13,
+    "weight": {
+      "count": 13,
+      "mean": 28.03846153846154,
+      "std": 13.021375235271869,
+      "min": 6.5,
+      "max": 50.0,
+      "median": 30.0,
+      "percentile_25": 25.0,
+      "percentile_75": 34.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ゲーム・おもちゃ・グッズ|キャラクターグッズ|Tシャツ・アパレル": {
+    "category": {
+      "root": "ゲーム・おもちゃ・グッズ",
+      "parent": "キャラクターグッズ",
+      "name": "Tシャツ・アパレル"
+    },
+    "count": 33,
+    "weight": {
+      "count": 31,
+      "mean": 308.90967741935486,
+      "std": 212.14730024942986,
+      "min": 4.2,
+      "max": 690.0,
+      "median": 240.0,
+      "percentile_25": 167.5,
+      "percentile_75": 477.5
+    },
+    "volume": {
+      "count": 2,
+      "mean": 4248.0,
+      "std": 0.0,
+      "min": 4248.0,
+      "max": 4248.0,
+      "median": 4248.0,
+      "percentile_25": 4248.0,
+      "percentile_75": 4248.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 720.0,
+        "std": 0.0
+      },
+      "width": {
+        "mean": 590.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 10.0,
+        "std": 0.0
+      }
+    }
+  },
+  "ゲーム・おもちゃ・グッズ|キャラクターグッズ|その他": {
+    "category": {
+      "root": "ゲーム・おもちゃ・グッズ",
+      "parent": "キャラクターグッズ",
+      "name": "その他"
+    },
+    "count": 11,
+    "weight": {
+      "count": 10,
+      "mean": 193.2,
+      "std": 216.17437405946154,
+      "min": 18.0,
+      "max": 680.0,
+      "median": 87.5,
+      "percentile_25": 69.25,
+      "percentile_75": 225.0
+    },
+    "volume": {
+      "count": 1,
+      "mean": 3920.0,
+      "std": 0.0,
+      "min": 3920.0,
+      "max": 3920.0,
+      "median": 3920.0,
+      "percentile_25": 3920.0,
+      "percentile_75": 3920.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 350.0,
+        "std": 0.0
+      },
+      "width": {
+        "mean": 280.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 40.0,
+        "std": 0.0
+      }
+    }
+  },
+  "ゲーム・おもちゃ・グッズ|キャラクターグッズ|ぬいぐるみ・マスコット": {
+    "category": {
+      "root": "ゲーム・おもちゃ・グッズ",
+      "parent": "キャラクターグッズ",
+      "name": "ぬいぐるみ・マスコット"
+    },
+    "count": 17,
+    "weight": {
+      "count": 14,
+      "mean": 362.85714285714283,
+      "std": 310.00434493334285,
+      "min": 26.0,
+      "max": 1000.0,
+      "median": 278.0,
+      "percentile_25": 162.0,
+      "percentile_75": 520.0
+    },
+    "volume": {
+      "count": 3,
+      "mean": 8318.318666666666,
+      "std": 986.0398804123266,
+      "min": 6962.956,
+      "max": 9280.0,
+      "median": 8712.0,
+      "percentile_25": 7837.478,
+      "percentile_75": 8996.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 303.0,
+        "std": 42.245315322135625
+      },
+      "width": {
+        "mean": 202.66666666666666,
+        "std": 13.199326582148888
+      },
+      "height": {
+        "mean": 137.66666666666666,
+        "std": 20.75786330258702
+      }
+    }
+  },
+  "ゲーム・おもちゃ・グッズ|タレントグッズ|アイドル": {
+    "category": {
+      "root": "ゲーム・おもちゃ・グッズ",
+      "parent": "タレントグッズ",
+      "name": "アイドル"
+    },
+    "count": 9,
+    "weight": {
+      "count": 2,
+      "mean": 15750.0,
+      "std": 14250.0,
+      "min": 1500.0,
+      "max": 30000.0,
+      "median": 15750.0,
+      "percentile_25": 8625.0,
+      "percentile_75": 22875.0
+    },
+    "volume": {
+      "count": 7,
+      "mean": 233.75,
+      "std": 0.0,
+      "min": 233.75,
+      "max": 233.75,
+      "median": 233.75,
+      "percentile_25": 233.75,
+      "percentile_75": 233.75
+    },
+    "dimensions": {
+      "length": {
+        "mean": 110.0,
+        "std": 0.0
+      },
+      "width": {
+        "mean": 85.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 25.0,
+        "std": 0.0
+      }
+    }
+  },
+  "ゲーム・おもちゃ・グッズ|None|パーティグッズ": {
+    "category": {
+      "root": "ゲーム・おもちゃ・グッズ",
+      "parent": "None",
+      "name": "パーティグッズ"
+    },
+    "count": 37,
+    "weight": {
+      "count": 37,
+      "mean": 1306.5189189189189,
+      "std": 6785.440717780013,
+      "min": 2.3,
+      "max": 42000.0,
+      "median": 90.0,
+      "percentile_25": 17.5,
+      "percentile_75": 247.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ゲーム・おもちゃ・グッズ|トレーディングカード|タレントカード": {
+    "category": {
+      "root": "ゲーム・おもちゃ・グッズ",
+      "parent": "トレーディングカード",
+      "name": "タレントカード"
+    },
+    "count": 1,
+    "weight": {
+      "count": 1,
+      "mean": 130.0,
+      "std": 0.0,
+      "min": 130.0,
+      "max": 130.0,
+      "median": 130.0,
+      "percentile_25": 130.0,
+      "percentile_75": 130.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ゲーム・おもちゃ・グッズ|フィギュア|アメコミ": {
+    "category": {
+      "root": "ゲーム・おもちゃ・グッズ",
+      "parent": "フィギュア",
+      "name": "アメコミ"
+    },
+    "count": 41,
+    "weight": {
+      "count": 34,
+      "mean": 627.3823529411765,
+      "std": 620.7385551149762,
+      "min": 3.0,
+      "max": 3000.0,
+      "median": 445.0,
+      "percentile_25": 289.0,
+      "percentile_75": 798.75
+    },
+    "volume": {
+      "count": 7,
+      "mean": 5059.7585714285715,
+      "std": 1797.7317761988586,
+      "min": 2860.0,
+      "max": 7895.700000000001,
+      "median": 4758.6,
+      "percentile_25": 3849.025,
+      "percentile_75": 6102.9800000000005
+    },
+    "dimensions": {
+      "length": {
+        "mean": 244.71428571428572,
+        "std": 52.02118877565806
+      },
+      "width": {
+        "mean": 182.14285714285714,
+        "std": 24.982442814496583
+      },
+      "height": {
+        "mean": 113.71428571428571,
+        "std": 28.135967249434035
+      }
+    }
+  },
+  "ゲーム・おもちゃ・グッズ|フィギュア|ゲームキャラクター": {
+    "category": {
+      "root": "ゲーム・おもちゃ・グッズ",
+      "parent": "フィギュア",
+      "name": "ゲームキャラクター"
+    },
+    "count": 11,
+    "weight": {
+      "count": 11,
+      "mean": 92.0909090909091,
+      "std": 81.25320082697112,
+      "min": 28.0,
+      "max": 299.0,
+      "median": 50.0,
+      "percentile_25": 49.0,
+      "percentile_75": 81.5
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ゲーム・おもちゃ・グッズ|フィギュア|コミック・アニメ": {
+    "category": {
+      "root": "ゲーム・おもちゃ・グッズ",
+      "parent": "フィギュア",
+      "name": "コミック・アニメ"
+    },
+    "count": 6,
+    "weight": {
+      "count": 5,
+      "mean": 677.8,
+      "std": 298.18678709828845,
+      "min": 260.0,
+      "max": 1000.0,
+      "median": 700.0,
+      "percentile_25": 429.0,
+      "percentile_75": 1000.0
+    },
+    "volume": {
+      "count": 1,
+      "mean": 3075.7999999999997,
+      "std": 0.0,
+      "min": 3075.7999999999997,
+      "max": 3075.7999999999997,
+      "median": 3075.7999999999997,
+      "percentile_25": 3075.7999999999997,
+      "percentile_75": 3075.7999999999997
+    },
+    "dimensions": {
+      "length": {
+        "mean": 182.0,
+        "std": 0.0
+      },
+      "width": {
+        "mean": 130.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 130.0,
+        "std": 0.0
+      }
+    }
+  },
+  "ゲーム・おもちゃ・グッズ|フィギュア|スポーツ": {
+    "category": {
+      "root": "ゲーム・おもちゃ・グッズ",
+      "parent": "フィギュア",
+      "name": "スポーツ"
+    },
+    "count": 32,
+    "weight": {
+      "count": 31,
+      "mean": 1024.967741935484,
+      "std": 2539.151019964197,
+      "min": 3.0,
+      "max": 14000.0,
+      "median": 450.0,
+      "percentile_25": 80.0,
+      "percentile_75": 659.5
+    },
+    "volume": {
+      "count": 1,
+      "mean": 666.0,
+      "std": 0.0,
+      "min": 666.0,
+      "max": 666.0,
+      "median": 666.0,
+      "percentile_25": 666.0,
+      "percentile_75": 666.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 185.0,
+        "std": 0.0
+      },
+      "width": {
+        "mean": 60.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 60.0,
+        "std": 0.0
+      }
+    }
+  },
+  "ゲーム・おもちゃ・グッズ|フィギュア|その他": {
+    "category": {
+      "root": "ゲーム・おもちゃ・グッズ",
+      "parent": "フィギュア",
+      "name": "その他"
+    },
+    "count": 23,
+    "weight": {
+      "count": 21,
+      "mean": 342.1904761904762,
+      "std": 680.3214659645499,
+      "min": 11.0,
+      "max": 2800.0,
+      "median": 45.0,
+      "percentile_25": 20.0,
+      "percentile_75": 100.0
+    },
+    "volume": {
+      "count": 2,
+      "mean": 323.34,
+      "std": 201.66,
+      "min": 121.67999999999999,
+      "max": 525.0,
+      "median": 323.34,
+      "percentile_25": 222.51,
+      "percentile_75": 424.17
+    },
+    "dimensions": {
+      "length": {
+        "mean": 110.0,
+        "std": 30.0
+      },
+      "width": {
+        "mean": 57.0,
+        "std": 18.0
+      },
+      "height": {
+        "mean": 44.5,
+        "std": 5.5
+      }
+    }
+  },
+  "ゲーム・おもちゃ・グッズ|テレビゲーム|ニンテンドー3DS/2DS": {
+    "category": {
+      "root": "ゲーム・おもちゃ・グッズ",
+      "parent": "テレビゲーム",
+      "name": "ニンテンドー3DS/2DS"
+    },
+    "count": 14,
+    "weight": {
+      "count": 14,
+      "mean": 93.97857142857143,
+      "std": 179.83714926316543,
+      "min": 4.0,
+      "max": 730.0,
+      "median": 49.5,
+      "percentile_25": 5.5,
+      "percentile_75": 76.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ゲーム・おもちゃ・グッズ|テレビゲーム|Nintendo Switch": {
+    "category": {
+      "root": "ゲーム・おもちゃ・グッズ",
+      "parent": "テレビゲーム",
+      "name": "Nintendo Switch"
+    },
+    "count": 5,
+    "weight": {
+      "count": 4,
+      "mean": 1087.5,
+      "std": 589.8887606998459,
+      "min": 350.0,
+      "max": 2000.0,
+      "median": 1000.0,
+      "percentile_25": 837.5,
+      "percentile_75": 1250.0
+    },
+    "volume": {
+      "count": 1,
+      "mean": 200.0,
+      "std": 0.0,
+      "min": 200.0,
+      "max": 200.0,
+      "median": 200.0,
+      "percentile_25": 200.0,
+      "percentile_75": 200.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 80.0,
+        "std": 0.0
+      },
+      "width": {
+        "mean": 50.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 50.0,
+        "std": 0.0
+      }
+    }
+  },
+  "ゲーム・おもちゃ・グッズ|おもちゃ|小物・アクセサリー": {
+    "category": {
+      "root": "ゲーム・おもちゃ・グッズ",
+      "parent": "おもちゃ",
+      "name": "小物・アクセサリー"
+    },
+    "count": 31,
+    "weight": {
+      "count": 27,
+      "mean": 83.4074074074074,
+      "std": 131.47771512602412,
+      "min": 2.0,
+      "max": 610.0,
+      "median": 30.0,
+      "percentile_25": 18.0,
+      "percentile_75": 76.0
+    },
+    "volume": {
+      "count": 4,
+      "mean": 312.45799999999997,
+      "std": 298.64775320099096,
+      "min": 40.8,
+      "max": 782.0,
+      "median": 213.516,
+      "percentile_25": 60.474,
+      "percentile_75": 465.5
+    },
+    "dimensions": {
+      "length": {
+        "mean": 78.0,
+        "std": 26.16295090390226
+      },
+      "width": {
+        "mean": 60.25,
+        "std": 22.498611068241523
+      },
+      "height": {
+        "mean": 45.5,
+        "std": 22.242976419535225
+      }
+    }
+  },
+  "ゲーム・おもちゃ・グッズ|おもちゃ|カプセルトイ・ガチャガチャ": {
+    "category": {
+      "root": "ゲーム・おもちゃ・グッズ",
+      "parent": "おもちゃ",
+      "name": "カプセルトイ・ガチャガチャ"
+    },
+    "count": 9,
+    "weight": {
+      "count": 9,
+      "mean": 113.55555555555556,
+      "std": 229.5667954653872,
+      "min": 10.0,
+      "max": 760.0,
+      "median": 40.0,
+      "percentile_25": 11.0,
+      "percentile_75": 60.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ゲーム・おもちゃ・グッズ|おもちゃ|キャラクター玩具": {
+    "category": {
+      "root": "ゲーム・おもちゃ・グッズ",
+      "parent": "おもちゃ",
+      "name": "キャラクター玩具"
+    },
+    "count": 31,
+    "weight": {
+      "count": 29,
+      "mean": 1049.2068965517242,
+      "std": 4531.405501526296,
+      "min": 8.0,
+      "max": 25000.0,
+      "median": 117.0,
+      "percentile_25": 18.0,
+      "percentile_75": 370.0
+    },
+    "volume": {
+      "count": 2,
+      "mean": 36019.523669999995,
+      "std": 30811.523669999995,
+      "min": 5208.0,
+      "max": 66831.04733999999,
+      "median": 36019.523669999995,
+      "percentile_25": 20613.761834999998,
+      "percentile_75": 51425.28550499999
+    },
+    "dimensions": {
+      "length": {
+        "mean": 438.45,
+        "std": 128.45
+      },
+      "width": {
+        "mean": 323.0,
+        "std": 43.0
+      },
+      "height": {
+        "mean": 191.05,
+        "std": 131.05
+      }
+    }
+  },
+  "ゲーム・おもちゃ・グッズ|パズル・ボードゲーム|バランスゲーム(ジェンガ等)": {
+    "category": {
+      "root": "ゲーム・おもちゃ・グッズ",
+      "parent": "パズル・ボードゲーム",
+      "name": "バランスゲーム(ジェンガ等)"
+    },
+    "count": 48,
+    "weight": {
+      "count": 13,
+      "mean": 402.40769230769234,
+      "std": 416.49968965089266,
+      "min": 1.8,
+      "max": 1200.0,
+      "median": 250.6,
+      "percentile_25": 35.0,
+      "percentile_75": 622.0
+    },
+    "volume": {
+      "count": 35,
+      "mean": 959.3601785714287,
+      "std": 2052.956988290604,
+      "min": 7.3694999999999995,
+      "max": 8365.427000000001,
+      "median": 7.3694999999999995,
+      "percentile_25": 7.3694999999999995,
+      "percentile_75": 466.53999999999996
+    },
+    "dimensions": {
+      "length": {
+        "mean": 106.2,
+        "std": 96.46429391230727
+      },
+      "width": {
+        "mean": 52.18571428571428,
+        "std": 67.48122338994813
+      },
+      "height": {
+        "mean": 31.12857142857143,
+        "std": 42.76603172364435
+      }
+    }
+  },
+  "テレビ・オーディオ・カメラ|テレビ・映像機器|テレビ": {
+    "category": {
+      "root": "テレビ・オーディオ・カメラ",
+      "parent": "テレビ・映像機器",
+      "name": "テレビ"
+    },
+    "count": 90,
+    "weight": {
+      "count": 70,
+      "mean": 14544.6,
+      "std": 15338.039857445,
+      "min": 42.0,
+      "max": 88500.0,
+      "median": 10500.0,
+      "percentile_25": 5175.0,
+      "percentile_75": 16875.0
+    },
+    "volume": {
+      "count": 20,
+      "mean": 125243.36830000002,
+      "std": 101965.30019687189,
+      "min": 8853.6,
+      "max": 389499.0,
+      "median": 79969.92000000001,
+      "percentile_25": 57124.815,
+      "percentile_75": 175314.65999999997
+    },
+    "dimensions": {
+      "length": {
+        "mean": 906.85,
+        "std": 274.7945186862358
+      },
+      "width": {
+        "mean": 610.65,
+        "std": 160.35718724148288
+      },
+      "height": {
+        "mean": 206.7,
+        "std": 97.32682055836408
+      }
+    }
+  },
+  "テレビ・オーディオ・カメラ|カメラ|レンズ(単焦点)": {
+    "category": {
+      "root": "テレビ・オーディオ・カメラ",
+      "parent": "カメラ",
+      "name": "レンズ(単焦点)"
+    },
+    "count": 50,
+    "weight": {
+      "count": 50,
+      "mean": 226.57799999999995,
+      "std": 196.24960972190493,
+      "min": 1.8,
+      "max": 1000.0,
+      "median": 202.0,
+      "percentile_25": 119.5,
+      "percentile_75": 285.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "テレビ・オーディオ・カメラ|カメラ|フィルムカメラ": {
+    "category": {
+      "root": "テレビ・オーディオ・カメラ",
+      "parent": "カメラ",
+      "name": "フィルムカメラ"
+    },
+    "count": 83,
+    "weight": {
+      "count": 60,
+      "mean": 529.4166666666666,
+      "std": 331.1295462336288,
+      "min": 98.0,
+      "max": 1840.0,
+      "median": 555.0,
+      "percentile_25": 228.75,
+      "percentile_75": 658.5
+    },
+    "volume": {
+      "count": 23,
+      "mean": 932.5409347826087,
+      "std": 413.4441633011712,
+      "min": 160.965,
+      "max": 2002.0,
+      "median": 990.0,
+      "percentile_25": 652.1243750000001,
+      "percentile_75": 1104.9395
+    },
+    "dimensions": {
+      "length": {
+        "mean": 139.17391304347825,
+        "std": 19.26339663469249
+      },
+      "width": {
+        "mean": 95.19565217391305,
+        "std": 16.369868349869538
+      },
+      "height": {
+        "mean": 66.71739130434783,
+        "std": 17.66587602705857
+      }
+    }
+  },
+  "テレビ・オーディオ・カメラ|カメラ|デジタルカメラ": {
+    "category": {
+      "root": "テレビ・オーディオ・カメラ",
+      "parent": "カメラ",
+      "name": "デジタルカメラ"
+    },
+    "count": 166,
+    "weight": {
+      "count": 147,
+      "mean": 792.7605442176871,
+      "std": 5748.994062679919,
+      "min": 8.0,
+      "max": 70200.0,
+      "median": 270.0,
+      "percentile_25": 127.0,
+      "percentile_75": 450.0
+    },
+    "volume": {
+      "count": 19,
+      "mean": 252.90014499999998,
+      "std": 226.52383687542994,
+      "min": 49.961068000000004,
+      "max": 896.0,
+      "median": 171.93544,
+      "percentile_25": 126.96837000000001,
+      "percentile_75": 249.61715100000004
+    },
+    "dimensions": {
+      "length": {
+        "mean": 99.84736842105264,
+        "std": 18.975811983765368
+      },
+      "width": {
+        "mean": 64.49473684210527,
+        "std": 12.670125396472082
+      },
+      "height": {
+        "mean": 32.93684210526316,
+        "std": 15.773435714460788
+      }
+    }
+  },
+  "フラワー・ガーデニング|園芸用品|その他": {
+    "category": {
+      "root": "フラワー・ガーデニング",
+      "parent": "園芸用品",
+      "name": "その他"
+    },
+    "count": 46,
+    "weight": {
+      "count": 43,
+      "mean": 3333.6511627906975,
+      "std": 7691.102551631199,
+      "min": 1.0,
+      "max": 40000.0,
+      "median": 500.0,
+      "percentile_25": 197.5,
+      "percentile_75": 2000.0
+    },
+    "volume": {
+      "count": 3,
+      "mean": 1535133.3533333333,
+      "std": 1966332.308496529,
+      "min": 10510.06,
+      "max": 4311480.0,
+      "median": 283410.0,
+      "percentile_25": 146960.03,
+      "percentile_75": 2297445.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 1014.0,
+        "std": 681.6587611603527
+      },
+      "width": {
+        "mean": 915.0,
+        "std": 693.553650892753
+      },
+      "height": {
+        "mean": 630.6666666666666,
+        "std": 430.84516424761637
+      }
+    }
+  },
+  "フラワー・ガーデニング|観葉植物|ブロメリア・エアープランツ": {
+    "category": {
+      "root": "フラワー・ガーデニング",
+      "parent": "観葉植物",
+      "name": "ブロメリア・エアープランツ"
+    },
+    "count": 50,
+    "weight": {
+      "count": 50,
+      "mean": 106.11200000000001,
+      "std": 125.38827638978056,
+      "min": 6.0,
+      "max": 800.0,
+      "median": 100.0,
+      "percentile_25": 26.25,
+      "percentile_75": 137.5
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "フラワー・ガーデニング|造花・アートフラワー|花束・アレンジメント": {
+    "category": {
+      "root": "フラワー・ガーデニング",
+      "parent": "造花・アートフラワー",
+      "name": "花束・アレンジメント"
+    },
+    "count": 36,
+    "weight": {
+      "count": 34,
+      "mean": 442.5882352941176,
+      "std": 1029.0279284395785,
+      "min": 6.0,
+      "max": 5900.0,
+      "median": 184.0,
+      "percentile_25": 68.75,
+      "percentile_75": 300.0
+    },
+    "volume": {
+      "count": 2,
+      "mean": 2848.3875,
+      "std": 193.61249999999995,
+      "min": 2654.775,
+      "max": 3042.0,
+      "median": 2848.3875,
+      "percentile_25": 2751.58125,
+      "percentile_75": 2945.19375
+    },
+    "dimensions": {
+      "length": {
+        "mean": 211.5,
+        "std": 31.5
+      },
+      "width": {
+        "mean": 122.5,
+        "std": 7.5
+      },
+      "height": {
+        "mean": 112.5,
+        "std": 17.5
+      }
+    }
+  },
+  "ファッション|None|靴": {
+    "category": {
+      "root": "ファッション",
+      "parent": "None",
+      "name": "靴"
+    },
+    "count": 10,
+    "weight": {
+      "count": 10,
+      "mean": 283.8,
+      "std": 136.43958369915967,
+      "min": 120.0,
+      "max": 566.0,
+      "median": 248.5,
+      "percentile_25": 179.5,
+      "percentile_75": 356.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ファッション|None|小物": {
+    "category": {
+      "root": "ファッション",
+      "parent": "None",
+      "name": "小物"
+    },
+    "count": 4,
+    "weight": {
+      "count": 4,
+      "mean": 660.0,
+      "std": 793.5993951610599,
+      "min": 40.0,
+      "max": 2000.0,
+      "median": 300.0,
+      "percentile_25": 85.0,
+      "percentile_75": 875.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ファッション|None|下着・アンダーウェア": {
+    "category": {
+      "root": "ファッション",
+      "parent": "None",
+      "name": "下着・アンダーウェア"
+    },
+    "count": 2,
+    "weight": {
+      "count": 2,
+      "mean": 47500.0,
+      "std": 7500.0,
+      "min": 40000.0,
+      "max": 55000.0,
+      "median": 47500.0,
+      "percentile_25": 43750.0,
+      "percentile_75": 51250.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ファッション|None|アクセサリー": {
+    "category": {
+      "root": "ファッション",
+      "parent": "None",
+      "name": "アクセサリー"
+    },
+    "count": 16,
+    "weight": {
+      "count": 16,
+      "mean": 20.560625,
+      "std": 25.292941324792082,
+      "min": 1.07,
+      "max": 95.0,
+      "median": 9.5,
+      "percentile_25": 5.5,
+      "percentile_75": 20.924999999999997
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ファッション|None|スカート": {
+    "category": {
+      "root": "ファッション",
+      "parent": "None",
+      "name": "スカート"
+    },
+    "count": 1,
+    "weight": {
+      "count": 1,
+      "mean": 50000.0,
+      "std": 0.0,
+      "min": 50000.0,
+      "max": 50000.0,
+      "median": 50000.0,
+      "percentile_25": 50000.0,
+      "percentile_75": 50000.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ファッション|None|バッグ": {
+    "category": {
+      "root": "ファッション",
+      "parent": "None",
+      "name": "バッグ"
+    },
+    "count": 7,
+    "weight": {
+      "count": 7,
+      "mean": 769.2857142857143,
+      "std": 1023.7725353229754,
+      "min": 45.0,
+      "max": 2900.0,
+      "median": 270.0,
+      "percentile_25": 85.0,
+      "percentile_75": 1000.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ファッション|レディース|パンツ": {
+    "category": {
+      "root": "ファッション",
+      "parent": "レディース",
+      "name": "パンツ"
+    },
+    "count": 188,
+    "weight": {
+      "count": 188,
+      "mean": 3773.0159574468084,
+      "std": 12202.456896390006,
+      "min": 2.0,
+      "max": 80000.0,
+      "median": 400.0,
+      "percentile_25": 313.625,
+      "percentile_75": 535.125
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ファッション|レディース|靴": {
+    "category": {
+      "root": "ファッション",
+      "parent": "レディース",
+      "name": "靴"
+    },
+    "count": 50,
+    "weight": {
+      "count": 50,
+      "mean": 270.58,
+      "std": 149.28711799750172,
+      "min": 4.0,
+      "max": 819.0,
+      "median": 240.5,
+      "percentile_25": 140.0,
+      "percentile_75": 331.5
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ファッション|レディース|帽子": {
+    "category": {
+      "root": "ファッション",
+      "parent": "レディース",
+      "name": "帽子"
+    },
+    "count": 50,
+    "weight": {
+      "count": 50,
+      "mean": 92.62,
+      "std": 29.94587784654175,
+      "min": 48.0,
+      "max": 170.0,
+      "median": 89.5,
+      "percentile_25": 70.0,
+      "percentile_75": 110.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ファッション|レディース|小物": {
+    "category": {
+      "root": "ファッション",
+      "parent": "レディース",
+      "name": "小物"
+    },
+    "count": 175,
+    "weight": {
+      "count": 169,
+      "mean": 115.01775147928994,
+      "std": 153.3181506090742,
+      "min": 12.0,
+      "max": 2000.0,
+      "median": 100.0,
+      "percentile_25": 75.0,
+      "percentile_75": 130.0
+    },
+    "volume": {
+      "count": 6,
+      "mean": 290.4166666666667,
+      "std": 89.15677982570305,
+      "min": 187.5,
+      "max": 434.70000000000005,
+      "median": 264.9,
+      "percentile_25": 219.375,
+      "percentile_75": 355.95
+    },
+    "dimensions": {
+      "length": {
+        "mean": 111.66666666666667,
+        "std": 14.337208778404378
+      },
+      "width": {
+        "mean": 85.0,
+        "std": 5.773502691896258
+      },
+      "height": {
+        "mean": 30.0,
+        "std": 5.744562646538029
+      }
+    }
+  },
+  "ファッション|レディース|トップス": {
+    "category": {
+      "root": "ファッション",
+      "parent": "レディース",
+      "name": "トップス"
+    },
+    "count": 244,
+    "weight": {
+      "count": 244,
+      "mean": 1144.8524590163934,
+      "std": 6582.50198106242,
+      "min": 3.0,
+      "max": 64000.0,
+      "median": 260.0,
+      "percentile_25": 180.0,
+      "percentile_75": 410.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ファッション|レディース|スーツ・フォーマル・ドレス": {
+    "category": {
+      "root": "ファッション",
+      "parent": "レディース",
+      "name": "スーツ・フォーマル・ドレス"
+    },
+    "count": 37,
+    "weight": {
+      "count": 37,
+      "mean": 20090.027027027027,
+      "std": 25246.772039305833,
+      "min": 15.0,
+      "max": 53000.0,
+      "median": 600.0,
+      "percentile_25": 353.0,
+      "percentile_75": 53000.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ファッション|レディース|アクセサリー": {
+    "category": {
+      "root": "ファッション",
+      "parent": "レディース",
+      "name": "アクセサリー"
+    },
+    "count": 197,
+    "weight": {
+      "count": 193,
+      "mean": 9.636269430051813,
+      "std": 13.622090774448093,
+      "min": 1.0,
+      "max": 95.0,
+      "median": 5.0,
+      "percentile_25": 2.5,
+      "percentile_75": 12.0
+    },
+    "volume": {
+      "count": 4,
+      "mean": 5.335,
+      "std": 6.517375775571024,
+      "min": 0.8999999999999999,
+      "max": 16.588,
+      "median": 1.926,
+      "percentile_25": 1.35,
+      "percentile_75": 5.911
+    },
+    "dimensions": {
+      "length": {
+        "mean": 30.25,
+        "std": 13.645054048995188
+      },
+      "width": {
+        "mean": 15.75,
+        "std": 7.8222439235810075
+      },
+      "height": {
+        "mean": 7.25,
+        "std": 2.277608394786075
+      }
+    }
+  },
+  "ファッション|レディース|ジャケット・アウター": {
+    "category": {
+      "root": "ファッション",
+      "parent": "レディース",
+      "name": "ジャケット・アウター"
+    },
+    "count": 204,
+    "weight": {
+      "count": 204,
+      "mean": 1292.2549019607843,
+      "std": 5204.912771087795,
+      "min": 5.0,
+      "max": 75000.0,
+      "median": 845.0,
+      "percentile_25": 640.0,
+      "percentile_75": 1100.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ファッション|レディース|スカート": {
+    "category": {
+      "root": "ファッション",
+      "parent": "レディース",
+      "name": "スカート"
+    },
+    "count": 171,
+    "weight": {
+      "count": 171,
+      "mean": 394.60818713450294,
+      "std": 349.4332985111886,
+      "min": 18.0,
+      "max": 3000.0,
+      "median": 330.0,
+      "percentile_25": 250.0,
+      "percentile_75": 423.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ファッション|レディース|バッグ": {
+    "category": {
+      "root": "ファッション",
+      "parent": "レディース",
+      "name": "バッグ"
+    },
+    "count": 102,
+    "weight": {
+      "count": 95,
+      "mean": 233.76526315789474,
+      "std": 178.23439491353489,
+      "min": 29.0,
+      "max": 840.0,
+      "median": 180.0,
+      "percentile_25": 90.0,
+      "percentile_75": 338.0
+    },
+    "volume": {
+      "count": 7,
+      "mean": 9699.42857142857,
+      "std": 9705.946967226446,
+      "min": 792.0,
+      "max": 27440.0,
+      "median": 3910.0,
+      "percentile_25": 1641.0,
+      "percentile_75": 16236.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 294.2857142857143,
+        "std": 122.6909174490508
+      },
+      "width": {
+        "mean": 208.57142857142858,
+        "std": 79.17946548886296
+      },
+      "height": {
+        "mean": 105.0,
+        "std": 53.78528742004771
+      }
+    }
+  },
+  "ファッション|レディース|ワンピース": {
+    "category": {
+      "root": "ファッション",
+      "parent": "レディース",
+      "name": "ワンピース"
+    },
+    "count": 101,
+    "weight": {
+      "count": 101,
+      "mean": 1602.3663366336634,
+      "std": 7073.532270838209,
+      "min": 30.0,
+      "max": 50000.0,
+      "median": 444.0,
+      "percentile_25": 330.0,
+      "percentile_75": 590.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ファッション|メンズ|パンツ": {
+    "category": {
+      "root": "ファッション",
+      "parent": "メンズ",
+      "name": "パンツ"
+    },
+    "count": 16,
+    "weight": {
+      "count": 16,
+      "mean": 17590.3125,
+      "std": 30021.155637980424,
+      "min": 60.0,
+      "max": 80000.0,
+      "median": 390.0,
+      "percentile_25": 341.25,
+      "percentile_75": 16096.25
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ファッション|メンズ|靴": {
+    "category": {
+      "root": "ファッション",
+      "parent": "メンズ",
+      "name": "靴"
+    },
+    "count": 42,
+    "weight": {
+      "count": 42,
+      "mean": 338.2142857142857,
+      "std": 149.55163715877788,
+      "min": 28.0,
+      "max": 830.0,
+      "median": 320.0,
+      "percentile_25": 274.25,
+      "percentile_75": 378.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ファッション|メンズ|帽子": {
+    "category": {
+      "root": "ファッション",
+      "parent": "メンズ",
+      "name": "帽子"
+    },
+    "count": 34,
+    "weight": {
+      "count": 34,
+      "mean": 63.23529411764706,
+      "std": 17.76490066118384,
+      "min": 30.0,
+      "max": 130.0,
+      "median": 60.0,
+      "percentile_25": 60.0,
+      "percentile_75": 69.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ファッション|メンズ|小物": {
+    "category": {
+      "root": "ファッション",
+      "parent": "メンズ",
+      "name": "小物"
+    },
+    "count": 90,
+    "weight": {
+      "count": 83,
+      "mean": 138.40361445783134,
+      "std": 213.1539047152771,
+      "min": 16.0,
+      "max": 1980.0,
+      "median": 100.0,
+      "percentile_25": 77.0,
+      "percentile_75": 125.5
+    },
+    "volume": {
+      "count": 7,
+      "mean": 228.51071428571427,
+      "std": 68.0071002820699,
+      "min": 94.35,
+      "max": 284.05,
+      "median": 259.2,
+      "percentile_25": 196.9375,
+      "percentile_75": 284.05
+    },
+    "dimensions": {
+      "length": {
+        "mean": 115.14285714285714,
+        "std": 2.415933503612538
+      },
+      "width": {
+        "mean": 93.57142857142857,
+        "std": 4.403152859263555
+      },
+      "height": {
+        "mean": 21.0,
+        "std": 5.879747322073336
+      }
+    }
+  },
+  "ファッション|メンズ|トップス": {
+    "category": {
+      "root": "ファッション",
+      "parent": "メンズ",
+      "name": "トップス"
+    },
+    "count": 61,
+    "weight": {
+      "count": 60,
+      "mean": 10202.35,
+      "std": 23529.842267374,
+      "min": 50.0,
+      "max": 79000.0,
+      "median": 246.0,
+      "percentile_25": 203.0,
+      "percentile_75": 557.5
+    },
+    "volume": {
+      "count": 1,
+      "mean": 466221.65199999994,
+      "std": 0.0,
+      "min": 466221.65199999994,
+      "max": 466221.65199999994,
+      "median": 466221.65199999994,
+      "percentile_25": 466221.65199999994,
+      "percentile_75": 466221.65199999994
+    },
+    "dimensions": {
+      "length": {
+        "mean": 1118.0,
+        "std": 0.0
+      },
+      "width": {
+        "mean": 746.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 559.0,
+        "std": 0.0
+      }
+    }
+  },
+  "ファッション|メンズ|アクセサリー": {
+    "category": {
+      "root": "ファッション",
+      "parent": "メンズ",
+      "name": "アクセサリー"
+    },
+    "count": 50,
+    "weight": {
+      "count": 50,
+      "mean": 30.407400000000003,
+      "std": 27.02227679600666,
+      "min": 2.0,
+      "max": 129.0,
+      "median": 20.0,
+      "percentile_25": 14.25,
+      "percentile_75": 43.25
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ファッション|メンズ|ジャケット・アウター": {
+    "category": {
+      "root": "ファッション",
+      "parent": "メンズ",
+      "name": "ジャケット・アウター"
+    },
+    "count": 93,
+    "weight": {
+      "count": 92,
+      "mean": 10540.152173913044,
+      "std": 22783.18003433329,
+      "min": 28.0,
+      "max": 88000.0,
+      "median": 610.5,
+      "percentile_25": 391.25,
+      "percentile_75": 952.5
+    },
+    "volume": {
+      "count": 1,
+      "mean": 11520.0,
+      "std": 0.0,
+      "min": 11520.0,
+      "max": 11520.0,
+      "median": 11520.0,
+      "percentile_25": 11520.0,
+      "percentile_75": 11520.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 640.0,
+        "std": 0.0
+      },
+      "width": {
+        "mean": 600.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 30.0,
+        "std": 0.0
+      }
+    }
+  },
+  "食品・飲料・酒|食品|菓子": {
+    "category": {
+      "root": "食品・飲料・酒",
+      "parent": "食品",
+      "name": "菓子"
+    },
+    "count": 53,
+    "weight": {
+      "count": 50,
+      "mean": 233.58599999999998,
+      "std": 241.7488415773693,
+      "min": 5.3,
+      "max": 1000.0,
+      "median": 154.5,
+      "percentile_25": 68.0,
+      "percentile_75": 282.25
+    },
+    "volume": {
+      "count": 3,
+      "mean": 732.9583333333334,
+      "std": 91.98280711935006,
+      "min": 602.875,
+      "max": 798.0,
+      "median": 798.0,
+      "percentile_25": 700.4375,
+      "percentile_75": 798.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 215.0,
+        "std": 35.35533905932738
+      },
+      "width": {
+        "mean": 68.33333333333333,
+        "std": 2.357022603955158
+      },
+      "height": {
+        "mean": 51.666666666666664,
+        "std": 11.785113019775793
+      }
+    }
+  },
+  "ベビー・キッズ|ベビー家具・寝具|ベビー用家具": {
+    "category": {
+      "root": "ベビー・キッズ",
+      "parent": "ベビー家具・寝具",
+      "name": "ベビー用家具"
+    },
+    "count": 98,
+    "weight": {
+      "count": 85,
+      "mean": 16162.823529411764,
+      "std": 20666.71365273522,
+      "min": 170.0,
+      "max": 80000.0,
+      "median": 9000.0,
+      "percentile_25": 3800.0,
+      "percentile_75": 15000.0
+    },
+    "volume": {
+      "count": 13,
+      "mean": 63484.86538461538,
+      "std": 50520.43350644365,
+      "min": 3125.0,
+      "max": 178066.0,
+      "median": 47970.0,
+      "percentile_25": 23814.0,
+      "percentile_75": 79439.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 790.0,
+        "std": 576.6748183802082
+      },
+      "width": {
+        "mean": 581.5384615384615,
+        "std": 458.7960189258932
+      },
+      "height": {
+        "mean": 201.53846153846155,
+        "std": 132.00210685067776
+      }
+    }
+  },
+  "ベビー・キッズ|外出・移動用品|チャイルドシート": {
+    "category": {
+      "root": "ベビー・キッズ",
+      "parent": "外出・移動用品",
+      "name": "チャイルドシート"
+    },
+    "count": 152,
+    "weight": {
+      "count": 149,
+      "mean": 8569.194630872484,
+      "std": 5207.859125093229,
+      "min": 60.0,
+      "max": 18000.0,
+      "median": 7400.0,
+      "percentile_25": 3700.0,
+      "percentile_75": 13000.0
+    },
+    "volume": {
+      "count": 3,
+      "mean": 116299.2,
+      "std": 73657.4288062424,
+      "min": 12544.0,
+      "max": 176193.6,
+      "median": 160160.0,
+      "percentile_25": 86352.0,
+      "percentile_75": 168176.8
+    },
+    "dimensions": {
+      "length": {
+        "mean": 576.6666666666666,
+        "std": 181.5366507225347
+      },
+      "width": {
+        "mean": 454.6666666666667,
+        "std": 124.80740718758999
+      },
+      "height": {
+        "mean": 340.0,
+        "std": 141.4213562373095
+      }
+    }
+  },
+  "ベビー・キッズ|外出・移動用品|ベビーカー・バギー": {
+    "category": {
+      "root": "ベビー・キッズ",
+      "parent": "外出・移動用品",
+      "name": "ベビーカー・バギー"
+    },
+    "count": 57,
+    "weight": {
+      "count": 50,
+      "mean": 6960.4,
+      "std": 3944.530370018717,
+      "min": 100.0,
+      "max": 20000.0,
+      "median": 5500.0,
+      "percentile_25": 4825.0,
+      "percentile_75": 6650.0
+    },
+    "volume": {
+      "count": 7,
+      "mean": 224133.67857142858,
+      "std": 125408.69039811355,
+      "min": 60742.5,
+      "max": 400816.0,
+      "median": 152220.0,
+      "percentile_25": 132664.5,
+      "percentile_75": 344914.125
+    },
+    "dimensions": {
+      "length": {
+        "mean": 853.5714285714286,
+        "std": 207.32504303481468
+      },
+      "width": {
+        "mean": 632.8571428571429,
+        "std": 162.65338130201778
+      },
+      "height": {
+        "mean": 377.14285714285717,
+        "std": 79.23099785064028
+      }
+    }
+  },
+  "ベビー・キッズ|外出・移動用品|その他": {
+    "category": {
+      "root": "ベビー・キッズ",
+      "parent": "外出・移動用品",
+      "name": "その他"
+    },
+    "count": 53,
+    "weight": {
+      "count": 47,
+      "mean": 2094.872340425532,
+      "std": 4418.3510913780665,
+      "min": 15.0,
+      "max": 20000.0,
+      "median": 270.0,
+      "percentile_25": 104.0,
+      "percentile_75": 1200.0
+    },
+    "volume": {
+      "count": 6,
+      "mean": 5474.745833333333,
+      "std": 2706.007824823031,
+      "min": 650.4749999999999,
+      "max": 8510.0,
+      "median": 6864.0,
+      "percentile_25": 4038.0,
+      "percentile_75": 6864.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 304.1666666666667,
+        "std": 70.14370170506321
+      },
+      "width": {
+        "mean": 247.83333333333334,
+        "std": 54.925454532079705
+      },
+      "height": {
+        "mean": 77.5,
+        "std": 42.59792639710686
+      }
+    }
+  },
+  "ベビー・キッズ|子ども用家具・寝具|子ども用家具": {
+    "category": {
+      "root": "ベビー・キッズ",
+      "parent": "子ども用家具・寝具",
+      "name": "子ども用家具"
+    },
+    "count": 114,
+    "weight": {
+      "count": 86,
+      "mean": 14919.918604651162,
+      "std": 15731.949255483114,
+      "min": 511.0,
+      "max": 80000.0,
+      "median": 10000.0,
+      "percentile_25": 6000.0,
+      "percentile_75": 18300.0
+    },
+    "volume": {
+      "count": 28,
+      "mean": 135457.22142857144,
+      "std": 117177.21796423999,
+      "min": 7875.0,
+      "max": 337500.0,
+      "median": 105966.0,
+      "percentile_25": 29912.1875,
+      "percentile_75": 234450.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 757.0357142857143,
+        "std": 322.97296239588775
+      },
+      "width": {
+        "mean": 496.57142857142856,
+        "std": 214.40789373985086
+      },
+      "height": {
+        "mean": 279.4642857142857,
+        "std": 104.95185363600137
+      }
+    }
+  },
+  "ベビー・キッズ|ベビー服(~95cm)|ロンパース・カバーオール": {
+    "category": {
+      "root": "ベビー・キッズ",
+      "parent": "ベビー服(~95cm)",
+      "name": "ロンパース・カバーオール"
+    },
+    "count": 14,
+    "weight": {
+      "count": 14,
+      "mean": 7338.928571428572,
+      "std": 4054.647324178687,
+      "min": 195.0,
+      "max": 11000.0,
+      "median": 8500.0,
+      "percentile_25": 5750.0,
+      "percentile_75": 11000.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ベビー・キッズ|ベビー服(~95cm)|トップス": {
+    "category": {
+      "root": "ベビー・キッズ",
+      "parent": "ベビー服(~95cm)",
+      "name": "トップス"
+    },
+    "count": 28,
+    "weight": {
+      "count": 28,
+      "mean": 6782.857142857143,
+      "std": 6325.040088604102,
+      "min": 50.0,
+      "max": 14000.0,
+      "median": 8500.0,
+      "percentile_25": 148.5,
+      "percentile_75": 13000.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ベビー・キッズ|ベビー服(~95cm)|レッグウェア": {
+    "category": {
+      "root": "ベビー・キッズ",
+      "parent": "ベビー服(~95cm)",
+      "name": "レッグウェア"
+    },
+    "count": 10,
+    "weight": {
+      "count": 10,
+      "mean": 8861.4,
+      "std": 4658.459492149739,
+      "min": 52.0,
+      "max": 14000.0,
+      "median": 11000.0,
+      "percentile_25": 8625.0,
+      "percentile_75": 11000.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ベビー・キッズ|ベビー服(~95cm)|アウター": {
+    "category": {
+      "root": "ベビー・キッズ",
+      "parent": "ベビー服(~95cm)",
+      "name": "アウター"
+    },
+    "count": 31,
+    "weight": {
+      "count": 31,
+      "mean": 3984.0967741935483,
+      "std": 5932.753891117533,
+      "min": 100.0,
+      "max": 16500.0,
+      "median": 350.0,
+      "percentile_25": 234.5,
+      "percentile_75": 10000.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ベビー・キッズ|ベビー服(~95cm)|着物・セレモニードレス": {
+    "category": {
+      "root": "ベビー・キッズ",
+      "parent": "ベビー服(~95cm)",
+      "name": "着物・セレモニードレス"
+    },
+    "count": 6,
+    "weight": {
+      "count": 6,
+      "mean": 10666.666666666666,
+      "std": 2624.6692913372704,
+      "min": 6000.0,
+      "max": 14000.0,
+      "median": 11000.0,
+      "percentile_25": 9500.0,
+      "percentile_75": 12500.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ベビー・キッズ|ベビー服(~95cm)|ベビー肌着・下着": {
+    "category": {
+      "root": "ベビー・キッズ",
+      "parent": "ベビー服(~95cm)",
+      "name": "ベビー肌着・下着"
+    },
+    "count": 14,
+    "weight": {
+      "count": 14,
+      "mean": 3300.0,
+      "std": 5007.706560891922,
+      "min": 80.0,
+      "max": 14000.0,
+      "median": 387.5,
+      "percentile_25": 100.0,
+      "percentile_75": 5805.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ベビー・キッズ|ベビー服(~95cm)|ボトムス": {
+    "category": {
+      "root": "ベビー・キッズ",
+      "parent": "ベビー服(~95cm)",
+      "name": "ボトムス"
+    },
+    "count": 12,
+    "weight": {
+      "count": 12,
+      "mean": 927.375,
+      "std": 2736.091198566853,
+      "min": 33.0,
+      "max": 10000.0,
+      "median": 81.0,
+      "percentile_25": 67.0,
+      "percentile_75": 166.25
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ベビー・キッズ|子ども用セーフティグッズ|その他": {
+    "category": {
+      "root": "ベビー・キッズ",
+      "parent": "子ども用セーフティグッズ",
+      "name": "その他"
+    },
+    "count": 54,
+    "weight": {
+      "count": 48,
+      "mean": 5340.958333333333,
+      "std": 15757.47728885181,
+      "min": 6.0,
+      "max": 90000.0,
+      "median": 240.0,
+      "percentile_25": 144.75,
+      "percentile_75": 1325.0
+    },
+    "volume": {
+      "count": 6,
+      "mean": 13631.078466666668,
+      "std": 26178.083466300268,
+      "min": 30.375,
+      "max": 72000.0,
+      "median": 2200.2375,
+      "percentile_25": 203.58434999999997,
+      "percentile_75": 4913.25
+    },
+    "dimensions": {
+      "length": {
+        "mean": 492.0,
+        "std": 682.9433846715749
+      },
+      "width": {
+        "mean": 419.0,
+        "std": 621.9983922808805
+      },
+      "height": {
+        "mean": 35.03333333333333,
+        "std": 27.367965864410813
+      }
+    }
+  },
+  "ベビー・キッズ|キッズシューズ|スニーカー": {
+    "category": {
+      "root": "ベビー・キッズ",
+      "parent": "キッズシューズ",
+      "name": "スニーカー"
+    },
+    "count": 50,
+    "weight": {
+      "count": 50,
+      "mean": 1141.48,
+      "std": 2953.462877640415,
+      "min": 80.0,
+      "max": 10000.0,
+      "median": 140.0,
+      "percentile_25": 140.0,
+      "percentile_75": 181.5
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ベビー・キッズ|キッズシューズ|その他": {
+    "category": {
+      "root": "ベビー・キッズ",
+      "parent": "キッズシューズ",
+      "name": "その他"
+    },
+    "count": 43,
+    "weight": {
+      "count": 43,
+      "mean": 1073.246511627907,
+      "std": 2860.2734937820223,
+      "min": 15.0,
+      "max": 10000.0,
+      "median": 140.0,
+      "percentile_25": 100.0,
+      "percentile_75": 249.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ベビー・キッズ|キッズ服(100cm~)|下着・肌着": {
+    "category": {
+      "root": "ベビー・キッズ",
+      "parent": "キッズ服(100cm~)",
+      "name": "下着・肌着"
+    },
+    "count": 1,
+    "weight": {
+      "count": 1,
+      "mean": 30000.0,
+      "std": 0.0,
+      "min": 30000.0,
+      "max": 30000.0,
+      "median": 30000.0,
+      "percentile_25": 30000.0,
+      "percentile_75": 30000.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ベビー・キッズ|キッズ服(100cm~)|ジャケット・ブルゾン": {
+    "category": {
+      "root": "ベビー・キッズ",
+      "parent": "キッズ服(100cm~)",
+      "name": "ジャケット・ブルゾン"
+    },
+    "count": 35,
+    "weight": {
+      "count": 35,
+      "mean": 1852.4,
+      "std": 8260.291517512305,
+      "min": 110.0,
+      "max": 50000.0,
+      "median": 380.0,
+      "percentile_25": 267.5,
+      "percentile_75": 590.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ベビー・キッズ|キッズ服(100cm~)|トップス": {
+    "category": {
+      "root": "ベビー・キッズ",
+      "parent": "キッズ服(100cm~)",
+      "name": "トップス"
+    },
+    "count": 34,
+    "weight": {
+      "count": 34,
+      "mean": 1548.0294117647059,
+      "std": 5625.844200626532,
+      "min": 100.0,
+      "max": 30000.0,
+      "median": 210.0,
+      "percentile_25": 142.5,
+      "percentile_75": 285.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ベビー・キッズ|キッズ服(100cm~)|ダウンベスト・中綿ベスト": {
+    "category": {
+      "root": "ベビー・キッズ",
+      "parent": "キッズ服(100cm~)",
+      "name": "ダウンベスト・中綿ベスト"
+    },
+    "count": 24,
+    "weight": {
+      "count": 24,
+      "mean": 379.3333333333333,
+      "std": 179.61896398271043,
+      "min": 190.0,
+      "max": 980.0,
+      "median": 327.0,
+      "percentile_25": 255.0,
+      "percentile_75": 473.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ベビー・キッズ|キッズ服(100cm~)|その他": {
+    "category": {
+      "root": "ベビー・キッズ",
+      "parent": "キッズ服(100cm~)",
+      "name": "その他"
+    },
+    "count": 11,
+    "weight": {
+      "count": 11,
+      "mean": 1207.8181818181818,
+      "std": 2786.4366889429953,
+      "min": 130.0,
+      "max": 10000.0,
+      "median": 361.0,
+      "percentile_25": 150.0,
+      "percentile_75": 595.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ベビー・キッズ|キッズ服(100cm~)|オーバーオール": {
+    "category": {
+      "root": "ベビー・キッズ",
+      "parent": "キッズ服(100cm~)",
+      "name": "オーバーオール"
+    },
+    "count": 5,
+    "weight": {
+      "count": 5,
+      "mean": 339.2,
+      "std": 142.7086542575467,
+      "min": 176.0,
+      "max": 570.0,
+      "median": 274.0,
+      "percentile_25": 244.0,
+      "percentile_75": 432.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ベビー・キッズ|キッズ服(100cm~)|コート": {
+    "category": {
+      "root": "ベビー・キッズ",
+      "parent": "キッズ服(100cm~)",
+      "name": "コート"
+    },
+    "count": 29,
+    "weight": {
+      "count": 29,
+      "mean": 2259.4827586206898,
+      "std": 7895.930381818872,
+      "min": 240.0,
+      "max": 43000.0,
+      "median": 400.0,
+      "percentile_25": 303.0,
+      "percentile_75": 665.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ベビー・キッズ|キッズ服(100cm~)|フォーマル・ドレス・スーツ": {
+    "category": {
+      "root": "ベビー・キッズ",
+      "parent": "キッズ服(100cm~)",
+      "name": "フォーマル・ドレス・スーツ"
+    },
+    "count": 4,
+    "weight": {
+      "count": 4,
+      "mean": 7612.5,
+      "std": 12925.55100372901,
+      "min": 60.0,
+      "max": 30000.0,
+      "median": 195.0,
+      "percentile_25": 150.0,
+      "percentile_75": 7657.5
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ベビー・キッズ|ベビー・キッズおもちゃ|知育玩具": {
+    "category": {
+      "root": "ベビー・キッズ",
+      "parent": "ベビー・キッズおもちゃ",
+      "name": "知育玩具"
+    },
+    "count": 59,
+    "weight": {
+      "count": 46,
+      "mean": 3154.3695652173915,
+      "std": 14538.348694219918,
+      "min": 4.0,
+      "max": 100000.0,
+      "median": 271.0,
+      "percentile_25": 90.0,
+      "percentile_75": 1200.0
+    },
+    "volume": {
+      "count": 13,
+      "mean": 10601.790384615386,
+      "std": 13837.32184790555,
+      "min": 16.0,
+      "max": 31257.600000000002,
+      "median": 1579.5,
+      "percentile_25": 315.375,
+      "percentile_75": 31257.600000000002
+    },
+    "dimensions": {
+      "length": {
+        "mean": 211.30769230769232,
+        "std": 124.87186331804578
+      },
+      "width": {
+        "mean": 181.15384615384616,
+        "std": 121.8181786066975
+      },
+      "height": {
+        "mean": 119.61538461538461,
+        "std": 88.67272450424605
+      }
+    }
+  },
+  "ベビー・キッズ|キッズファッション小物|マフラー": {
+    "category": {
+      "root": "ベビー・キッズ",
+      "parent": "キッズファッション小物",
+      "name": "マフラー"
+    },
+    "count": 18,
+    "weight": {
+      "count": 18,
+      "mean": 636.7777777777778,
+      "std": 2271.2914719641963,
+      "min": 50.0,
+      "max": 10000.0,
+      "median": 68.0,
+      "percentile_25": 58.0,
+      "percentile_75": 105.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "ベビー・キッズ|キッズファッション小物|手袋": {
+    "category": {
+      "root": "ベビー・キッズ",
+      "parent": "キッズファッション小物",
+      "name": "手袋"
+    },
+    "count": 10,
+    "weight": {
+      "count": 9,
+      "mean": 73.88888888888889,
+      "std": 39.90946544491376,
+      "min": 17.0,
+      "max": 150.0,
+      "median": 90.0,
+      "percentile_25": 32.0,
+      "percentile_75": 91.0
+    },
+    "volume": {
+      "count": 1,
+      "mean": 203.125,
+      "std": 0.0,
+      "min": 203.125,
+      "max": 203.125,
+      "median": 203.125,
+      "percentile_25": 203.125,
+      "percentile_75": 203.125
+    },
+    "dimensions": {
+      "length": {
+        "mean": 125.0,
+        "std": 0.0
+      },
+      "width": {
+        "mean": 65.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 25.0,
+        "std": 0.0
+      }
+    }
+  },
+  "車・バイク・自転車|バイク|セキュリティ・セーフティ": {
+    "category": {
+      "root": "車・バイク・自転車",
+      "parent": "バイク",
+      "name": "セキュリティ・セーフティ"
+    },
+    "count": 41,
+    "weight": {
+      "count": 36,
+      "mean": 990.8333333333334,
+      "std": 373.380763356181,
+      "min": 100.0,
+      "max": 1750.0,
+      "median": 1025.0,
+      "percentile_25": 750.0,
+      "percentile_75": 1197.5
+    },
+    "volume": {
+      "count": 5,
+      "mean": 15248.0,
+      "std": 6208.0,
+      "min": 12144.0,
+      "max": 27664.0,
+      "median": 12144.0,
+      "percentile_25": 12144.0,
+      "percentile_75": 12144.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 268.0,
+        "std": 56.0
+      },
+      "width": {
+        "mean": 240.0,
+        "std": 20.0
+      },
+      "height": {
+        "mean": 228.0,
+        "std": 16.0
+      }
+    }
+  },
+  "車・バイク・自転車|バイク|バイクウェア・装備": {
+    "category": {
+      "root": "車・バイク・自転車",
+      "parent": "バイク",
+      "name": "バイクウェア・装備"
+    },
+    "count": 49,
+    "weight": {
+      "count": 45,
+      "mean": 17916.48888888889,
+      "std": 30647.312965864636,
+      "min": 2.0,
+      "max": 90000.0,
+      "median": 550.0,
+      "percentile_25": 100.0,
+      "percentile_75": 8000.0
+    },
+    "volume": {
+      "count": 4,
+      "mean": 169.26999999999995,
+      "std": 250.22938016947566,
+      "min": 24.8,
+      "max": 602.68,
+      "median": 24.8,
+      "percentile_25": 24.8,
+      "percentile_75": 169.27
+    },
+    "dimensions": {
+      "length": {
+        "mean": 122.75,
+        "std": 105.2220865598093
+      },
+      "width": {
+        "mean": 75.5,
+        "std": 44.16729559300637
+      },
+      "height": {
+        "mean": 9.25,
+        "std": 2.165063509461097
+      }
+    }
+  },
+  "車・バイク・自転車|バイク|パーツ": {
+    "category": {
+      "root": "車・バイク・自転車",
+      "parent": "バイク",
+      "name": "パーツ"
+    },
+    "count": 12,
+    "weight": {
+      "count": 11,
+      "mean": 309.54545454545456,
+      "std": 327.3983849675176,
+      "min": 14.0,
+      "max": 900.0,
+      "median": 135.0,
+      "percentile_25": 56.5,
+      "percentile_75": 462.5
+    },
+    "volume": {
+      "count": 1,
+      "mean": 3.125,
+      "std": 0.0,
+      "min": 3.125,
+      "max": 3.125,
+      "median": 3.125,
+      "percentile_25": 3.125,
+      "percentile_75": 3.125
+    },
+    "dimensions": {
+      "length": {
+        "mean": 25.0,
+        "std": 0.0
+      },
+      "width": {
+        "mean": 25.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 5.0,
+        "std": 0.0
+      }
+    }
+  },
+  "車・バイク・自転車|車|タイヤ・ホイール": {
+    "category": {
+      "root": "車・バイク・自転車",
+      "parent": "車",
+      "name": "タイヤ・ホイール"
+    },
+    "count": 35,
+    "weight": {
+      "count": 35,
+      "mean": 17192.257142857143,
+      "std": 10278.002511168783,
+      "min": 3.0,
+      "max": 30000.0,
+      "median": 15400.0,
+      "percentile_25": 12700.0,
+      "percentile_75": 28050.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "車・バイク・自転車|車|工具": {
+    "category": {
+      "root": "車・バイク・自転車",
+      "parent": "車",
+      "name": "工具"
+    },
+    "count": 43,
+    "weight": {
+      "count": 37,
+      "mean": 6475.648648648648,
+      "std": 17045.283321939853,
+      "min": 70.0,
+      "max": 70000.0,
+      "median": 900.0,
+      "percentile_25": 345.0,
+      "percentile_75": 1400.0
+    },
+    "volume": {
+      "count": 6,
+      "mean": 5996.4800000000005,
+      "std": 8193.52199191532,
+      "min": 9.0,
+      "max": 23625.0,
+      "median": 2632.4400000000005,
+      "percentile_25": 765.0,
+      "percentile_75": 5861.22
+    },
+    "dimensions": {
+      "length": {
+        "mean": 253.0,
+        "std": 120.18735374406077
+      },
+      "width": {
+        "mean": 184.16666666666666,
+        "std": 119.80597740606359
+      },
+      "height": {
+        "mean": 73.83333333333333,
+        "std": 59.77852643066925
+      }
+    }
+  },
+  "車・バイク・自転車|車|アクセサリー": {
+    "category": {
+      "root": "車・バイク・自転車",
+      "parent": "車",
+      "name": "アクセサリー"
+    },
+    "count": 30,
+    "weight": {
+      "count": 28,
+      "mean": 1898.9535714285714,
+      "std": 6543.7845074261195,
+      "min": 8.7,
+      "max": 35000.0,
+      "median": 190.0,
+      "percentile_25": 53.75,
+      "percentile_75": 635.0
+    },
+    "volume": {
+      "count": 2,
+      "mean": 403478.5,
+      "std": 403401.5,
+      "min": 77.0,
+      "max": 806880.0,
+      "median": 403478.5,
+      "percentile_25": 201777.75,
+      "percentile_75": 605179.25
+    },
+    "dimensions": {
+      "length": {
+        "mean": 635.0,
+        "std": 565.0
+      },
+      "width": {
+        "mean": 435.0,
+        "std": 385.0
+      },
+      "height": {
+        "mean": 421.0,
+        "std": 399.0
+      }
+    }
+  },
+  "車・バイク・自転車|車|パーツ": {
+    "category": {
+      "root": "車・バイク・自転車",
+      "parent": "車",
+      "name": "パーツ"
+    },
+    "count": 41,
+    "weight": {
+      "count": 39,
+      "mean": 783.7948717948718,
+      "std": 2757.0602253355923,
+      "min": 1.0,
+      "max": 16800.0,
+      "median": 62.0,
+      "percentile_25": 22.5,
+      "percentile_75": 280.0
+    },
+    "volume": {
+      "count": 2,
+      "mean": 2346.0,
+      "std": 1986.0,
+      "min": 360.0,
+      "max": 4332.0,
+      "median": 2346.0,
+      "percentile_25": 1353.0,
+      "percentile_75": 3339.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 240.0,
+        "std": 140.0
+      },
+      "width": {
+        "mean": 235.0,
+        "std": 145.0
+      },
+      "height": {
+        "mean": 35.0,
+        "std": 5.0
+      }
+    }
+  },
+  "車・バイク・自転車|自転車|パーツ": {
+    "category": {
+      "root": "車・バイク・自転車",
+      "parent": "自転車",
+      "name": "パーツ"
+    },
+    "count": 50,
+    "weight": {
+      "count": 50,
+      "mean": 350.588,
+      "std": 300.0991527079009,
+      "min": 11.0,
+      "max": 1510.0,
+      "median": 255.0,
+      "percentile_25": 205.0,
+      "percentile_75": 320.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "家具・インテリア|洋服タンス・押入れ収納|衣装ケース・衣類収納ケース": {
+    "category": {
+      "root": "家具・インテリア",
+      "parent": "洋服タンス・押入れ収納",
+      "name": "衣装ケース・衣類収納ケース"
+    },
+    "count": 54,
+    "weight": {
+      "count": 24,
+      "mean": 7016.958333333333,
+      "std": 15778.689065421875,
+      "min": 40.0,
+      "max": 60000.0,
+      "median": 248.5,
+      "percentile_25": 100.0,
+      "percentile_75": 1662.5
+    },
+    "volume": {
+      "count": 30,
+      "mean": 64597.582500000004,
+      "std": 39051.30633821632,
+      "min": 594.0,
+      "max": 219240.0,
+      "median": 62500.0,
+      "percentile_25": 44813.25,
+      "percentile_75": 86580.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 611.5,
+        "std": 221.74365830841703
+      },
+      "width": {
+        "mean": 398.6666666666667,
+        "std": 96.03760837412719
+      },
+      "height": {
+        "mean": 246.35,
+        "std": 79.47904860192193
+      }
+    }
+  },
+  "家具・インテリア|椅子・チェア|椅子": {
+    "category": {
+      "root": "家具・インテリア",
+      "parent": "椅子・チェア",
+      "name": "椅子"
+    },
+    "count": 54,
+    "weight": {
+      "count": 45,
+      "mean": 23071.333333333332,
+      "std": 31366.555621482505,
+      "min": 240.0,
+      "max": 100000.0,
+      "median": 6500.0,
+      "percentile_25": 4000.0,
+      "percentile_75": 17500.0
+    },
+    "volume": {
+      "count": 9,
+      "mean": 148135.11111111112,
+      "std": 39559.744020754915,
+      "min": 75809.0,
+      "max": 198990.0,
+      "median": 136971.0,
+      "percentile_25": 129000.0,
+      "percentile_75": 182736.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 664.4444444444445,
+        "std": 168.13427908213464
+      },
+      "width": {
+        "mean": 566.6666666666666,
+        "std": 143.13940369055925
+      },
+      "height": {
+        "mean": 418.3333333333333,
+        "std": 108.01234497346434
+      }
+    }
+  },
+  "家具・インテリア|椅子・チェア|座椅子": {
+    "category": {
+      "root": "家具・インテリア",
+      "parent": "椅子・チェア",
+      "name": "座椅子"
+    },
+    "count": 52,
+    "weight": {
+      "count": 45,
+      "mean": 5778.444444444444,
+      "std": 3602.3903148113914,
+      "min": 562.0,
+      "max": 16800.0,
+      "median": 5000.0,
+      "percentile_25": 3000.0,
+      "percentile_75": 8500.0
+    },
+    "volume": {
+      "count": 7,
+      "mean": 65697.57142857143,
+      "std": 34886.50471726502,
+      "min": 24288.0,
+      "max": 133056.0,
+      "median": 57040.0,
+      "percentile_25": 40372.5,
+      "percentile_75": 82377.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 637.1428571428571,
+        "std": 250.36911526294736
+      },
+      "width": {
+        "mean": 424.2857142857143,
+        "std": 66.73126122358093
+      },
+      "height": {
+        "mean": 252.14285714285714,
+        "std": 97.46270872408962
+      }
+    }
+  },
+  "家具・インテリア|椅子・チェア|ダイニングチェア": {
+    "category": {
+      "root": "家具・インテリア",
+      "parent": "椅子・チェア",
+      "name": "ダイニングチェア"
+    },
+    "count": 52,
+    "weight": {
+      "count": 23,
+      "mean": 16436.956521739132,
+      "std": 26021.31324340017,
+      "min": 2950.0,
+      "max": 90000.0,
+      "median": 7400.0,
+      "percentile_25": 5250.0,
+      "percentile_75": 8750.0
+    },
+    "volume": {
+      "count": 29,
+      "mean": 127815.87068965517,
+      "std": 53067.21161375988,
+      "min": 59143.50000000001,
+      "max": 283920.0,
+      "median": 116272.0,
+      "percentile_25": 94500.0,
+      "percentile_75": 147963.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 601.2068965517242,
+        "std": 170.85310878068267
+      },
+      "width": {
+        "mean": 490.51724137931035,
+        "std": 60.42015003557213
+      },
+      "height": {
+        "mean": 427.6551724137931,
+        "std": 71.30907755827201
+      }
+    }
+  },
+  "家具・インテリア|机・テーブル|デスク用ワゴン・ラック": {
+    "category": {
+      "root": "家具・インテリア",
+      "parent": "机・テーブル",
+      "name": "デスク用ワゴン・ラック"
+    },
+    "count": 38,
+    "weight": {
+      "count": 24,
+      "mean": 9580.666666666666,
+      "std": 11162.147372805208,
+      "min": 245.0,
+      "max": 40000.0,
+      "median": 2850.0,
+      "percentile_25": 1015.0,
+      "percentile_75": 16425.0
+    },
+    "volume": {
+      "count": 14,
+      "mean": 108046.65357142857,
+      "std": 189597.613528445,
+      "min": 5342.4,
+      "max": 777600.0,
+      "median": 59112.5,
+      "percentile_25": 21200.3125,
+      "percentile_75": 103500.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 652.8571428571429,
+        "std": 243.15423005129222
+      },
+      "width": {
+        "mean": 413.42857142857144,
+        "std": 174.21444678725055
+      },
+      "height": {
+        "mean": 254.0,
+        "std": 175.336818723279
+      }
+    }
+  },
+  "家具・インテリア|机・テーブル|サイドテーブル・ナイトテーブル・ローテーブル": {
+    "category": {
+      "root": "家具・インテリア",
+      "parent": "机・テーブル",
+      "name": "サイドテーブル・ナイトテーブル・ローテーブル"
+    },
+    "count": 55,
+    "weight": {
+      "count": 39,
+      "mean": 9945.897435897436,
+      "std": 9615.276231867789,
+      "min": 950.0,
+      "max": 45000.0,
+      "median": 6000.0,
+      "percentile_25": 3150.0,
+      "percentile_75": 11100.0
+    },
+    "volume": {
+      "count": 16,
+      "mean": 127195.25,
+      "std": 103568.73198901539,
+      "min": 6720.0,
+      "max": 450996.0,
+      "median": 101827.5,
+      "percentile_25": 63343.25,
+      "percentile_75": 162062.5
+    },
+    "dimensions": {
+      "length": {
+        "mean": 664.6875,
+        "std": 185.61947592790472
+      },
+      "width": {
+        "mean": 518.4375,
+        "std": 147.0301706921066
+      },
+      "height": {
+        "mean": 319.6875,
+        "std": 126.54629525888934
+      }
+    }
+  },
+  "家具・インテリア|机・テーブル|センターテーブル・ローテーブル": {
+    "category": {
+      "root": "家具・インテリア",
+      "parent": "机・テーブル",
+      "name": "センターテーブル・ローテーブル"
+    },
+    "count": 55,
+    "weight": {
+      "count": 34,
+      "mean": 15608.823529411764,
+      "std": 11437.38369010765,
+      "min": 1200.0,
+      "max": 69000.0,
+      "median": 13450.0,
+      "percentile_25": 8775.0,
+      "percentile_75": 20000.0
+    },
+    "volume": {
+      "count": 21,
+      "mean": 172810.0,
+      "std": 98730.0785851433,
+      "min": 13916.0,
+      "max": 473200.0,
+      "median": 170000.0,
+      "percentile_25": 124875.0,
+      "percentile_75": 216996.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 942.8571428571429,
+        "std": 189.13695861900248
+      },
+      "width": {
+        "mean": 491.6666666666667,
+        "std": 80.01983880997639
+      },
+      "height": {
+        "mean": 345.3333333333333,
+        "std": 103.09881221122326
+      }
+    }
+  },
+  "家具・インテリア|None|ケース・ボックス・コンテナ": {
+    "category": {
+      "root": "家具・インテリア",
+      "parent": "None",
+      "name": "ケース・ボックス・コンテナ"
+    },
+    "count": 55,
+    "weight": {
+      "count": 33,
+      "mean": 2721.151515151515,
+      "std": 2654.0441425071463,
+      "min": 18.0,
+      "max": 10000.0,
+      "median": 2000.0,
+      "percentile_25": 970.0,
+      "percentile_75": 3400.0
+    },
+    "volume": {
+      "count": 22,
+      "mean": 24709.505,
+      "std": 18998.884313260405,
+      "min": 880.0,
+      "max": 58590.0,
+      "median": 20095.0,
+      "percentile_25": 9185.945,
+      "percentile_75": 45484.5
+    },
+    "dimensions": {
+      "length": {
+        "mean": 409.04545454545456,
+        "std": 117.24856163984089
+      },
+      "width": {
+        "mean": 265.6363636363636,
+        "std": 88.22262411059125
+      },
+      "height": {
+        "mean": 183.27272727272728,
+        "std": 84.17308024550681
+      }
+    }
+  },
+  "家具・インテリア|棚・ラック・シェルフ|その他": {
+    "category": {
+      "root": "家具・インテリア",
+      "parent": "棚・ラック・シェルフ",
+      "name": "その他"
+    },
+    "count": 56,
+    "weight": {
+      "count": 45,
+      "mean": 11991.511111111111,
+      "std": 19407.313507624127,
+      "min": 157.0,
+      "max": 90000.0,
+      "median": 2500.0,
+      "percentile_25": 1400.0,
+      "percentile_75": 22700.0
+    },
+    "volume": {
+      "count": 11,
+      "mean": 111294.36363636363,
+      "std": 86743.26867441827,
+      "min": 5280.0,
+      "max": 225036.0,
+      "median": 79387.5,
+      "percentile_25": 46493.75,
+      "percentile_75": 218118.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 894.5454545454545,
+        "std": 393.4778181656874
+      },
+      "width": {
+        "mean": 423.1818181818182,
+        "std": 130.23183396739984
+      },
+      "height": {
+        "mean": 230.0,
+        "std": 89.21373722185899
+      }
+    }
+  },
+  "家具・インテリア|玄関・屋外収納|スリッパラック・玄関収納": {
+    "category": {
+      "root": "家具・インテリア",
+      "parent": "玄関・屋外収納",
+      "name": "スリッパラック・玄関収納"
+    },
+    "count": 27,
+    "weight": {
+      "count": 19,
+      "mean": 1546.157894736842,
+      "std": 1371.0730435898467,
+      "min": 69.0,
+      "max": 6000.0,
+      "median": 1300.0,
+      "percentile_25": 690.0,
+      "percentile_75": 1700.0
+    },
+    "volume": {
+      "count": 8,
+      "mean": 21476.61625,
+      "std": 20081.868370811477,
+      "min": 157.3,
+      "max": 48546.0,
+      "median": 15139.04,
+      "percentile_25": 2317.7625,
+      "percentile_75": 42736.5
+    },
+    "dimensions": {
+      "length": {
+        "mean": 420.5,
+        "std": 197.89012102679607
+      },
+      "width": {
+        "mean": 209.125,
+        "std": 89.64713813056164
+      },
+      "height": {
+        "mean": 148.125,
+        "std": 105.7549496477588
+      }
+    }
+  },
+  "家具・インテリア|リビング収納|その他": {
+    "category": {
+      "root": "家具・インテリア",
+      "parent": "リビング収納",
+      "name": "その他"
+    },
+    "count": 53,
+    "weight": {
+      "count": 40,
+      "mean": 2192.7,
+      "std": 3624.509285406785,
+      "min": 15.0,
+      "max": 20000.0,
+      "median": 1270.0,
+      "percentile_25": 632.5,
+      "percentile_75": 1450.0
+    },
+    "volume": {
+      "count": 13,
+      "mean": 21301.84461538462,
+      "std": 20976.178822182894,
+      "min": 90.19999999999999,
+      "max": 58500.0,
+      "median": 14168.0,
+      "percentile_25": 2760.0,
+      "percentile_75": 28224.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 375.0,
+        "std": 137.50524465522145
+      },
+      "width": {
+        "mean": 240.23076923076923,
+        "std": 120.11350647562423
+      },
+      "height": {
+        "mean": 166.15384615384616,
+        "std": 97.84276723698956
+      }
+    }
+  },
+  "家具・インテリア|カーテン・ブラインド|カーテン": {
+    "category": {
+      "root": "家具・インテリア",
+      "parent": "カーテン・ブラインド",
+      "name": "カーテン"
+    },
+    "count": 26,
+    "weight": {
+      "count": 26,
+      "mean": 1210.076923076923,
+      "std": 959.5881698006192,
+      "min": 15.0,
+      "max": 3500.0,
+      "median": 795.0,
+      "percentile_25": 400.0,
+      "percentile_75": 2085.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "家具・インテリア|ソファ・ソファベッド|2人掛け・3人掛けソファ": {
+    "category": {
+      "root": "家具・インテリア",
+      "parent": "ソファ・ソファベッド",
+      "name": "2人掛け・3人掛けソファ"
+    },
+    "count": 51,
+    "weight": {
+      "count": 24,
+      "mean": 34916.666666666664,
+      "std": 18361.86416341096,
+      "min": 200.0,
+      "max": 80000.0,
+      "median": 34000.0,
+      "percentile_25": 24125.0,
+      "percentile_75": 43200.0
+    },
+    "volume": {
+      "count": 27,
+      "mean": 678923.2962962963,
+      "std": 493022.47163501324,
+      "min": 52200.0,
+      "max": 1890000.0,
+      "median": 511920.0,
+      "percentile_25": 340641.5,
+      "percentile_75": 775731.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 1601.851851851852,
+        "std": 306.7757902109187
+      },
+      "width": {
+        "mean": 823.5185185185185,
+        "std": 190.33019463657837
+      },
+      "height": {
+        "mean": 483.7037037037037,
+        "std": 229.67203909452743
+      }
+    }
+  },
+  "家具・インテリア|ソファ・ソファベッド|1人掛けソファ": {
+    "category": {
+      "root": "家具・インテリア",
+      "parent": "ソファ・ソファベッド",
+      "name": "1人掛けソファ"
+    },
+    "count": 62,
+    "weight": {
+      "count": 40,
+      "mean": 20525.575,
+      "std": 22906.750831236957,
+      "min": 253.0,
+      "max": 100000.0,
+      "median": 12600.0,
+      "percentile_25": 8700.0,
+      "percentile_75": 18550.0
+    },
+    "volume": {
+      "count": 22,
+      "mean": 246787.6590909091,
+      "std": 168774.51166728794,
+      "min": 13200.0,
+      "max": 676000.0,
+      "median": 230210.0,
+      "percentile_25": 114972.0,
+      "percentile_75": 305865.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 796.1363636363636,
+        "std": 183.79788688431785
+      },
+      "width": {
+        "mean": 624.3181818181819,
+        "std": 160.95097682881195
+      },
+      "height": {
+        "mean": 434.77272727272725,
+        "std": 172.2212983920244
+      }
+    }
+  },
+  "家具・インテリア|ソファ・ソファベッド|その他": {
+    "category": {
+      "root": "家具・インテリア",
+      "parent": "ソファ・ソファベッド",
+      "name": "その他"
+    },
+    "count": 50,
+    "weight": {
+      "count": 40,
+      "mean": 18255.75,
+      "std": 20977.930051306303,
+      "min": 320.0,
+      "max": 85000.0,
+      "median": 11400.0,
+      "percentile_25": 2650.0,
+      "percentile_75": 23500.0
+    },
+    "volume": {
+      "count": 10,
+      "mean": 617056.35,
+      "std": 449672.19054229103,
+      "min": 16200.0,
+      "max": 1554756.0,
+      "median": 629160.0,
+      "percentile_25": 296212.875,
+      "percentile_75": 795222.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 1341.0,
+        "std": 506.5264060244046
+      },
+      "width": {
+        "mean": 708.0,
+        "std": 236.97257225257104
+      },
+      "height": {
+        "mean": 487.5,
+        "std": 217.33902088672434
+      }
+    }
+  },
+  "家具・インテリア|事務・店舗用品|オフィス家具": {
+    "category": {
+      "root": "家具・インテリア",
+      "parent": "事務・店舗用品",
+      "name": "オフィス家具"
+    },
+    "count": 18,
+    "weight": {
+      "count": 14,
+      "mean": 5171.142857142857,
+      "std": 6787.8799431375455,
+      "min": 180.0,
+      "max": 21500.0,
+      "median": 770.0,
+      "percentile_25": 404.0,
+      "percentile_75": 7500.0
+    },
+    "volume": {
+      "count": 4,
+      "mean": 1976.75,
+      "std": 1818.4022347929515,
+      "min": 285.0,
+      "max": 5000.0,
+      "median": 1311.0,
+      "percentile_25": 746.25,
+      "percentile_75": 2541.5
+    },
+    "dimensions": {
+      "length": {
+        "mean": 396.25,
+        "std": 125.6669706008703
+      },
+      "width": {
+        "mean": 290.0,
+        "std": 77.78174593052023
+      },
+      "height": {
+        "mean": 18.0,
+        "std": 18.560711193270585
+      }
+    }
+  },
+  "家具・インテリア|ラグ・カーペット・マット|ラグ・カーペット": {
+    "category": {
+      "root": "家具・インテリア",
+      "parent": "ラグ・カーペット・マット",
+      "name": "ラグ・カーペット"
+    },
+    "count": 19,
+    "weight": {
+      "count": 19,
+      "mean": 4652.321052631579,
+      "std": 6515.995048023946,
+      "min": 1.1,
+      "max": 24000.0,
+      "median": 2213.0,
+      "percentile_25": 2000.0,
+      "percentile_75": 4250.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "家具・インテリア|ベッド・マットレス|ベッドフレーム": {
+    "category": {
+      "root": "家具・インテリア",
+      "parent": "ベッド・マットレス",
+      "name": "ベッドフレーム"
+    },
+    "count": 86,
+    "weight": {
+      "count": 61,
+      "mean": 29365.983606557376,
+      "std": 23693.206068124604,
+      "min": 5.0,
+      "max": 100000.0,
+      "median": 19200.0,
+      "percentile_25": 15500.0,
+      "percentile_75": 34000.0
+    },
+    "volume": {
+      "count": 25,
+      "mean": 492474.136,
+      "std": 833451.4336654464,
+      "min": 49140.0,
+      "max": 3532200.0,
+      "median": 63315.0,
+      "percentile_25": 50000.0,
+      "percentile_75": 662025.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 1436.4,
+        "std": 506.6211997143428
+      },
+      "width": {
+        "mean": 683.8,
+        "std": 429.94250778447116
+      },
+      "height": {
+        "mean": 271.64,
+        "std": 233.6034040847864
+      }
+    }
+  },
+  "家具・インテリア|インテリア小物|置物": {
+    "category": {
+      "root": "家具・インテリア",
+      "parent": "インテリア小物",
+      "name": "置物"
+    },
+    "count": 51,
+    "weight": {
+      "count": 48,
+      "mean": 535.9083333333333,
+      "std": 1286.1515771921631,
+      "min": 9.0,
+      "max": 8000.0,
+      "median": 60.650000000000006,
+      "percentile_25": 26.775,
+      "percentile_75": 312.75
+    },
+    "volume": {
+      "count": 3,
+      "mean": 693.2999999999998,
+      "std": 438.1748281222918,
+      "min": 225.0,
+      "max": 1278.8999999999999,
+      "median": 576.0,
+      "percentile_25": 400.5,
+      "percentile_75": 927.4499999999999
+    },
+    "dimensions": {
+      "length": {
+        "mean": 128.66666666666666,
+        "std": 15.173075568988057
+      },
+      "width": {
+        "mean": 81.66666666666667,
+        "std": 18.408935028645434
+      },
+      "height": {
+        "mean": 63.333333333333336,
+        "std": 32.744804507314164
+      }
+    }
+  },
+  "家具・インテリア|インテリア小物|ウォールデコレーション": {
+    "category": {
+      "root": "家具・インテリア",
+      "parent": "インテリア小物",
+      "name": "ウォールデコレーション"
+    },
+    "count": 50,
+    "weight": {
+      "count": 50,
+      "mean": 181.7,
+      "std": 350.664925534334,
+      "min": 36.0,
+      "max": 1700.0,
+      "median": 40.0,
+      "percentile_25": 40.0,
+      "percentile_75": 110.5
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "家具・インテリア|インテリア小物|小物入れ": {
+    "category": {
+      "root": "家具・インテリア",
+      "parent": "インテリア小物",
+      "name": "小物入れ"
+    },
+    "count": 53,
+    "weight": {
+      "count": 48,
+      "mean": 389.9791666666667,
+      "std": 342.75492274506024,
+      "min": 20.0,
+      "max": 1300.0,
+      "median": 251.0,
+      "percentile_25": 126.0,
+      "percentile_75": 607.5
+    },
+    "volume": {
+      "count": 5,
+      "mean": 5782.6,
+      "std": 4377.993540424655,
+      "min": 1200.0,
+      "max": 12768.0,
+      "median": 5425.0,
+      "percentile_25": 1309.0,
+      "percentile_75": 8211.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 218.0,
+        "std": 68.52736679604726
+      },
+      "width": {
+        "mean": 157.0,
+        "std": 47.07440918375928
+      },
+      "height": {
+        "mean": 134.0,
+        "std": 44.090815370097204
+      }
+    }
+  },
+  "家具・インテリア|インテリア小物|その他": {
+    "category": {
+      "root": "家具・インテリア",
+      "parent": "インテリア小物",
+      "name": "その他"
+    },
+    "count": 52,
+    "weight": {
+      "count": 48,
+      "mean": 452.4041666666667,
+      "std": 764.2153617595666,
+      "min": 5.4,
+      "max": 5000.0,
+      "median": 215.0,
+      "percentile_25": 67.75,
+      "percentile_75": 505.0
+    },
+    "volume": {
+      "count": 4,
+      "mean": 1153776.94,
+      "std": 1994009.5987097581,
+      "min": 108.0,
+      "max": 4607500.0,
+      "median": 3749.88,
+      "percentile_25": 611.8199999999999,
+      "percentile_75": 1156915.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 817.0,
+        "std": 972.0632695457637
+      },
+      "width": {
+        "mean": 579.5,
+        "std": 765.7027817632636
+      },
+      "height": {
+        "mean": 285.0,
+        "std": 398.763714497696
+      }
+    }
+  },
+  "家具・インテリア|インテリア小物|インテリア時計": {
+    "category": {
+      "root": "家具・インテリア",
+      "parent": "インテリア小物",
+      "name": "インテリア時計"
+    },
+    "count": 63,
+    "weight": {
+      "count": 39,
+      "mean": 533.2,
+      "std": 645.1143234004422,
+      "min": 68.0,
+      "max": 2900.0,
+      "median": 260.0,
+      "percentile_25": 154.5,
+      "percentile_75": 626.0
+    },
+    "volume": {
+      "count": 24,
+      "mean": 1566.67575,
+      "std": 2085.363701935253,
+      "min": 57.51,
+      "max": 8851.5,
+      "median": 776.05,
+      "percentile_25": 321.75,
+      "percentile_75": 1581.75
+    },
+    "dimensions": {
+      "length": {
+        "mean": 158.45833333333334,
+        "std": 61.156206530672115
+      },
+      "width": {
+        "mean": 114.375,
+        "std": 51.697688939319775
+      },
+      "height": {
+        "mean": 55.875,
+        "std": 30.677506010104537
+      }
+    }
+  },
+  "スポーツ|ゴルフ|メンズウェア": {
+    "category": {
+      "root": "スポーツ",
+      "parent": "ゴルフ",
+      "name": "メンズウェア"
+    },
+    "count": 3,
+    "weight": {
+      "count": 3,
+      "mean": 64666.666666666664,
+      "std": 3771.2361663282536,
+      "min": 62000.0,
+      "max": 70000.0,
+      "median": 62000.0,
+      "percentile_25": 62000.0,
+      "percentile_75": 66000.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "スポーツ|バドミントン|ウェア": {
+    "category": {
+      "root": "スポーツ",
+      "parent": "バドミントン",
+      "name": "ウェア"
+    },
+    "count": 3,
+    "weight": {
+      "count": 3,
+      "mean": 403.3333333333333,
+      "std": 426.32799058419283,
+      "min": 30.0,
+      "max": 1000.0,
+      "median": 180.0,
+      "percentile_25": 105.0,
+      "percentile_75": 590.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "スポーツ|サッカー・フットサル|ウェア": {
+    "category": {
+      "root": "スポーツ",
+      "parent": "サッカー・フットサル",
+      "name": "ウェア"
+    },
+    "count": 19,
+    "weight": {
+      "count": 18,
+      "mean": 22428.166666666668,
+      "std": 31667.708281553234,
+      "min": 123.0,
+      "max": 85000.0,
+      "median": 465.5,
+      "percentile_25": 186.25,
+      "percentile_75": 61750.0
+    },
+    "volume": {
+      "count": 1,
+      "mean": 51678.0,
+      "std": 0.0,
+      "min": 51678.0,
+      "max": 51678.0,
+      "median": 51678.0,
+      "percentile_25": 51678.0,
+      "percentile_75": 51678.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 1080.0,
+        "std": 0.0
+      },
+      "width": {
+        "mean": 330.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 145.0,
+        "std": 0.0
+      }
+    }
+  },
+  "スポーツ|テニス|ウェア": {
+    "category": {
+      "root": "スポーツ",
+      "parent": "テニス",
+      "name": "ウェア"
+    },
+    "count": 10,
+    "weight": {
+      "count": 10,
+      "mean": 5368.2,
+      "std": 15544.186506858437,
+      "min": 120.0,
+      "max": 52000.0,
+      "median": 122.5,
+      "percentile_25": 120.0,
+      "percentile_75": 317.5
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "スポーツ|野球|ボール": {
+    "category": {
+      "root": "スポーツ",
+      "parent": "野球",
+      "name": "ボール"
+    },
+    "count": 24,
+    "weight": {
+      "count": 24,
+      "mean": 152.17499999999998,
+      "std": 173.9698758645684,
+      "min": 1.0,
+      "max": 623.0,
+      "median": 128.0,
+      "percentile_25": 19.5,
+      "percentile_75": 145.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "スポーツ|野球|応援グッズ": {
+    "category": {
+      "root": "スポーツ",
+      "parent": "野球",
+      "name": "応援グッズ"
+    },
+    "count": 23,
+    "weight": {
+      "count": 20,
+      "mean": 211.65500000000003,
+      "std": 229.68456951872062,
+      "min": 11.6,
+      "max": 855.0,
+      "median": 129.0,
+      "percentile_25": 86.625,
+      "percentile_75": 211.5
+    },
+    "volume": {
+      "count": 3,
+      "mean": 4850.0,
+      "std": 3516.560819892072,
+      "min": 780.0,
+      "max": 9360.0,
+      "median": 4410.0,
+      "percentile_25": 2595.0,
+      "percentile_75": 6885.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 243.33333333333334,
+        "std": 108.73004286866728
+      },
+      "width": {
+        "mean": 183.33333333333334,
+        "std": 84.98365855987974
+      },
+      "height": {
+        "mean": 93.33333333333333,
+        "std": 33.9934634239519
+      }
+    }
+  },
+  "スポーツ|野球|ウェア": {
+    "category": {
+      "root": "スポーツ",
+      "parent": "野球",
+      "name": "ウェア"
+    },
+    "count": 5,
+    "weight": {
+      "count": 5,
+      "mean": 15373.2,
+      "std": 29814.405473864474,
+      "min": 72.0,
+      "max": 75000.0,
+      "median": 720.0,
+      "percentile_25": 350.0,
+      "percentile_75": 724.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "スポーツ|トレーニング・エクササイズ|ウォーキング・ランニングウェア": {
+    "category": {
+      "root": "スポーツ",
+      "parent": "トレーニング・エクササイズ",
+      "name": "ウォーキング・ランニングウェア"
+    },
+    "count": 50,
+    "weight": {
+      "count": 49,
+      "mean": 7883.655102040816,
+      "std": 21408.370448190675,
+      "min": 10.0,
+      "max": 80000.0,
+      "median": 153.0,
+      "percentile_25": 107.0,
+      "percentile_75": 210.0
+    },
+    "volume": {
+      "count": 1,
+      "mean": 985600.0,
+      "std": 0.0,
+      "min": 985600.0,
+      "max": 985600.0,
+      "median": 985600.0,
+      "percentile_25": 985600.0,
+      "percentile_75": 985600.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 1400.0,
+        "std": 0.0
+      },
+      "width": {
+        "mean": 1100.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 640.0,
+        "std": 0.0
+      }
+    }
+  },
+  "スポーツ|トレーニング・エクササイズ|エクササイズグッズ": {
+    "category": {
+      "root": "スポーツ",
+      "parent": "トレーニング・エクササイズ",
+      "name": "エクササイズグッズ"
+    },
+    "count": 50,
+    "weight": {
+      "count": 49,
+      "mean": 17356.122448979593,
+      "std": 34459.13568131641,
+      "min": 150.0,
+      "max": 90000.0,
+      "median": 1200.0,
+      "percentile_25": 1000.0,
+      "percentile_75": 1300.0
+    },
+    "volume": {
+      "count": 1,
+      "mean": 108337.5,
+      "std": 0.0,
+      "min": 108337.5,
+      "max": 108337.5,
+      "median": 108337.5,
+      "percentile_25": 108337.5,
+      "percentile_75": 108337.5
+    },
+    "dimensions": {
+      "length": {
+        "mean": 535.0,
+        "std": 0.0
+      },
+      "width": {
+        "mean": 450.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 450.0,
+        "std": 0.0
+      }
+    }
+  },
+  "スポーツ|トレーニング・エクササイズ|フィットネスマシン": {
+    "category": {
+      "root": "スポーツ",
+      "parent": "トレーニング・エクササイズ",
+      "name": "フィットネスマシン"
+    },
+    "count": 61,
+    "weight": {
+      "count": 49,
+      "mean": 27948.571428571428,
+      "std": 26133.39711744264,
+      "min": 2200.0,
+      "max": 100000.0,
+      "median": 20000.0,
+      "percentile_25": 14000.0,
+      "percentile_75": 30000.0
+    },
+    "volume": {
+      "count": 12,
+      "mean": 424435.23333333334,
+      "std": 263442.5121705535,
+      "min": 36312.0,
+      "max": 785460.0,
+      "median": 557460.0,
+      "percentile_25": 191483.5,
+      "percentile_75": 598312.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 1014.1666666666666,
+        "std": 336.42008296506646
+      },
+      "width": {
+        "mean": 797.5,
+        "std": 323.06152664778887
+      },
+      "height": {
+        "mean": 424.6666666666667,
+        "std": 99.9144078143332
+      }
+    }
+  },
+  "アウトドア・釣り・旅行用品|アウトドア|バーベキュー・調理用品": {
+    "category": {
+      "root": "アウトドア・釣り・旅行用品",
+      "parent": "アウトドア",
+      "name": "バーベキュー・調理用品"
+    },
+    "count": 172,
+    "weight": {
+      "count": 136,
+      "mean": 1962.3514705882353,
+      "std": 3641.0700148765513,
+      "min": 8.0,
+      "max": 25000.0,
+      "median": 755.0,
+      "percentile_25": 176.5,
+      "percentile_75": 2185.0
+    },
+    "volume": {
+      "count": 36,
+      "mean": 30353.884555555556,
+      "std": 44516.774329147636,
+      "min": 126.75,
+      "max": 146372.0,
+      "median": 10517.875,
+      "percentile_25": 4289.4675,
+      "percentile_75": 25543.46875
+    },
+    "dimensions": {
+      "length": {
+        "mean": 371.22222222222223,
+        "std": 175.93529604676183
+      },
+      "width": {
+        "mean": 275.72222222222223,
+        "std": 134.69319274870392
+      },
+      "height": {
+        "mean": 166.75,
+        "std": 112.31710441622168
+      }
+    }
+  },
+  "アウトドア・釣り・旅行用品|アウトドア|リュック・バッグ": {
+    "category": {
+      "root": "アウトドア・釣り・旅行用品",
+      "parent": "アウトドア",
+      "name": "リュック・バッグ"
+    },
+    "count": 105,
+    "weight": {
+      "count": 97,
+      "mean": 1470.5463917525774,
+      "std": 10366.89861865627,
+      "min": 2.0,
+      "max": 100000.0,
+      "median": 65.0,
+      "percentile_25": 20.0,
+      "percentile_75": 220.0
+    },
+    "volume": {
+      "count": 8,
+      "mean": 21072.319375,
+      "std": 22588.252631478663,
+      "min": 2340.0,
+      "max": 76680.0,
+      "median": 13865.077500000001,
+      "percentile_25": 6582.3,
+      "percentile_75": 24414.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 406.875,
+        "std": 151.5943909747323
+      },
+      "width": {
+        "mean": 232.375,
+        "std": 81.31718376210529
+      },
+      "height": {
+        "mean": 161.375,
+        "std": 60.956823859187416
+      }
+    }
+  },
+  "アウトドア・釣り・旅行用品|アウトドア|テーブル・チェア・ハンモック": {
+    "category": {
+      "root": "アウトドア・釣り・旅行用品",
+      "parent": "アウトドア",
+      "name": "テーブル・チェア・ハンモック"
+    },
+    "count": 57,
+    "weight": {
+      "count": 48,
+      "mean": 19222.104166666668,
+      "std": 37848.895321968324,
+      "min": 50.0,
+      "max": 100000.0,
+      "median": 1050.0,
+      "percentile_25": 500.0,
+      "percentile_75": 2850.0
+    },
+    "volume": {
+      "count": 9,
+      "mean": 74746.83333333333,
+      "std": 101133.00397056893,
+      "min": 1430.0,
+      "max": 262440.0,
+      "median": 15548.0,
+      "percentile_25": 8944.0,
+      "percentile_75": 94710.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 471.6666666666667,
+        "std": 234.56816114345577
+      },
+      "width": {
+        "mean": 304.44444444444446,
+        "std": 165.55369126467107
+      },
+      "height": {
+        "mean": 272.22222222222223,
+        "std": 174.40551582624124
+      }
+    }
+  },
+  "アウトドア・釣り・旅行用品|アウトドア|登山ウェア・アウトドアウェア": {
+    "category": {
+      "root": "アウトドア・釣り・旅行用品",
+      "parent": "アウトドア",
+      "name": "登山ウェア・アウトドアウェア"
+    },
+    "count": 101,
+    "weight": {
+      "count": 99,
+      "mean": 3016.308080808081,
+      "std": 13242.295538532348,
+      "min": 60.0,
+      "max": 70000.0,
+      "median": 300.0,
+      "percentile_25": 223.5,
+      "percentile_75": 380.0
+    },
+    "volume": {
+      "count": 2,
+      "mean": 1123.25,
+      "std": 226.75,
+      "min": 896.5,
+      "max": 1350.0,
+      "median": 1123.25,
+      "percentile_25": 1009.875,
+      "percentile_75": 1236.625
+    },
+    "dimensions": {
+      "length": {
+        "mean": 156.5,
+        "std": 6.5
+      },
+      "width": {
+        "mean": 100.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 72.5,
+        "std": 17.5
+      }
+    }
+  },
+  "アウトドア・釣り・旅行用品|フィッシング|フィッシングツール": {
+    "category": {
+      "root": "アウトドア・釣り・旅行用品",
+      "parent": "フィッシング",
+      "name": "フィッシングツール"
+    },
+    "count": 38,
+    "weight": {
+      "count": 35,
+      "mean": 5041.628571428571,
+      "std": 7669.257777780117,
+      "min": 13.0,
+      "max": 26000.0,
+      "median": 1050.0,
+      "percentile_25": 105.0,
+      "percentile_75": 5000.0
+    },
+    "volume": {
+      "count": 3,
+      "mean": 805.0,
+      "std": 0.0,
+      "min": 805.0,
+      "max": 805.0,
+      "median": 805.0,
+      "percentile_25": 805.0,
+      "percentile_75": 805.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 200.0,
+        "std": 0.0
+      },
+      "width": {
+        "mean": 115.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 35.0,
+        "std": 0.0
+      }
+    }
+  },
+  "アウトドア・釣り・旅行用品|フィッシング|ルアー・フライ": {
+    "category": {
+      "root": "アウトドア・釣り・旅行用品",
+      "parent": "フィッシング",
+      "name": "ルアー・フライ"
+    },
+    "count": 100,
+    "weight": {
+      "count": 100,
+      "mean": 309.435,
+      "std": 2532.2191025412867,
+      "min": 2.5,
+      "max": 25500.0,
+      "median": 30.0,
+      "percentile_25": 22.0,
+      "percentile_75": 76.25
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "アウトドア・釣り・旅行用品|フィッシング|釣り仕掛け・仕掛け用品": {
+    "category": {
+      "root": "アウトドア・釣り・旅行用品",
+      "parent": "フィッシング",
+      "name": "釣り仕掛け・仕掛け用品"
+    },
+    "count": 167,
+    "weight": {
+      "count": 167,
+      "mean": 1715.6139520958081,
+      "std": 7051.523556791594,
+      "min": 1.0,
+      "max": 50000.0,
+      "median": 19.0,
+      "percentile_25": 6.0,
+      "percentile_75": 80.0
+    },
+    "volume": {},
+    "dimensions": {}
+  },
+  "アウトドア・釣り・旅行用品|フィッシング|釣り餌": {
+    "category": {
+      "root": "アウトドア・釣り・旅行用品",
+      "parent": "フィッシング",
+      "name": "釣り餌"
+    },
+    "count": 27,
+    "weight": {
+      "count": 26,
+      "mean": 2193.6423076923074,
+      "std": 6040.056629139338,
+      "min": 2.2,
+      "max": 23000.0,
+      "median": 35.5,
+      "percentile_25": 14.25,
+      "percentile_75": 155.25
+    },
+    "volume": {
+      "count": 1,
+      "mean": 11.2,
+      "std": 0.0,
+      "min": 11.2,
+      "max": 11.2,
+      "median": 11.2,
+      "percentile_25": 11.2,
+      "percentile_75": 11.2
+    },
+    "dimensions": {
+      "length": {
+        "mean": 80.0,
+        "std": 0.0
+      },
+      "width": {
+        "mean": 20.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 7.0,
+        "std": 0.0
+      }
+    }
+  },
+  "ホビー・楽器・アート|模型・プラモデル|自動車": {
+    "category": {
+      "root": "ホビー・楽器・アート",
+      "parent": "模型・プラモデル",
+      "name": "自動車"
+    },
+    "count": 51,
+    "weight": {
+      "count": 50,
+      "mean": 20.526,
+      "std": 25.830677962453866,
+      "min": 1.5,
+      "max": 180.0,
+      "median": 15.5,
+      "percentile_25": 8.125,
+      "percentile_75": 19.85
+    },
+    "volume": {
+      "count": 1,
+      "mean": 144.16,
+      "std": 0.0,
+      "min": 144.16,
+      "max": 144.16,
+      "median": 144.16,
+      "percentile_25": 144.16,
+      "percentile_75": 144.16
+    },
+    "dimensions": {
+      "length": {
+        "mean": 80.0,
+        "std": 0.0
+      },
+      "width": {
+        "mean": 68.0,
+        "std": 0.0
+      },
+      "height": {
+        "mean": 26.5,
+        "std": 0.0
+      }
+    }
+  },
+  "ホビー・楽器・アート|楽器・機材|鍵盤楽器": {
+    "category": {
+      "root": "ホビー・楽器・アート",
+      "parent": "楽器・機材",
+      "name": "鍵盤楽器"
+    },
+    "count": 130,
+    "weight": {
+      "count": 90,
+      "mean": 9043.777777777777,
+      "std": 18154.71848111105,
+      "min": 15.0,
+      "max": 87000.0,
+      "median": 1100.0,
+      "percentile_25": 550.0,
+      "percentile_75": 4500.0
+    },
+    "volume": {
+      "count": 40,
+      "mean": 28547.060275000003,
+      "std": 75555.5575271286,
+      "min": 9.503,
+      "max": 483892.63,
+      "median": 10489.494999999999,
+      "percentile_25": 2150.0,
+      "percentile_75": 26718.823999999997
+    },
+    "dimensions": {
+      "length": {
+        "mean": 706.775,
+        "std": 340.1021528526392
+      },
+      "width": {
+        "mean": 225.675,
+        "std": 142.2972922265213
+      },
+      "height": {
+        "mean": 89.35,
+        "std": 74.09370756008907
+      }
+    }
+  },
+  "ホビー・楽器・アート|楽器・機材|デジタル楽器": {
+    "category": {
+      "root": "ホビー・楽器・アート",
+      "parent": "楽器・機材",
+      "name": "デジタル楽器"
+    },
+    "count": 14,
+    "weight": {
+      "count": 11,
+      "mean": 1926.2727272727273,
+      "std": 1764.0204127302286,
+      "min": 4.0,
+      "max": 5500.0,
+      "median": 1340.0,
+      "percentile_25": 707.5,
+      "percentile_75": 2625.0
+    },
+    "volume": {
+      "count": 3,
+      "mean": 1601.6879999999999,
+      "std": 860.8572512606256,
+      "min": 992.9699999999999,
+      "max": 2819.124,
+      "median": 992.9699999999999,
+      "percentile_25": 992.9699999999999,
+      "percentile_75": 1906.0469999999998
+    },
+    "dimensions": {
+      "length": {
+        "mean": 309.6666666666667,
+        "std": 20.741798914805393
+      },
+      "width": {
+        "mean": 131.0,
+        "std": 41.012193308819754
+      },
+      "height": {
+        "mean": 36.666666666666664,
+        "std": 5.185449728701348
+      }
+    }
+  },
+  "ホビー・楽器・アート|楽器・機材|楽器アクセサリー": {
+    "category": {
+      "root": "ホビー・楽器・アート",
+      "parent": "楽器・機材",
+      "name": "楽器アクセサリー"
+    },
+    "count": 95,
+    "weight": {
+      "count": 85,
+      "mean": 1661.1352941176472,
+      "std": 5628.736422506249,
+      "min": 9.0,
+      "max": 50000.0,
+      "median": 650.0,
+      "percentile_25": 135.0,
+      "percentile_75": 990.0
+    },
+    "volume": {
+      "count": 10,
+      "mean": 10014.2928,
+      "std": 16220.269127965817,
+      "min": 95.976,
+      "max": 52800.0,
+      "median": 1064.25,
+      "percentile_25": 190.107,
+      "percentile_75": 12647.25
+    },
+    "dimensions": {
+      "length": {
+        "mean": 252.8,
+        "std": 138.99985611503345
+      },
+      "width": {
+        "mean": 158.3,
+        "std": 121.97298881309747
+      },
+      "height": {
+        "mean": 99.3,
+        "std": 101.52738546815829
+      }
+    }
+  },
+  "ホビー・楽器・アート|楽器・機材|DTM・DAW": {
+    "category": {
+      "root": "ホビー・楽器・アート",
+      "parent": "楽器・機材",
+      "name": "DTM・DAW"
+    },
+    "count": 68,
+    "weight": {
+      "count": 49,
+      "mean": 3605.8979591836733,
+      "std": 3136.345144772605,
+      "min": 350.0,
+      "max": 13500.0,
+      "median": 3700.0,
+      "percentile_25": 677.0,
+      "percentile_75": 5200.0
+    },
+    "volume": {
+      "count": 19,
+      "mean": 22254.196736842106,
+      "std": 16387.778243401226,
+      "min": 838.0799999999999,
+      "max": 56338.92000000001,
+      "median": 20956.32,
+      "percentile_25": 10564.344,
+      "percentile_75": 31464.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 915.2105263157895,
+        "std": 356.7011986976699
+      },
+      "width": {
+        "mean": 244.31578947368422,
+        "std": 72.5824776821651
+      },
+      "height": {
+        "mean": 76.21052631578948,
+        "std": 28.770560515126753
+      }
+    }
+  },
+  "ダイエット・健康|健康用品|メガネ・老眼鏡": {
+    "category": {
+      "root": "ダイエット・健康",
+      "parent": "健康用品",
+      "name": "メガネ・老眼鏡"
+    },
+    "count": 63,
+    "weight": {
+      "count": 37,
+      "mean": 753.2567567567568,
+      "std": 1078.2921971591682,
+      "min": 55.0,
+      "max": 4700.0,
+      "median": 356.0,
+      "percentile_25": 260.0,
+      "percentile_75": 550.0
+    },
+    "volume": {
+      "count": 26,
+      "mean": 3904.4141538461536,
+      "std": 7129.486452282669,
+      "min": 278.25,
+      "max": 37573.2,
+      "median": 2260.33,
+      "percentile_25": 931.0,
+      "percentile_75": 3330.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 218.69230769230768,
+        "std": 48.50754836642139
+      },
+      "width": {
+        "mean": 124.11538461538461,
+        "std": 60.48224591568932
+      },
+      "height": {
+        "mean": 96.0,
+        "std": 44.526569423383435
+      }
+    }
+  },
+  "キッチン・日用品・その他|洗濯用品|その他": {
+    "category": {
+      "root": "キッチン・日用品・その他",
+      "parent": "洗濯用品",
+      "name": "その他"
+    },
+    "count": 52,
+    "weight": {
+      "count": 48,
+      "mean": 1125.5729166666667,
+      "std": 2003.8848805444954,
+      "min": 20.0,
+      "max": 10000.0,
+      "median": 415.25,
+      "percentile_25": 107.5,
+      "percentile_75": 852.5
+    },
+    "volume": {
+      "count": 4,
+      "mean": 4430.1224999999995,
+      "std": 3399.9299400162276,
+      "min": 90.65,
+      "max": 9629.839999999998,
+      "median": 4000.0,
+      "percentile_25": 3022.6625,
+      "percentile_75": 5407.459999999999
+    },
+    "dimensions": {
+      "length": {
+        "mean": 206.75,
+        "std": 98.87207644223925
+      },
+      "width": {
+        "mean": 163.75,
+        "std": 74.78093005573012
+      },
+      "height": {
+        "mean": 89.75,
+        "std": 33.09361720936531
+      }
+    }
+  },
+  "スマホ・タブレット・パソコン|ノートPC|Windowsノート本体": {
+    "category": {
+      "root": "スマホ・タブレット・パソコン",
+      "parent": "ノートPC",
+      "name": "Windowsノート本体"
+    },
+    "count": 60,
+    "weight": {
+      "count": 50,
+      "mean": 1317.02,
+      "std": 1163.3833674245134,
+      "min": 4.0,
+      "max": 8500.0,
+      "median": 1067.5,
+      "percentile_25": 812.5,
+      "percentile_75": 1300.0
+    },
+    "volume": {
+      "count": 10,
+      "mean": 1867.348315,
+      "std": 832.669733731185,
+      "min": 411.075,
+      "max": 3302.7839999999997,
+      "median": 2182.38495,
+      "percentile_25": 1122.3828125,
+      "percentile_75": 2363.05935
+    },
+    "dimensions": {
+      "length": {
+        "mean": 338.46,
+        "std": 45.098385780424564
+      },
+      "width": {
+        "mean": 231.06,
+        "std": 29.709298207800195
+      },
+      "height": {
+        "mean": 22.35,
+        "std": 6.905975673284695
+      }
+    }
+  },
+  "スマホ・タブレット・パソコン|PC周辺機器|その他": {
+    "category": {
+      "root": "スマホ・タブレット・パソコン",
+      "parent": "PC周辺機器",
+      "name": "その他"
+    },
+    "count": 19,
+    "weight": {
+      "count": 16,
+      "mean": 4474.5,
+      "std": 10684.118699031755,
+      "min": 17.0,
+      "max": 40000.0,
+      "median": 234.5,
+      "percentile_25": 19.25,
+      "percentile_75": 2200.0
+    },
+    "volume": {
+      "count": 3,
+      "mean": 383.5,
+      "std": 250.4605757399755,
+      "min": 76.5,
+      "max": 690.0,
+      "median": 384.0,
+      "percentile_25": 230.25,
+      "percentile_75": 537.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 170.33333333333334,
+        "std": 101.91608748813353
+      },
+      "width": {
+        "mean": 120.0,
+        "std": 78.74007874011811
+      },
+      "height": {
+        "mean": 23.333333333333332,
+        "std": 9.428090415820632
+      }
+    }
+  },
+  "スマホ・タブレット・パソコン|スマートフォン・携帯電話|スマートフォン本体": {
+    "category": {
+      "root": "スマホ・タブレット・パソコン",
+      "parent": "スマートフォン・携帯電話",
+      "name": "スマートフォン本体"
+    },
+    "count": 50,
+    "weight": {
+      "count": 43,
+      "mean": 97.11627906976744,
+      "std": 82.80242927071296,
+      "min": 3.0,
+      "max": 214.0,
+      "median": 128.0,
+      "percentile_25": 5.0,
+      "percentile_75": 176.0
+    },
+    "volume": {
+      "count": 7,
+      "mean": 98.5866972857143,
+      "std": 13.547902106367344,
+      "min": 81.49504000000002,
+      "max": 119.50847999999999,
+      "median": 94.61376,
+      "percentile_25": 87.6931605,
+      "percentile_75": 109.55164
+    },
+    "dimensions": {
+      "length": {
+        "mean": 152.27142857142857,
+        "std": 9.148569643972346
+      },
+      "width": {
+        "mean": 72.92857142857143,
+        "std": 2.0748248020456255
+      },
+      "height": {
+        "mean": 8.857142857142858,
+        "std": 0.9068897284630791
+      }
+    }
+  },
+  "生活家電・空調|電池・充電池|充電池・電池充電器": {
+    "category": {
+      "root": "生活家電・空調",
+      "parent": "電池・充電池",
+      "name": "充電池・電池充電器"
+    },
+    "count": 58,
+    "weight": {
+      "count": 45,
+      "mean": 1225.2444444444445,
+      "std": 3752.063159297565,
+      "min": 14.0,
+      "max": 16000.0,
+      "median": 119.0,
+      "percentile_25": 45.0,
+      "percentile_75": 244.0
+    },
+    "volume": {
+      "count": 13,
+      "mean": 3474.8096153846154,
+      "std": 6736.540132403607,
+      "min": 54.72,
+      "max": 23800.975000000002,
+      "median": 670.5,
+      "percentile_25": 189.125,
+      "percentile_75": 2261.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 190.30769230769232,
+        "std": 114.30955583945298
+      },
+      "width": {
+        "mean": 123.3076923076923,
+        "std": 92.51809354464723
+      },
+      "height": {
+        "mean": 60.57692307692308,
+        "std": 59.19454436719853
+      }
+    }
+  },
+  "生活家電・空調|冷暖房・空調|エアコン": {
+    "category": {
+      "root": "生活家電・空調",
+      "parent": "冷暖房・空調",
+      "name": "エアコン"
+    },
+    "count": 138,
+    "weight": {
+      "count": 107,
+      "mean": 13822.981308411216,
+      "std": 9517.155804990956,
+      "min": 20.0,
+      "max": 39000.0,
+      "median": 19500.0,
+      "percentile_25": 2202.0,
+      "percentile_75": 21500.0
+    },
+    "volume": {
+      "count": 31,
+      "mean": 37685.152709677415,
+      "std": 30652.689959440835,
+      "min": 0.768,
+      "max": 89051.75,
+      "median": 53437.5,
+      "percentile_25": 221.691,
+      "percentile_75": 61104.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 496.80645161290323,
+        "std": 290.08879834650395
+      },
+      "width": {
+        "mean": 232.48387096774192,
+        "std": 131.37679644092452
+      },
+      "height": {
+        "mean": 172.74193548387098,
+        "std": 114.37910020626948
+      }
+    }
+  },
+  "生活家電・空調|生活家電|洗濯機": {
+    "category": {
+      "root": "生活家電・空調",
+      "parent": "生活家電",
+      "name": "洗濯機"
+    },
+    "count": 119,
+    "weight": {
+      "count": 88,
+      "mean": 5590.863636363636,
+      "std": 6566.035186649098,
+      "min": 200.0,
+      "max": 39000.0,
+      "median": 4500.0,
+      "percentile_25": 2075.0,
+      "percentile_75": 6000.0
+    },
+    "volume": {
+      "count": 31,
+      "mean": 97817.06477419355,
+      "std": 122359.23230853998,
+      "min": 673.1999999999999,
+      "max": 381348.558,
+      "median": 30752.0,
+      "percentile_25": 12672.0,
+      "percentile_75": 200480.37
+    },
+    "dimensions": {
+      "length": {
+        "mean": 510.61290322580646,
+        "std": 277.359051960585
+      },
+      "width": {
+        "mean": 347.48387096774195,
+        "std": 147.94612597654333
+      },
+      "height": {
+        "mean": 306.258064516129,
+        "std": 165.3143569945211
+      }
+    }
+  },
+  "生活家電・空調|生活家電|掃除機・クリーナー": {
+    "category": {
+      "root": "生活家電・空調",
+      "parent": "生活家電",
+      "name": "掃除機・クリーナー"
+    },
+    "count": 232,
+    "weight": {
+      "count": 170,
+      "mean": 2166.385294117647,
+      "std": 1627.7909760907758,
+      "min": 3.0,
+      "max": 11700.0,
+      "median": 2050.0,
+      "percentile_25": 1100.0,
+      "percentile_75": 2900.0
+    },
+    "volume": {
+      "count": 62,
+      "mean": 23529.47025806452,
+      "std": 23150.181203576853,
+      "min": 195.0,
+      "max": 94493.157,
+      "median": 12858.948,
+      "percentile_25": 6224.8125,
+      "percentile_75": 34101.24
+    },
+    "dimensions": {
+      "length": {
+        "mean": 500.56451612903226,
+        "std": 314.8317328847546
+      },
+      "width": {
+        "mean": 270.2096774193548,
+        "std": 91.45087471966967
+      },
+      "height": {
+        "mean": 141.73387096774192,
+        "std": 78.64496157917429
+      }
+    }
+  },
+  "生活家電・空調|生活家電|電子レンジ・オーブン": {
+    "category": {
+      "root": "生活家電・空調",
+      "parent": "生活家電",
+      "name": "電子レンジ・オーブン"
+    },
+    "count": 234,
+    "weight": {
+      "count": 176,
+      "mean": 9578.426136363636,
+      "std": 5833.746018484224,
+      "min": 10.0,
+      "max": 25000.0,
+      "median": 11000.0,
+      "percentile_25": 3600.0,
+      "percentile_75": 13500.0
+    },
+    "volume": {
+      "count": 58,
+      "mean": 35333.45882758621,
+      "std": 21233.629302298108,
+      "min": 120.0,
+      "max": 83807.1,
+      "median": 36322.83,
+      "percentile_25": 16951.68,
+      "percentile_75": 48201.43000000001
+    },
+    "dimensions": {
+      "length": {
+        "mean": 400.0,
+        "std": 86.52565894098937
+      },
+      "width": {
+        "mean": 310.98275862068965,
+        "std": 79.17233306796317
+      },
+      "height": {
+        "mean": 242.82758620689654,
+        "std": 83.54518453921114
+      }
+    }
+  },
+  "生活家電・空調|生活家電|ガステーブル・コンロ": {
+    "category": {
+      "root": "生活家電・空調",
+      "parent": "生活家電",
+      "name": "ガステーブル・コンロ"
+    },
+    "count": 65,
+    "weight": {
+      "count": 43,
+      "mean": 1723.6744186046512,
+      "std": 1259.2541299373202,
+      "min": 120.0,
+      "max": 8000.0,
+      "median": 1500.0,
+      "percentile_25": 1200.0,
+      "percentile_75": 2200.0
+    },
+    "volume": {
+      "count": 22,
+      "mean": 13873.446954545456,
+      "std": 18000.57158151031,
+      "min": 444.59999999999997,
+      "max": 77439.89000000001,
+      "median": 7463.652,
+      "percentile_25": 6024.0265,
+      "percentile_75": 11776.690999999999
+    },
+    "dimensions": {
+      "length": {
+        "mean": 339.1363636363636,
+        "std": 87.8435051950836
+      },
+      "width": {
+        "mean": 251.97727272727272,
+        "std": 78.76756330448227
+      },
+      "height": {
+        "mean": 121.36363636363636,
+        "std": 67.61222687606507
+      }
+    }
+  },
+  "生活家電・空調|生活家電|炊飯器・餅つき機": {
+    "category": {
+      "root": "生活家電・空調",
+      "parent": "生活家電",
+      "name": "炊飯器・餅つき機"
+    },
+    "count": 80,
+    "weight": {
+      "count": 58,
+      "mean": 3425.5172413793102,
+      "std": 1684.3400656041185,
+      "min": 35.0,
+      "max": 7700.0,
+      "median": 3050.0,
+      "percentile_25": 2300.0,
+      "percentile_75": 5050.0
+    },
+    "volume": {
+      "count": 22,
+      "mean": 13834.892351136361,
+      "std": 7321.787719989057,
+      "min": 19.603125,
+      "max": 26607.1176,
+      "median": 16057.944,
+      "percentile_25": 8905.875,
+      "percentile_75": 17775.72
+    },
+    "dimensions": {
+      "length": {
+        "mean": 277.7,
+        "std": 68.58845648967736
+      },
+      "width": {
+        "mean": 216.1590909090909,
+        "std": 72.2356287002405
+      },
+      "height": {
+        "mean": 189.1590909090909,
+        "std": 66.86951105148341
+      }
+    }
+  },
+  "生活家電・空調|生活家電|喫煙具・ライター": {
+    "category": {
+      "root": "生活家電・空調",
+      "parent": "生活家電",
+      "name": "喫煙具・ライター"
+    },
+    "count": 55,
+    "weight": {
+      "count": 38,
+      "mean": 52.67131578947368,
+      "std": 27.589821461341465,
+      "min": 13.0,
+      "max": 110.0,
+      "median": 57.0,
+      "percentile_25": 19.77,
+      "percentile_75": 74.375
+    },
+    "volume": {
+      "count": 17,
+      "mean": 48.0598588235294,
+      "std": 46.15343017436591,
+      "min": 3.12,
+      "max": 184.0,
+      "median": 25.055999999999997,
+      "percentile_25": 18.297,
+      "percentile_75": 67.03199999999998
+    },
+    "dimensions": {
+      "length": {
+        "mean": 98.00588235294117,
+        "std": 16.466024577836748
+      },
+      "width": {
+        "mean": 29.25,
+        "std": 16.645525807608625
+      },
+      "height": {
+        "mean": 16.064705882352943,
+        "std": 10.314292834615502
+      }
+    }
+  },
+  "生活家電・空調|生活家電|冷蔵庫・冷凍庫": {
+    "category": {
+      "root": "生活家電・空調",
+      "parent": "生活家電",
+      "name": "冷蔵庫・冷凍庫"
+    },
+    "count": 167,
+    "weight": {
+      "count": 136,
+      "mean": 26374.46323529412,
+      "std": 21852.35693806616,
+      "min": 8.0,
+      "max": 100000.0,
+      "median": 25000.0,
+      "percentile_25": 13000.0,
+      "percentile_75": 33250.0
+    },
+    "volume": {
+      "count": 31,
+      "mean": 231690.23837779614,
+      "std": 172925.34270858957,
+      "min": 40.32,
+      "max": 829535.0,
+      "median": 195075.0,
+      "percentile_25": 105958.32,
+      "percentile_75": 347739.0
+    },
+    "dimensions": {
+      "length": {
+        "mean": 867.3432258064516,
+        "std": 381.5961333102527
+      },
+      "width": {
+        "mean": 481.7361290322581,
+        "std": 158.92090078902854
+      },
+      "height": {
+        "mean": 427.6967741935484,
+        "std": 142.37559478223147
+      }
+    }
+  }
+}
