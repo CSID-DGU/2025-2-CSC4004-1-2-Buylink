@@ -44,7 +44,7 @@ AI 기반 무게/부피 예측을 통해 정확한 배송비를 산출하고, �
 ├── FE/                     # 프론트엔드 (React)
 │   └── buylink/
 │       ├── src/
-│       │은 | Frontend |
+│ 박지은 | Frontend |
 | 최하영 | Backend |
 | 강병민 | AI/ML |
 | 남윤수 | 기획 |
