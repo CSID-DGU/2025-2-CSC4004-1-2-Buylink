@@ -9,7 +9,7 @@ AI 기반 무게/부피 예측을 통해 정확한 배송비를 산출하고, �
 
 ## 주요 기능
 
-- **상품 검색 및 조회**: Mercari 상품 크롤링 및 한국어 번역
+- **상품 검색 및 조회**: Mercari 상품 크롤링
 - **AI 무게/부피 예측**: GPT-4o 기반 상품 무게 및 부피 자동 예측
 - **실시간 배송비 계산**: EMS 요금표 기반 정확한 국제 배송비 산출
 - **장바구니 및 견적**: 복수 상품 장바구니 담기 및 통합 견적 제공
@@ -44,86 +44,10 @@ AI 기반 무게/부피 예측을 통해 정확한 배송비를 산출하고, �
 ├── FE/                     # 프론트엔드 (React)
 │   └── buylink/
 │       ├── src/
-│       │   ├── components/ # 공통 컴포넌트
-│       │   └── pages/      # 페이지 컴포넌트
-│       └── public/
-│
-├── BE/                     # 백엔드 (Spring Boot)
-│   └── proxy-shopping/
-│       └── src/main/java/
-│           └── io/github/hayo02/proxyshopping/
-│               ├── cart/       # 장바구니
-│               ├── orders/     # 주문/결제
-│               ├── product/    # 상품 조회
-│               └── common/     # 공통 유틸
-│
-└── AI/                     # AI 서버 (Flask)
-    ├── api_server_standalone.py  # 무게/부피 예측 API
-    └── category_stats.json       # 카테고리별 통계 데이터
-```
-
-## 실행 방법
-
-### Frontend
-```bash
-cd FE/buylink
-npm install
-npm run dev
-```
-
-### Backend
-```bash
-cd BE/proxy-shopping
-./gradlew bootRun
-```
-
-### AI Server
-```bash
-cd AI
-pip install flask openai requests
-export OPENAI_API_KEY="your-api-key"
-python api_server_standalone.py
-```
-
-## 환경 변수
-
-### Backend (application.yml)
-- `spring.datasource.url`: MariaDB 연결 URL
-- `toss.secret-key`: 토스페이먼츠 시크릿 키
-- `toss.base-url`: 토스페이먼츠 API URL
-
-### AI Server
-- `OPENAI_API_KEY`: OpenAI API 키 (필수)
-- `AI_SERVER_PORT`: 서버 포트 (기본값: 7001)
-
-## API 엔드포인트
-
-### 상품
-- `GET /api/products/search?keyword={검색어}` - 상품 검색
-- `GET /api/products/detail?url={상품URL}` - 상품 상세 조회
-
-### 장바구니
-- `GET /api/cart` - 장바구니 조회
-- `POST /api/cart` - 장바구니 추가
-- `DELETE /api/cart/{id}` - 장바구니 삭제
-- `GET /api/cart/estimate` - 견적 조회
-
-### 주문
-- `POST /api/orders` - 주문 생성
-- `GET /api/orders/{orderId}` - 주문 상세 조회
-- `POST /api/orders/pay` - 결제 승인
-
-### AI 예측
-- `POST /predict` - 무게/부피 예측
-
-## 팀원
-
-| 이름 | 역할 |
-|------|------|
-| 팀원1 | Frontend |
-| 팀원2 | Backend |
-| 팀원3 | AI/ML |
-| 팀원4 | DevOps |
+│       │은 | Frontend |
+| 최하영 | Backend |
+| 강병민 | AI/ML |
+| 남윤수 | 기획 |
 
 ## 개발 저장소 안내
 
