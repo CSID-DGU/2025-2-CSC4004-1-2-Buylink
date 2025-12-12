@@ -1,0 +1,90 @@
+[
+  {
+    "image": "09010214_DC24FC022HG00L_1_2.jpg",
+    "product": "Nice Series Sweatshirt HEATHER GRAY L",
+    "category": "09_의류",
+    "actual_weight": 672.0,
+    "predicted_weight": 300.0,
+    "actual_size": "41.2x4.7x36.2",
+    "predicted_size": "30x30x2",
+    "error_rate": 55.35714285714286,
+    "subcategory": "상의/하의"
+  },
+  {
+    "image": "01110301_8805017220036_1_2.jpg",
+    "product": "뚜레반 감자전분가루A+(국산) 500g",
+    "category": "01_가공식품",
+    "actual_weight": 512.0,
+    "predicted_weight": 50.0,
+    "actual_size": "24.6x3.2x19.3",
+    "predicted_size": "10x15x3",
+    "error_rate": 90.234375,
+    "subcategory": "16_과자류"
+  },
+  {
+    "image": "10260401_8809146700025_1_1.jpg",
+    "product": "원형바베큐그릴(분리형)",
+    "category": "10_전문스포츠/레저",
+    "actual_weight": 1742.0,
+    "predicted_weight": 500.0,
+    "actual_size": "34.0x12.5x32.8",
+    "predicted_size": "30x30x5",
+    "error_rate": 71.29735935706086,
+    "subcategory": "소형용품"
+  },
+  {
+    "image": "07250802_8809656953065_2_3.jpg",
+    "product": "SVEN 와플메이커",
+    "category": "07_디지털/가전",
+    "actual_weight": 2460.0,
+    "predicted_weight": 750.0,
+    "actual_size": "33.8x24.6x23.8",
+    "predicted_size": "20x15x10",
+    "error_rate": 69.51219512195121,
+    "subcategory": "소형"
+  },
+  {
+    "image": "03110101_8809030363978_1_1.jpg",
+    "product": "피렌체식도",
+    "category": "03_일상용품",
+    "actual_weight": 126.0,
+    "predicted_weight": 30.0,
+    "actual_size": "39.0x2.4x7.0",
+    "predicted_size": "5x25x1",
+    "error_rate": 76.19047619047619,
+    "subcategory": "액세서리"
+  },
+  {
+    "image": "01060205_8801005382816_1_1.jpg",
+    "product": "샘표식품주식회사 버터장조림 90g",
+    "category": "01_가공식품",
+    "actual_weight": 118.0,
+    "predicted_weight": 50.0,
+    "actual_size": "7.3x3.3x7.3",
+    "predicted_size": "5x5x2",
+    "error_rate": 57.6271186440678,
+    "subcategory": "16_과자류"
+  },
+  {
+    "image": "01060101_8801955009399_1_2.jpg",
+    "product": "이츠웰 프리미엄 파인애플 슬라이스 836g",
+    "category": "01_가공식품",
+    "actual_weight": 960.0,
+    "predicted_weight": 400.0,
+    "actual_size": "10.0x11.8x9.9",
+    "predicted_size": "8x8x12",
+    "error_rate": 58.333333333333336,
+    "subcategory": "06_통조림,병"
+  },
+  {
+    "image": "05060104_6952830914054_2_3.jpg",
+    "product": "롤러 마사지기",
+    "category": "05_의약품/의료기기",
+    "actual_weight": 118.0,
+    "predicted_weight": 200.0,
+    "actual_size": "12.7x6.9x9.3",
+    "predicted_size": "10x10x10",
+    "error_rate": 69.49152542372882,
+    "subcategory": "화장품/샴푸/세제"
+  }
+]

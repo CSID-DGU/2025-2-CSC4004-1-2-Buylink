@@ -1,0 +1,72 @@
+[
+  {
+    "image": "01020303_9310264912980_1_2.jpg",
+    "prediction": {
+      "카테고리": "03_일상용품",
+      "무게": 0.0,
+      "부피": "16x16x16"
+    },
+    "ground_truth": {
+      "category": "01_가공식품",
+      "weight": 0.681,
+      "dimensions": "14.0x10.0x30.0"
+    },
+    "weight_error_percent": 100.0
+  },
+  {
+    "image": "01040101_8809247980203_1_2.jpg",
+    "prediction": {
+      "카테고리": "03_일상용품",
+      "무게": 0.0,
+      "부피": "21x21x21"
+    },
+    "ground_truth": {
+      "category": "01_가공식품",
+      "weight": 0.364,
+      "dimensions": "26.0x10.0x34.0"
+    },
+    "weight_error_percent": 100.0
+  },
+  {
+    "image": "03040606_8809276673756_1_3.jpg",
+    "prediction": {
+      "카테고리": "08_가구/인테리어",
+      "무게": 0.0,
+      "부피": "40x40x40"
+    },
+    "ground_truth": {
+      "category": "03_일상용품",
+      "weight": 2.11,
+      "dimensions": "45.0x40.0x52.0"
+    },
+    "weight_error_percent": 100.0
+  },
+  {
+    "image": "03110503_8809854967383_2_3.jpg",
+    "prediction": {
+      "카테고리": "03_일상용품",
+      "무게": 0.0,
+      "부피": "15x15x15"
+    },
+    "ground_truth": {
+      "category": "03_일상용품",
+      "weight": 0.174,
+      "dimensions": "13.0x6.5x25.0"
+    },
+    "weight_error_percent": 100.0
+  },
+  {
+    "image": "01090101_8801024947355_2_3.jpg",
+    "prediction": {
+      "카테고리": "03_일상용품",
+      "무게": 0.0,
+      "부피": "36x36x36"
+    },
+    "ground_truth": {
+      "category": "01_가공식품",
+      "weight": 11.128,
+      "dimensions": "35.0x35.0x46.0"
+    },
+    "weight_error_percent": 100.0
+  }
+]
