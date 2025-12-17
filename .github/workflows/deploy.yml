@@ -11,30 +11,21 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # SSH 키를 파일로 echo 하지 말고 ssh-agent로 로드 (줄바꿈/권한 이슈 방지)
-      - name: Load SSH key
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
-
-      - name: Add known_hosts
-        run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan -H "${{ secrets.EC2_HOST }}" >> ~/.ssh/known_hosts
-
-      # EC2에서 docker compose pull 하려면 "EC2에서" ghcr 로그인 해야 함
       - name: Remote deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
-          port: ${{ secrets.EC2_PORT }} # 보통 22. 없으면 Secrets에 22로 넣어두세요.
+          port: ${{ secrets.EC2_PORT }}
+          key: ${{ secrets.EC2_SSH_KEY }}
           script_stop: true
+          envs: GHCR_USER,GHCR_PAT
           script: |
             set -euo pipefail
 
