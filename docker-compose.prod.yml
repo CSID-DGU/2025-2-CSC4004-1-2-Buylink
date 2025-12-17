@@ -1,0 +1,81 @@
+services:
+  mariadb:
+    image: mariadb:11
+    container_name: buylink-mariadb
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Seoul
+      MARIADB_DATABASE: ${DB_NAME}
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - buylink-net
+
+  ai:
+    image: ghcr.io/${GHCR_USER}/buylink-ai:latest
+    container_name: buylink-ai
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Seoul
+      AI_PORT: "7001"
+    ports:
+      - "7001:7001"
+    networks:
+      - buylink-net
+
+  backend:
+    image: ghcr.io/${GHCR_USER}/buylink-backend:latest
+    container_name: buylink-backend
+    restart: unless-stopped
+    depends_on:
+      - mariadb
+      - ai
+    env_file:
+      - .env.prod
+    environment:
+      TZ: Asia/Seoul
+
+      # Spring
+      SPRING_PROFILES_ACTIVE: prod
+      SERVER_PORT: "17788"
+
+      # DB (application-prod.yml의 localhost를 강제로 덮어씀)
+      SPRING_DATASOURCE_URL: jdbc:mariadb://mariadb:3306/${DB_NAME}?characterEncoding=utf8mb4
+      SPRING_DATASOURCE_USERNAME: ${DB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+
+      # AI (B안 유지)
+      AI_BASE_URL: http://ai:7001
+
+      # 크롤러(서버에서 따로 안 올릴 거면 비활성 권장)
+      PYTHON_CRAWLER_ENABLED: "false"
+
+      # 견적서 저장 위치(컨테이너 내부 경로로 덮어씀)
+      QUOTATION_OUTPUT_DIR: /data/quotes
+
+      # 외부 연동 키들(값은 .env.prod에서 주입)
+      JUSO_API_KEY: ${JUSO_API_KEY}
+      TOSS_SECRET_KEY: ${TOSS_SECRET_KEY}
+      TOSS_BASE_URL: ${TOSS_BASE_URL}
+
+      # 슬랙(선택)
+      SLACK_WEBHOOK_URL: ${SLACK_WEBHOOK_URL}
+      SLACK_BOT_TOKEN: ${SLACK_BOT_TOKEN}
+      SLACK_CHANNEL: ${SLACK_CHANNEL}
+      SLACK_ENABLED: ${SLACK_ENABLED}
+    ports:
+      - "17788:17788"
+    volumes:
+      - quotes_data:/data/quotes
+    networks:
+      - buylink-net
+
+networks:
+  buylink-net:
+
+volumes:
+  mariadb_data:
+  quotes_data:

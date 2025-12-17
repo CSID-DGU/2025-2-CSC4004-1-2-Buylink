@@ -1,0 +1,63 @@
+server:
+  port: 17788
+
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:mariadb://db:3306/proxyshopping?characterEncoding=utf8mb4}
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root}
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 20000
+      idle-timeout: 300000
+      max-lifetime: 1200000
+      leak-detection-threshold: 60000
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
+        format_sql: true
+
+  transaction:
+    default-timeout: 30
+
+  sql:
+    init:
+      mode: never
+
+python:
+  crawler:
+    enabled: true
+    # docker-compose에서 python-crawler 컨테이너를 띄우는 경우에만 아래를 사용하세요.
+    # 지금 compose에 crawler를 안 올릴 거면 enabled: false 로 두는 게 안전합니다.
+    base-url: ${CRAWLER_BASE_URL:http://python-crawler:5001}
+    work-dir: ${CRAWLER_WORK_DIR:/app}
+    command: ${CRAWLER_COMMAND:.venv/bin/python}
+    health-url: ${CRAWLER_HEALTH_URL:http://python-crawler:5001/health}
+
+juso:
+  api-key: ${JUSO_API_KEY}
+
+toss:
+  secret-key: ${TOSS_SECRET_KEY}
+  base-url: ${TOSS_BASE_URL:https://api.tosspayments.com}
+
+# 님이 유지한다고 한 값: backend -> http://ai:7001
+ai:
+  base-url: ${AI_BASE_URL:http://ai:7001}
+
+quotation:
+  # EC2 컨테이너 내부 경로 (호스트에 마운트하면 파일 남길 수 있음)
+  output-dir: ${QUOTATION_OUTPUT_DIR:/opt/buylink/quotation}
+
+slack:
+  webhook-url: ${SLACK_WEBHOOK_URL:}
+  bot-token: ${SLACK_BOT_TOKEN:}
+  channel: ${SLACK_CHANNEL:}
+  enabled: ${SLACK_ENABLED:false}
