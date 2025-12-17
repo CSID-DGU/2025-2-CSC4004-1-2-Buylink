@@ -22,15 +22,9 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p ~/.ssh
-
-          # 1) secret -> key file (줄바꿈 유지)
           printf "%s" "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-
-          # 2) known_hosts
           ssh-keyscan -p "${{ secrets.EC2_PORT }}" -H "${{ secrets.EC2_HOST }}" >> ~/.ssh/known_hosts
-
-          # 3) (디버그) 키가 비어있으면 바로 실패시키기
           test -s ~/.ssh/id_rsa
 
       - name: Remote deploy via SSH
@@ -43,12 +37,9 @@ jobs:
             "GHCR_USER='${{ secrets.GHCR_USER }}' GHCR_PAT='${{ secrets.GHCR_PAT }}' bash -se" << 'EOF'
               set -euo pipefail
 
-              cd /opt/buylink
+              cd /new_data/bm/buylink
 
-              # GHCR 로그인 (EC2에서 pull 하니까 EC2에서 로그인해야 함)
               echo "$GHCR_PAT" | docker login ghcr.io -u "$GHCR_USER" --password-stdin
-
-              # compose에서 ${GHCR_USER} 쓰고 있으니(현재 파일 구조상) 환경변수로 확실히 주입
               export GHCR_USER
 
               docker compose -f docker-compose.prod.yml pull
