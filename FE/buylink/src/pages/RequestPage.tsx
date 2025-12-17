@@ -32,9 +32,9 @@ export default function RequestPage() {
   const navigate = useNavigate();
 
   const [urlInput, setUrlInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);        // URL 불러오기 로딩
+  const [isLoading, setIsLoading] = useState(false); // URL 불러오기 로딩
   const [isAddingToCart, setIsAddingToCart] = useState(false); // 버튼 중복 방지
-  const [isNavigating, setIsNavigating] = useState(false);  // Cart 이동 오버레이
+  const [isNavigating, setIsNavigating] = useState(false); // Cart 이동 오버레이
 
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
@@ -60,8 +60,11 @@ export default function RequestPage() {
         try {
           const errBody = await res.json();
           if (typeof errBody?.error === "string") message = errBody.error;
-          else if (typeof errBody?.message === "string") message = errBody.message;
-        } catch {}
+          else if (typeof errBody?.message === "string")
+            message = errBody.message;
+        } catch {
+          // ignore: 응답 바디가 JSON이 아닐 수 있음
+        }
         return { success: false, data: null, error: message };
       }
 
@@ -129,7 +132,8 @@ export default function RequestPage() {
   const handleToggleSelect = (productURL: string) => {
     setSelectedIds((prev) => {
       const next = new Set(prev);
-      next.has(productURL) ? next.delete(productURL) : next.add(productURL);
+      if (next.has(productURL)) next.delete(productURL);
+      else next.add(productURL);
       return next;
     });
   };

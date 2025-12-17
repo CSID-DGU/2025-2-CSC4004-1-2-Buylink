@@ -8,6 +8,7 @@ import OrderCompletePage from "./pages/OrderCompletePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import PaymentsSuccessPage from "./pages/PaymentsSuccessPage";
 import OrderHistoryPage from "./pages/OrderHistoryPage";
+import StatusPage from "./pages/StatusPage";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
       { path: "checkout", element: <CheckoutPage /> },
       { path: "order-complete", element: <OrderCompletePage /> },
       { path: "orders", element: <OrderHistoryPage /> },
+      { path: "status", element: <StatusPage /> },
     ],
   },
 

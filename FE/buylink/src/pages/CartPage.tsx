@@ -94,7 +94,9 @@ export default function CartPage() {
   // 선택
   const handleToggleAll = () => {
     const allSelected = items.every((i) => i.selected);
-    setItems((prev) => prev.map((item) => ({ ...item, selected: !allSelected })));
+    setItems((prev) =>
+      prev.map((item) => ({ ...item, selected: !allSelected }))
+    );
   };
 
   const handleToggleOne = (id: number) => {
@@ -162,12 +164,21 @@ export default function CartPage() {
 
   // 결제 버튼
   const handleGoCheckoutPage = () => {
-    if (selectedItems.length === 0) {
+    const selectedIds = selectedItems.map((i) => i.id);
+
+    if (selectedIds.length === 0) {
       alert("결제할 상품을 선택해주세요.");
       return;
     }
 
-    navigate("/checkout");
+    // ✅ 선택된 id + 옵션을 Checkout으로 전달
+    navigate("/checkout", {
+      state: {
+        selectedIds,
+        extraPackaging,
+        insurance,
+      },
+    });
   };
 
   return (
@@ -386,7 +397,7 @@ export default function CartPage() {
           <CartQuotation
             extraPackaging={extraPackaging}
             insurance={insurance}
-            selectedItems={selectedItems} // 선택된 상품들 전달
+            selectedItems={selectedItems}
             onCheckout={handleGoCheckoutPage}
           />
         </div>

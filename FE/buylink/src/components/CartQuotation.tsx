@@ -32,7 +32,7 @@ interface CartQuotationProps {
   extraPackaging: boolean;
   insurance: boolean;
   onCheckout: () => void;
-  selectedItems: SelectedCartItem[]; // 선택된 아이템 목록
+  selectedItems: SelectedCartItem[];
 }
 
 type CartEstimateApiResponse = {
@@ -47,6 +47,15 @@ const API_BASE_URL =
   import.meta.env.DEV ? import.meta.env.VITE_API_BASE_URL ?? "" : "";
 
 const buildApiUrl = (path: string) => `${API_BASE_URL}${path}`;
+
+function getErrorMessage(err: unknown): string {
+  if (err instanceof Error) return err.message;
+  if (typeof err === "object" && err && "message" in err) {
+    const m = (err as { message?: unknown }).message;
+    if (typeof m === "string") return m;
+  }
+  return "";
+}
 
 export default function CartQuotation({
   extraPackaging,
@@ -64,18 +73,12 @@ export default function CartQuotation({
       estimate.totalShippingFeeKRW
     : 0;
 
-  // 예측 무게(g), 예측 부피(cm³) - estimate가 있을 때만 의미 있음
-  const predictedWeightGrams = estimate
-  ? estimate.totalActualWeightKg * 1000
-  : 0;
+  const predictedWeightGrams = estimate ? estimate.totalActualWeightKg * 1000 : 0;
 
-  const predictedVolumeCm3 = estimate
-    ? estimate.totalVolumeM3 * 1_000_000
-    : 0;
+  const predictedVolumeCm3 = estimate ? estimate.totalVolumeM3 * 1_000_000 : 0;
 
   // extraPackaging / insurance / selectedItems 바뀔 때마다 견적 API 호출
   useEffect(() => {
-    // 선택된 상품이 없으면 API 안 부르고 상태만 정리
     if (selectedItems.length === 0) {
       setEstimate(null);
       setErrorMsg("선택된 상품이 없습니다. 상품을 선택해 주세요.");
@@ -87,7 +90,7 @@ export default function CartQuotation({
       setErrorMsg(null);
       try {
         const payload = {
-          itemIds: selectedItems.map((item) => item.id), // 선택된 id만 전송
+          itemIds: selectedItems.map((item) => item.id),
           extraPackaging,
           insurance,
         };
@@ -114,10 +117,10 @@ export default function CartQuotation({
         }
 
         setEstimate(json.data);
-      } catch (e: any) {
+      } catch (e: unknown) {
         console.error(e);
         setEstimate(null);
-        setErrorMsg(e?.message ?? "견적 정보를 불러오지 못했습니다.");
+        setErrorMsg(getErrorMessage(e) || "견적 정보를 불러오지 못했습니다.");
       } finally {
         setIsLoading(false);
       }
@@ -129,22 +132,24 @@ export default function CartQuotation({
   useEffect(() => {
     if (!estimate) return;
 
-    const predictedWeightGrams = Math.round(
+    const predictedWeightGramsRounded = Math.round(
       estimate.totalActualWeightKg * 1000
     );
-    const predictedVolumeCm3 = Math.round(estimate.totalVolumeM3 * 1_000_000);
+    const predictedVolumeCm3Rounded = Math.round(
+      estimate.totalVolumeM3 * 1_000_000
+    );
 
     console.log("[CartQuotation] estimate:", estimate);
     console.log(
       "[CartQuotation] predictedWeightGrams:",
-      predictedWeightGrams,
+      predictedWeightGramsRounded,
       "(from",
       estimate.totalActualWeightKg,
       "kg)"
     );
     console.log(
       "[CartQuotation] predictedVolumeCm3:",
-      predictedVolumeCm3,
+      predictedVolumeCm3Rounded,
       "(from",
       estimate.totalVolumeM3,
       "m³)"
@@ -160,22 +165,18 @@ export default function CartQuotation({
     >
       <h3 className="text-[#111111] font-[600]">견적서</h3>
 
-      {/* 로딩 상태 */}
       {isLoading && (
         <p className="text-sm text-[#767676] mt-2">견적을 계산 중입니다...</p>
       )}
 
-      {/* 에러 / 견적 없음 */}
       {!isLoading && !estimate && (
         <p className="text-sm text-[#767676] mt-2">
           {errorMsg ?? "견적 정보를 불러오지 못했습니다."}
         </p>
       )}
 
-      {/* 견적 표시 */}
       {!isLoading && estimate && (
         <>
-          {/* 상단 합계 전까지 */}
           <div className="space-y-3 text-sm">
             <div className="flex justify-between">
               <span className="text-[#505050]">상품 금액</span>
@@ -196,7 +197,6 @@ export default function CartQuotation({
               </span>
             </div>
 
-            {/* 예측 무게/부피 */}
             <div className="flex justify-between">
               <span className="text-[#505050]">예측 무게</span>
               <span className="text-[#111111] font-[500]">
@@ -213,7 +213,6 @@ export default function CartQuotation({
 
           <div className="h-px bg-[#e5e5ec]" />
 
-          {/* 합계액 */}
           <div className="flex justify-between">
             <span className="text-[#111111] font-[500]">합계액</span>
             <span className="text-[#ffcc4c] font-[600]">
@@ -221,7 +220,6 @@ export default function CartQuotation({
             </span>
           </div>
 
-          {/* 수수료 / 옵션 비용 */}
           <div className="space-y-3 text-sm mt-2">
             <div className="flex justify-between">
               <span className="text-[#505050]">+ 결제 수수료(3.4%)</span>
@@ -247,7 +245,6 @@ export default function CartQuotation({
 
           <div className="h-px bg-[#e5e5ec]" />
 
-          {/* 최종 결제 금액 */}
           <div className="flex justify-between items-center">
             <span className="text-[#111111] font-[600]">최종 결제 금액</span>
             <span className="text-lg text-[#111111] font-[700]">
@@ -255,7 +252,6 @@ export default function CartQuotation({
             </span>
           </div>
 
-          {/* 안내 문구 */}
           <div className="flex items-start gap-2 p-3 bg-[#fff5c9]/50 rounded-lg mt-2">
             <Info className="w-4 h-4 text-[#ff9200] flex-shrink-0 mt-0.5" />
             <div className="text-[11px] leading-relaxed text-[#505050] space-y-1">
@@ -265,7 +261,6 @@ export default function CartQuotation({
             </div>
           </div>
 
-          {/* 결제 버튼 */}
           <motion.button
             whileHover={{ scale: 1.02, y: -2 }}
             whileTap={{ scale: 0.98 }}
