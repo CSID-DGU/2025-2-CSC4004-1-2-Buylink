@@ -30,8 +30,8 @@ jobs:
       - name: Build & Push backend image (latest, sha)
         uses: docker/build-push-action@v6
         with:
-          context: ./BE
-          file: ./BE/Dockerfile
+          context: ./BE/proxy-shopping
+          file: ./BE/proxy-shopping/Dockerfile
           push: true
           tags: |
             ghcr.io/${{ secrets.GHCR_USER }}/buylink-backend:latest
