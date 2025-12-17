@@ -1,0 +1,20 @@
+FROM eclipse-temurin:17-jdk AS build
+
+WORKDIR /app
+
+COPY . .
+RUN chmod +x gradlew
+RUN ./gradlew clean bootJar -x test
+
+FROM eclipse-temurin:17-jre
+
+WORKDIR /app
+COPY --from=build /app/build/libs/*.jar app.jar
+
+# 견적서 저장 디렉토리 생성
+RUN mkdir -p /opt/buylink/quotation
+
+EXPOSE 17788
+ENV SPRING_PROFILES_ACTIVE=prod
+
+ENTRYPOINT ["java","-jar","/app/app.jar"]

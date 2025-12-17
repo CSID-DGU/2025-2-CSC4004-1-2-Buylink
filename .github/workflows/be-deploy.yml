@@ -1,0 +1,72 @@
+name: BE Deploy
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "BE/**"
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: BE
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew clean bootJar -x test
+
+      - name: Build Docker image
+        run: docker build -t buylink-be:latest .
+
+      - name: Save Docker image
+        run: docker save buylink-be:latest | gzip > buylink-be.tar.gz
+
+      - name: Copy to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "BE/buylink-be.tar.gz"
+          target: "/tmp"
+          strip_components: 1
+
+      - name: Deploy on server
+        uses: appleboy/ssh-action@v1.0.3
+        env:
+          TOSS_SECRET_KEY: ${{ secrets.TOSS_SECRET_KEY }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          envs: TOSS_SECRET_KEY,SLACK_BOT_TOKEN
+          script: |
+            cd /tmp
+            docker load < buylink-be.tar.gz
+            docker stop buylink-be || true
+            docker rm buylink-be || true
+            docker run -d \
+              --name buylink-be \
+              --restart unless-stopped \
+              --network host \
+              -e SPRING_PROFILES_ACTIVE=prod \
+              -e TOSS_SECRET_KEY="${TOSS_SECRET_KEY}" \
+              -e SLACK_BOT_TOKEN="${SLACK_BOT_TOKEN}" \
+              buylink-be:latest
+            rm -f buylink-be.tar.gz

@@ -1,0 +1,57 @@
+name: AI Deploy (Test)
+
+on:
+  push:
+    branches: ["develop"]
+    paths:
+      - "AI/**"
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: AI
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t buylink-ai-test:latest .
+
+      - name: Save Docker image
+        run: docker save buylink-ai-test:latest | gzip > buylink-ai-test.tar.gz
+
+      - name: Copy to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "AI/buylink-ai-test.tar.gz"
+          target: "/tmp"
+          strip_components: 1
+
+      - name: Deploy on server (Test Port 7002)
+        uses: appleboy/ssh-action@v1.0.3
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          envs: OPENAI_API_KEY
+          script: |
+            cd /tmp
+            docker load < buylink-ai-test.tar.gz
+            docker stop buylink-ai-test || true
+            docker rm buylink-ai-test || true
+            docker run -d \
+              --name buylink-ai-test \
+              --restart unless-stopped \
+              -p 7002:7001 \
+              -e OPENAI_API_KEY="${OPENAI_API_KEY}" \
+              buylink-ai-test:latest
+            rm -f buylink-ai-test.tar.gz

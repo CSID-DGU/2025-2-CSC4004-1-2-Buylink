@@ -1,0 +1,54 @@
+name: AI Deploy
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "AI/**"
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: AI
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t buylink-ai:latest .
+
+      - name: Save Docker image
+        run: docker save buylink-ai:latest | gzip > buylink-ai.tar.gz
+
+      - name: Copy to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "AI/buylink-ai.tar.gz"
+          target: "/tmp"
+          strip_components: 1
+
+      - name: Deploy on server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /tmp
+            docker load < buylink-ai.tar.gz
+            docker stop buylink-ai || true
+            docker rm buylink-ai || true
+            docker run -d \
+              --name buylink-ai \
+              --restart unless-stopped \
+              -p 7001:7001 \
+              -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} \
+              buylink-ai:latest
+            rm -f buylink-ai.tar.gz

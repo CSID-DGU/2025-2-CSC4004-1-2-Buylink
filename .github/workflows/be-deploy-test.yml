@@ -1,0 +1,73 @@
+name: BE Deploy (Test)
+
+on:
+  push:
+    branches: ["develop"]
+    paths:
+      - "BE/**"
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: BE
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew clean bootJar -x test
+
+      - name: Build Docker image
+        run: docker build -t buylink-be-test:latest .
+
+      - name: Save Docker image
+        run: docker save buylink-be-test:latest | gzip > buylink-be-test.tar.gz
+
+      - name: Copy to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "BE/buylink-be-test.tar.gz"
+          target: "/tmp"
+          strip_components: 1
+
+      - name: Deploy on server (Test Port 17789)
+        uses: appleboy/ssh-action@v1.0.3
+        env:
+          TOSS_SECRET_KEY: ${{ secrets.TOSS_SECRET_KEY }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          envs: TOSS_SECRET_KEY,SLACK_BOT_TOKEN
+          script: |
+            cd /tmp
+            docker load < buylink-be-test.tar.gz
+            docker stop buylink-be-test || true
+            docker rm buylink-be-test || true
+            docker run -d \
+              --name buylink-be-test \
+              --restart unless-stopped \
+              --network host \
+              -e SPRING_PROFILES_ACTIVE=test \
+              -e SERVER_PORT=17789 \
+              -e TOSS_SECRET_KEY="${TOSS_SECRET_KEY}" \
+              -e SLACK_BOT_TOKEN="${SLACK_BOT_TOKEN}" \
+              buylink-be-test:latest
+            rm -f buylink-be-test.tar.gz

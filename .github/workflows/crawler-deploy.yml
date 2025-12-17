@@ -1,0 +1,54 @@
+name: Crawler Deploy
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "Crawler/**"
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Crawler
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t buylink-crawler:latest .
+
+      - name: Save Docker image
+        run: docker save buylink-crawler:latest | gzip > buylink-crawler.tar.gz
+
+      - name: Copy to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "Crawler/buylink-crawler.tar.gz"
+          target: "/tmp"
+          strip_components: 1
+
+      - name: Deploy on server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /tmp
+            docker load < buylink-crawler.tar.gz
+            docker stop buylink-crawler || true
+            docker rm buylink-crawler || true
+            docker run -d \
+              --name buylink-crawler \
+              --restart unless-stopped \
+              -p 5001:5001 \
+              --shm-size=2g \
+              buylink-crawler:latest
+            rm -f buylink-crawler.tar.gz
