@@ -1,3 +1,4 @@
+// src/main/java/io/github/hayo02/proxyshopping/cart/entity/CartEstimate.java
 package io.github.hayo02.proxyshopping.cart.entity;
 
 import jakarta.persistence.*;
@@ -14,7 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class CartEstimate {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,11 +31,11 @@ public class CartEstimate {
     private Long productTotalKRW;
     private Long serviceFeeKRW;
 
-    // 2) 무게/부피 정보
-    private Double totalActualWeightKg;
-    private Double totalVolumeM3;
-    private Double volumetricWeightKg;
-    private Double chargeableWeightKg;
+    // 2) 무게/부피 정보 (단위 변경: g, cm^3)
+    private Double totalActualWeightG;  // g
+    private Double totalVolumeCm3;      // cm^3
+    private Double volumetricWeightG;   // g
+    private Double chargeableWeightG;   // g
 
     // 3) 배송비
     private Long emsYen;
