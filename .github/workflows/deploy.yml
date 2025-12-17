@@ -2,11 +2,12 @@ name: Deploy (Backend + AI)
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
       - name: Checkout
@@ -19,23 +20,18 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H "${{ secrets.EC2_HOST }}" >> ~/.ssh/known_hosts
 
-      - name: Login to GHCR
-        run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u "${{ secrets.GHCR_USER }}" --password-stdin
-
-      - name: Remote deploy via SSH
+      - name: Remote deploy via SSH (login + pull + up)
         run: |
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=yes ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-            set -e
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=yes \
+            ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} \
+            "GHCR_USER='${{ secrets.GHCR_USER }}' GHCR_PAT='${{ secrets.GHCR_PAT }}' bash -s" << 'EOF'
+              set -e
 
-            # (1) 배포 폴더로 이동
-            cd /opt/buylink
+              cd /opt/buylink
 
-            # (2) 최신 이미지 pull
-            docker compose -f docker-compose.prod.yml pull
+              echo "$GHCR_PAT" | docker login ghcr.io -u "$GHCR_USER" --password-stdin
 
-            # (3) 컨테이너 재기동
-            docker compose -f docker-compose.prod.yml up -d
-
-            # (4) 상태 확인
-            docker compose -f docker-compose.prod.yml ps
+              docker compose -f docker-compose.prod.yml pull
+              docker compose -f docker-compose.prod.yml up -d
+              docker compose -f docker-compose.prod.yml ps
           EOF
