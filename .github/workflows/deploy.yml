@@ -34,15 +34,23 @@ jobs:
 
           ssh -p "${{ secrets.EC2_PORT }}" -i ~/.ssh/id_rsa -o StrictHostKeyChecking=yes \
             "${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}" \
-            "GHCR_USER='${{ secrets.GHCR_USER }}' GHCR_PAT='${{ secrets.GHCR_PAT }}' bash -se" << 'EOF'
+            "GHCR_USER='${{ secrets.GHCR_USER }}' GHCR_PAT='${{ secrets.GHCR_PAT }}' ENV_PROD='${{ secrets.ENV_PROD }}' bash -se" << 'EOF'
               set -euo pipefail
 
               cd /new_data/bm/buylink
 
+              # (0) .env.prod 생성/갱신 (레포에는 저장하지 않음)
+              printf "%s" "$ENV_PROD" > .env.prod
+              chmod 600 .env.prod
+
+              # (1) GHCR 로그인 (EC2에서 pull 하므로 EC2에서 로그인)
               echo "$GHCR_PAT" | docker login ghcr.io -u "$GHCR_USER" --password-stdin
+
+              # (2) compose 변수용 (docker-compose.prod.yml에 ${GHCR_USER}가 있으면 필요)
               export GHCR_USER
 
-              docker compose -f docker-compose.prod.yml pull
-              docker compose -f docker-compose.prod.yml up -d
-              docker compose -f docker-compose.prod.yml ps
+              # (3) 배포
+              docker compose -f docker-compose.prod.yml --env-file .env.prod pull
+              docker compose -f docker-compose.prod.yml --env-file .env.prod up -d
+              docker compose -f docker-compose.prod.yml --env-file .env.prod ps
           EOF
